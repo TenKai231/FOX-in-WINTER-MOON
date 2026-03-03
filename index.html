@@ -50,7 +50,7 @@
   >
     <div
       id="preloader"
-      class="fixed inset-0 z-[100] bg-midnight-900 flex flex-col items-center justify-center transition-opacity duration-1000"
+      class="fixed inset-0 z-[100] bg-midnight-900 flex flz1ex-col items-center justify-center transition-opacity duration-1000"
     >
       <div
         class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-fox-orange mb-4"
@@ -191,120 +191,7 @@
         </a>
       </div>
     </section>
-    <section id="population" class="relative w-full min-h-screen bg-midnight-900 py-24 px-6 z-40 overflow-hidden flex flex-col justify-center">
-      
-      <div class="absolute top-1/2 left-0 w-[400px] h-[400px] bg-fox-orange/5 rounded-full blur-[120px] pointer-events-none z-0 -translate-y-1/2"></div>
-      <div class="absolute top-1/2 right-0 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none z-0 -translate-y-1/2"></div>
-
-      <div class="max-w-7xl mx-auto w-full relative z-10">
-        
-        <div class="text-center mb-16 reveal">
-          <span class="text-white font-fantasy tracking-[0.4em] text-xs md:text-sm uppercase">
-            Data & Statistics
-          </span>
-          <h2 class="text-4xl md:text-5xl font-fantasy font-bold mt-4 text-transparent bg-clip-text bg-gradient-to-r from-fox-orange to-blue-400">
-            GLOBAL DEMOGRAPHICS
-          </h2>
-          <p class="text-gray-400 mt-4 max-w-xl mx-auto font-body font-light leading-relaxed">
-            Analyzing the spatial distribution and the historical population growth of the Red Fox.
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-
-          <div class="reveal relative bg-white/5 border border-white/10 backdrop-blur-md rounded-3xl p-8 shadow-[0_0_40px_rgba(0,0,0,0.3)]">
-            <h3 class="font-fantasy text-xl text-fox-orange mb-2 border-b border-white/10 pb-4">Territory Distribution</h3>
-            
-            <div class="relative h-[250px] md:h-[300px] w-full flex items-end justify-around gap-2 md:gap-4 border-b border-l border-white/20 pb-4 pl-4 mt-8">
-              
-              <div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-20 ml-4 pb-4">
-                <div class="w-full border-b border-white/30 border-dashed relative"><span class="absolute -left-8 -top-3 text-xs">50%</span></div>
-                <div class="w-full border-b border-white/30 border-dashed relative"><span class="absolute -left-8 -top-3 text-xs">25%</span></div>
-                <div class="w-full border-b border-transparent relative"><span class="absolute -left-6 -top-3 text-xs">0%</span></div>
-              </div>
-
-              <div class="relative flex flex-col justify-end items-center group w-1/4 h-full">
-                <div class="bar-fill w-full md:w-16 bg-gradient-to-t from-fox-orange/20 to-fox-orange rounded-t-md shadow-[0_0_15px_rgba(255,140,66,0.5)] transition-all duration-[1.5s] ease-out flex justify-center items-start pt-2" data-target="90%">
-                  <span class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-sm">45%</span>
-                </div>
-                <p class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full">Eurasia</p>
-              </div>
-
-              <div class="relative flex flex-col justify-end items-center group w-1/4 h-full">
-                <div class="bar-fill w-full md:w-16 bg-gradient-to-t from-fox-orange/10 to-fox-orange/70 rounded-t-md transition-all duration-[1.5s] ease-out delay-200 flex justify-center items-start pt-2" data-target="60%">
-                  <span class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-sm">30%</span>
-                </div>
-                <p class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full">America</p>
-              </div>
-
-              <div class="relative flex flex-col justify-end items-center group w-1/4 h-full">
-                <div class="bar-fill w-full md:w-16 bg-gradient-to-t from-fox-orange/5 to-fox-orange/50 rounded-t-md transition-all duration-[1.5s] ease-out delay-300 flex justify-center items-start pt-2" data-target="30%">
-                  <span class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-sm">15%</span>
-                </div>
-                <p class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full">Mid-East</p>
-              </div>
-
-              <div class="relative flex flex-col justify-end items-center group w-1/4 h-full">
-                <div class="bar-fill w-full md:w-16 bg-gradient-to-t from-gray-600/20 to-gray-500 rounded-t-md transition-all duration-[1.5s] ease-out delay-500 flex justify-center items-start pt-2" data-target="20%">
-                  <span class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-sm">10%</span>
-                </div>
-                <p class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full">Australia</p>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="reveal relative bg-white/5 border border-white/10 backdrop-blur-md rounded-3xl p-8 shadow-[0_0_40px_rgba(0,0,0,0.3)]" style="transition-delay: 200ms;">
-            <h3 class="font-fantasy text-xl text-blue-400 mb-2 border-b border-white/10 pb-4">Global Population Index (1980 - 2026)</h3>
-            
-            <div class="relative h-[250px] md:h-[300px] w-full flex items-end justify-around gap-2 md:gap-4 border-b border-l border-white/20 pb-4 pl-4 mt-8">
-              
-              <div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-20 ml-4 pb-4">
-                <div class="w-full border-b border-white/30 border-dashed relative"><span class="absolute -left-8 -top-3 text-xs">Max</span></div>
-                <div class="w-full border-b border-white/30 border-dashed relative"><span class="absolute -left-8 -top-3 text-xs">Avg</span></div>
-                <div class="w-full border-b border-transparent relative"><span class="absolute -left-6 -top-3 text-xs">Min</span></div>
-              </div>
-
-              <div class="relative flex flex-col justify-end items-center group w-1/5 h-full">
-                <div class="bar-fill w-full md:w-12 bg-gradient-to-t from-blue-500/10 to-blue-600/50 rounded-t-md transition-all duration-[1.5s] ease-out flex justify-center items-start pt-2" data-target="55%">
-                  <span class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-xs">Stable</span>
-                </div>
-                <p class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full">1980</p>
-              </div>
-
-              <div class="relative flex flex-col justify-end items-center group w-1/5 h-full">
-                <div class="bar-fill w-full md:w-12 bg-gradient-to-t from-blue-500/10 to-blue-500/60 rounded-t-md transition-all duration-[1.5s] ease-out delay-100 flex justify-center items-start pt-2" data-target="65%">
-                  <span class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-xs">+12%</span>
-                </div>
-                <p class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full">1990</p>
-              </div>
-
-              <div class="relative flex flex-col justify-end items-center group w-1/5 h-full">
-                <div class="bar-fill w-full md:w-12 bg-gradient-to-t from-blue-400/20 to-blue-400/80 rounded-t-md transition-all duration-[1.5s] ease-out delay-200 flex justify-center items-start pt-2" data-target="75%">
-                  <span class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-xs">+18%</span>
-                </div>
-                <p class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full">2005</p>
-              </div>
-
-              <div class="relative flex flex-col justify-end items-center group w-1/5 h-full">
-                <div class="bar-fill w-full md:w-12 bg-gradient-to-t from-cyan-400/20 to-cyan-400/90 rounded-t-md shadow-[0_0_10px_rgba(34,211,238,0.3)] transition-all duration-[1.5s] ease-out delay-300 flex justify-center items-start pt-2" data-target="88%">
-                  <span class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-xs">+25%</span>
-                </div>
-                <p class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full">2015</p>
-              </div>
-
-              <div class="relative flex flex-col justify-end items-center group w-1/5 h-full">
-                <div class="bar-fill w-full md:w-12 bg-gradient-to-t from-cyan-300/30 to-cyan-300 rounded-t-md shadow-[0_0_20px_rgba(103,232,249,0.6)] transition-all duration-[1.5s] ease-out delay-400 flex justify-center items-start pt-2" data-target="100%">
-                  <span class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-xs">Peak</span>
-                </div>
-                <p class="absolute -bottom-8 text-[10px] md:text-xs text-fox-gold font-body text-center w-full">2026</p>
-              </div>
-
-            </div>
-          </div>
-
-        </div> </div>
-    </section>
+    
     <section
       id="biography"
       class="relative w-full min-h-screen bg-midnight-900 text-white py-24 px-6 z-40 overflow-hidden"
@@ -543,6 +430,121 @@
           </div>
       </div>
     </section>
+    <section id="population" class="relative w-full min-h-screen bg-midnight-900 py-24 px-6 z-40 overflow-hidden flex flex-col justify-center">
+      
+      <div class="absolute top-1/2 left-0 w-[400px] h-[400px] bg-fox-orange/5 rounded-full blur-[120px] pointer-events-none z-0 -translate-y-1/2"></div>
+      <div class="absolute top-1/2 right-0 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none z-0 -translate-y-1/2"></div>
+
+      <div class="max-w-7xl mx-auto w-full relative z-10">
+        
+        <div class="text-center mb-16 reveal">
+          <span class="text-white font-fantasy tracking-[0.4em] text-xs md:text-sm uppercase">border
+            Data & Statistics
+          </span>
+          <h2 class="text-4xl md:text-5xl font-fantasy font-bold mt-4 text-transparent bg-clip-text bg-gradient-to-r from-fox-orange to-blue-400">
+            GLOBAL DEMOGRAPHICS
+          </h2>
+          <p class="text-gray-400 mt-4 max-w-xl mx-auto font-body font-light leading-relaxed">
+            Analyzing the spatial distribution and the historical population growth of the Red Fox.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+          <div class="reveal relative bg-white/5 border border-white/10 backdrop-blur-md rounded-3xl p-8 shadow-[0_0_40px_rgba(0,0,0,0.3)]">
+            <h3 class="font-fantasy text-xl text-fox-orange mb-2 border-b border-white/10 pb-4">Territory Distribution</h3>
+            
+            <div class="relative h-[250px] md:h-[300px] w-full flex items-end justify-around gap-2 md:gap-4 border-b border-l border-white/20 pb-4 pl-4 mt-8">
+              
+              <div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-20 ml-4 pb-4">
+                <div class="w-full border-b border-white/30 border-dashed relative"><span class="absolute -left-8 -top-3 text-xs">50%</span></div>
+                <div class="w-full border-b border-white/30 border-dashed relative"><span class="absolute -left-8 -top-3 text-xs">25%</span></div>
+                <div class="w-full border-b border-transparent relative"><span class="absolute -left-6 -top-3 text-xs">0%</span></div>
+              </div>
+
+              <div class="relative flex flex-col justify-end items-center group w-1/4 h-full">
+                <div class="bar-fill w-full md:w-16 bg-gradient-to-t from-fox-orange/20 to-fox-orange rounded-t-md shadow-[0_0_15px_rgba(255,140,66,0.5)] transition-all duration-[1.5s] ease-out flex justify-center items-start pt-2" data-target="90%">
+                  <span class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-sm">45%</span>
+                </div>
+                <p class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full">Eurasia</p>
+              </div>
+
+              <div class="relative flex flex-col justify-end items-center group w-1/4 h-full">
+                <div class="bar-fill w-full md:w-16 bg-gradient-to-t from-fox-orange/10 to-fox-orange/70 rounded-t-md transition-all duration-[1.5s] ease-out delay-200 flex justify-center items-start pt-2" data-target="60%">
+                  <span class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-sm">30%</span>
+                </div>
+                <p class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full">America</p>
+              </div>
+
+              <div class="relative flex flex-col justify-end items-center group w-1/4 h-full">
+                <div class="bar-fill w-full md:w-16 bg-gradient-to-t from-fox-orange/5 to-fox-orange/50 rounded-t-md transition-all duration-[1.5s] ease-out delay-300 flex justify-center items-start pt-2" data-target="30%">
+                  <span class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-sm">15%</span>
+                </div>
+                <p class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full">Mid-East</p>
+              </div>
+
+              <div class="relative flex flex-col justify-end items-center group w-1/4 h-full">
+                <div class="bar-fill w-full md:w-16 bg-gradient-to-t from-gray-600/20 to-gray-500 rounded-t-md transition-all duration-[1.5s] ease-out delay-500 flex justify-center items-start pt-2" data-target="20%">
+                  <span class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-sm">10%</span>
+                </div>
+                <p class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full">Australia</p>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="reveal relative bg-white/5 border border-white/10 backdrop-blur-md rounded-3xl p-8 shadow-[0_0_40px_rgba(0,0,0,0.3)]" style="transition-delay: 200ms;">
+            <h3 class="font-fantasy text-xl text-blue-400 mb-2 border-b border-white/10 pb-4">Global Population Index (1980 - 2026)</h3>
+            
+            <div class="relative h-[250px] md:h-[300px] w-full flex items-end justify-around gap-2 md:gap-4 border-b border-l border-white/20 pb-4 pl-4 mt-8">
+              
+              <div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-20 ml-4 pb-4">
+                <div class="w-full border-b border-white/30 border-dashed relative"><span class="absolute -left-8 -top-3 text-xs">Max</span></div>
+                <div class="w-full border-b border-white/30 border-dashed relative"><span class="absolute -left-8 -top-3 text-xs">Avg</span></div>
+                <div class="w-full border-b border-transparent relative"><span class="absolute -left-6 -top-3 text-xs">Min</span></div>
+              </div>
+
+              <div class="relative flex flex-col justify-end items-center group w-1/5 h-full">
+                <div class="bar-fill w-full md:w-12 bg-gradient-to-t from-blue-500/10 to-blue-600/50 rounded-t-md transition-all duration-[1.5s] ease-out flex justify-center items-start pt-2" data-target="55%">
+                  <span class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-xs">Stable</span>
+                </div>
+                <p class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full">1980</p>
+              </div>
+
+              <div class="relative flex flex-col justify-end items-center group w-1/5 h-full">
+                <div class="bar-fill w-full md:w-12 bg-gradient-to-t from-blue-500/10 to-blue-500/60 rounded-t-md transition-all duration-[1.5s] ease-out delay-100 flex justify-center items-start pt-2" data-target="65%">
+                  <span class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-xs">+12%</span>
+                </div>
+                <p class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full">1990</p>
+              </div>
+
+              <div class="relative flex flex-col justify-end items-center group w-1/5 h-full">
+                <div class="bar-fill w-full md:w-12 bg-gradient-to-t from-blue-400/20 to-blue-400/80 rounded-t-md transition-all duration-[1.5s] ease-out delay-200 flex justify-center items-start pt-2" data-target="75%">
+                  <span class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-xs">+18%</span>
+                </div>
+                <p class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full">2005</p>
+              </div>
+
+              <div class="relative flex flex-col justify-end items-center group w-1/5 h-full">
+                <div class="bar-fill w-full md:w-12 bg-gradient-to-t from-cyan-400/20 to-cyan-400/90 rounded-t-md shadow-[0_0_10px_rgba(34,211,238,0.3)] transition-all duration-[1.5s] ease-out delay-300 flex justify-center items-start pt-2" data-target="88%">
+                  <span class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-xs">+25%</span>
+                </div>
+                <p class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full">2015</p>
+              </div>
+
+              <div class="relative flex flex-col justify-end items-center group w-1/5 h-full">
+                <div class="bar-fill w-full md:w-12 bg-gradient-to-t from-cyan-300/30 to-cyan-300 rounded-t-md shadow-[0_0_20px_rgba(103,232,249,0.6)] transition-all duration-[1.5s] ease-out delay-400 flex justify-center items-start pt-2" data-target="100%">
+                  <span class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-xs">Peak</span>
+                </div>
+                <p class="absolute -bottom-8 text-[10px] md:text-xs text-fox-gold font-body text-center w-full">2026</p>
+              </div>
+
+            </div>
+          </div>
+
+        </div> </div>
+    </section>
+
     <footer class="relative z-40 bg-black py-8 text-center border-t border-white/5 reveal">
       <div class="text-2xl font-fantasy font-bold tracking-widest text-white/30 mb-2">FOX.</div>
       <p class="text-gray-600 font-body text-xs tracking-widest uppercase">
