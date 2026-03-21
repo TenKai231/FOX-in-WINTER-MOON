@@ -200,6 +200,83 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // === SNOW: CTA + FOOTER ===
+  ["cta-snow", "footer-snow"].forEach((id) => {
+    const container = document.getElementById(id);
+    if (!container) return;
+    const count = id === "footer-snow" ? 25 : 40;
+    for (let i = 0; i < count; i++) {
+      const sf = document.createElement("div");
+      sf.classList.add("snowflake");
+      sf.style.left = Math.random() * 100 + "vw";
+      const size = Math.random() * 2.5 + 1.5 + "px";
+      sf.style.width = size;
+      sf.style.height = size;
+      sf.style.opacity = (Math.random() * 0.4 + 0.15).toFixed(2);
+      sf.style.animationDuration = Math.random() * 8 + 6 + "s";
+      sf.style.animationDelay = Math.random() * 6 + "s";
+      container.appendChild(sf);
+    }
+  });
+
+  // === CLICK-TO-SNOW INTERACTION (SNOW PILE) ===
+  function createSnowBurst(e, containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    // Ambil koordinat klik relatif terhadap viewport
+    const clickX = e.clientX;
+    const clickY = e.clientY;
+
+    // Buat burst 15-20 butir salju
+    const burstCount = Math.floor(Math.random() * 6) + 15;
+    
+    for (let i = 0; i < burstCount; i++) {
+      const sf = document.createElement("div");
+      sf.classList.add("snowflake");
+      
+      // Sebar sedikit dari titik klik awal
+      const offsetX = (Math.random() - 0.5) * 100;
+      sf.style.left = `calc(${clickX}px + ${offsetX}px)`;
+      
+      // Override posisi top agar mulai dari titik kursor (atau dikit di atas/bawah)
+      const offsetY = (Math.random() - 0.5) * 40;
+      sf.style.top = `calc(${clickY}px + ${offsetY}px)`;
+      
+      const size = Math.random() * 3 + 2 + "px";
+      sf.style.width = size;
+      sf.style.height = size;
+      sf.style.opacity = (Math.random() * 0.6 + 0.4).toFixed(2);
+      
+      // Animasi jatuh lebih cepat untuk efek burst
+      sf.style.animationDuration = Math.random() * 3 + 2 + "s";
+      // Tanpa delay
+      sf.style.animationDelay = "0s";
+      
+      container.appendChild(sf);
+
+      // Bersihkan flake setelah efek selesai
+      setTimeout(() => {
+        if(sf.parentNode === container) sf.remove();
+      }, 5000);
+    }
+  }
+
+  const snowPileCta = document.getElementById("snow-pile-cta");
+  const snowPileFooter = document.getElementById("snow-pile-footer");
+
+  if (snowPileCta) {
+    snowPileCta.addEventListener("click", (e) => {
+      createSnowBurst(e, "cta-snow");
+    });
+  }
+
+  if (snowPileFooter) {
+    snowPileFooter.addEventListener("click", (e) => {
+      createSnowBurst(e, "footer-snow");
+    });
+  }
+
   // === SCROLL REVEAL SYSTEM ===
   const revealElements = document.querySelectorAll(".reveal");
 

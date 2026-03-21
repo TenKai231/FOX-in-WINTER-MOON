@@ -11,7 +11,7 @@
 
 async function loadFoxData() {
   try {
-    const response = await fetch("data.json");
+    const response = await fetch("data/data.json");
     if (!response.ok) throw new Error("data.json tidak ditemukan");
     const data = await response.json();
 

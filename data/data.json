@@ -1,0 +1,87 @@
+{
+  "meta": {
+    "species": "Vulpes vulpes",
+    "common_name": "Red Fox",
+    "source": "GBIF (Global Biodiversity Information Facility)",
+    "source_url": "https://www.gbif.org/species/5219243",
+    "generated_at": "2026-03-19 13:40:47",
+    "total_records": 1757687
+  },
+  "distribution": [
+    {
+      "continent": "Europe",
+      "count": 1509501,
+      "percentage": 85.9
+    },
+    {
+      "continent": "Oceania",
+      "count": 157130,
+      "percentage": 8.9
+    },
+    {
+      "continent": "North America",
+      "count": 51202,
+      "percentage": 2.9
+    },
+    {
+      "continent": "Asia",
+      "count": 38659,
+      "percentage": 2.2
+    },
+    {
+      "continent": "Africa",
+      "count": 1195,
+      "percentage": 0.1
+    }
+  ],
+  "trend": [
+    {
+      "year": 1980,
+      "count": 4979,
+      "normalized": 3.2,
+      "change_pct": 0.0
+    },
+    {
+      "year": 1990,
+      "count": 2762,
+      "normalized": 1.8,
+      "change_pct": -44.5
+    },
+    {
+      "year": 2000,
+      "count": 5164,
+      "normalized": 3.3,
+      "change_pct": 3.7
+    },
+    {
+      "year": 2005,
+      "count": 12238,
+      "normalized": 7.9,
+      "change_pct": 145.8
+    },
+    {
+      "year": 2010,
+      "count": 30052,
+      "normalized": 19.3,
+      "change_pct": 503.6
+    },
+    {
+      "year": 2015,
+      "count": 109144,
+      "normalized": 70.2,
+      "change_pct": 2092.1
+    },
+    {
+      "year": 2020,
+      "count": 155469,
+      "normalized": 100.0,
+      "change_pct": 3022.5
+    },
+    {
+      "year": 2024,
+      "count": 68315,
+      "normalized": 43.9,
+      "change_pct": 1272.1
+    }
+  ]
+}

@@ -65,4 +65,94 @@ body::-webkit-scrollbar { display: none; }
 
   .leaflet-popup-content-wrapper { background-color:#0f172a; color:white; border:1px solid rgba(255,140,66,0.3); border-radius:12px; }
   .leaflet-popup-tip             { background-color:#0f172a; }
+
+  /* Snow pile effect */
+  .snow-pile {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    z-index: 5;
+    pointer-events: none;
+  }
+  .snow-pile svg {
+    display: block;
+    width: 100%;
+    height: 80px;
+    filter: drop-shadow(0 -4px 12px rgba(255,255,255,0.2));
+  }
+  .snow-pile-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    z-index: 5;
+    pointer-events: none;
+  }
+  .snow-pile-top svg {
+    display: block;
+    width: 100%;
+    height: 80px;
+    filter: drop-shadow(0 4px 12px rgba(255,255,255,0.15));
+  }
 }
+
+@keyframes snowShimmer {
+  0%, 100% { opacity: 0.85; }
+  50%       { opacity: 1; }
+}
+
+/* --- Extracted from more.html --- */
+#page-overlay { position: fixed; inset: 0; z-index: 9999; background: #020617; opacity: 1; transition: opacity .8s ease; pointer-events: none; }
+#page-overlay.hidden { opacity: 0; }
+.glass-card { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+
+/* Hub card */
+.hub-card { position: relative; overflow: hidden; border-radius: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.08); cursor: pointer; transition: all 0.5s ease; text-decoration: none; display: block; }
+.hub-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(2, 6, 23, 0.95) 30%, rgba(2, 6, 23, 0.3) 100%); z-index: 1; transition: opacity 0.5s ease; }
+.hub-card:hover { transform: translateY(-6px); border-color: rgba(255, 255, 255, 0.2); }
+.hub-card:hover::before { opacity: 0.7; }
+.hub-card:hover .card-arrow { transform: translateX(6px); }
+.hub-card:hover .card-bg { transform: scale(1.06); filter: brightness(0.5); }
+.card-bg { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; transition: transform 0.8s ease, filter 0.5s ease; filter: brightness(0.35); }
+.card-bg-gradient { width: 100%; height: 100%; position: absolute; inset: 0; transition: transform 0.8s ease; }
+.card-content { position: relative; z-index: 2; padding: 2.5rem; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; }
+.card-number { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.4em; color: rgba(255, 255, 255, 0.3); text-transform: uppercase; margin-bottom: auto; display: block; }
+.card-tag { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 0.75rem; }
+.card-title { font-family: 'Cinzel', serif; font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 700; letter-spacing: 0.05em; line-height: 1.2; margin-bottom: 0.75rem; }
+.card-desc { font-family: 'Lato', sans-serif; font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); font-weight: 300; line-height: 1.6; margin-bottom: 1.5rem; }
+.card-cta { display: inline-flex; align-items: center; gap: 8px; font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; }
+.card-arrow { transition: transform 0.3s ease; }
+
+/* --- Extracted from deeper.html --- */
+@keyframes scrollPulse { 0%,100% { opacity:0.4; transform:translateY(0); } 50% { opacity:1; transform:translateY(6px); } }
+@keyframes barGrow { from { width: 0; } }
+.scroll-bounce { animation: scrollPulse 2s ease-in-out infinite; }
+.bar-arctic { animation: barGrow 1.5s ease-out forwards; }
+.bar-ember  { animation: barGrow 1.5s .2s ease-out forwards; }
+.species-img { transition: transform .7s ease; }
+.species-wrap:hover .species-img { transform: scale(1.1); }
+
+/* --- Extracted from timeline.html --- */
+@keyframes pulse-ring { 0% { transform:translate(-50%,-50%) scale(1); opacity:0.6; } 100% { transform:translate(-50%,-50%) scale(2.2); opacity:0; } }
+@keyframes dash { to { stroke-dashoffset: -100; } }
+.dot-ring { position:absolute; top:50%; left:50%; width:32px; height:32px; border-radius:50%; border:2px solid rgba(167,139,250,0.4); animation: pulse-ring 2s ease-out infinite; }
+.timeline-dot { cursor:pointer; transition: transform 0.3s ease; }
+.timeline-dot:hover { transform: scale(1.2); }
+.no-scrollbar::-webkit-scrollbar { display:none; }
+.no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+.svg-path-anim { animation: dash 10s linear infinite; }
+
+/* --- Extracted from sounds.html --- */
+@keyframes waveAnim { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(0.3); } }
+.waveform-bar { width: 3px; border-radius: 4px; transform-origin: bottom; }
+.waveform-bar.animate { animation: waveAnim ease-in-out infinite; }
+tr.hover-row:hover td { background: rgba(255,255,255,0.04); }
+.tracking-wider-custom { letter-spacing: 0.15em; }
+.spec-bar { height: 0; transition: height 1.2s ease; }
+.play-btn { transition: all 0.3s ease; }
+.play-btn:hover { transform: scale(1.05); }
