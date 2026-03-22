@@ -159,9 +159,9 @@ document.addEventListener("DOMContentLoaded", () => {
     badge.innerText = `stars: ${stars} · snow: ${snows} · ${loaded}`;
   }
 
-  createStatusBadge();
-  updateStatusBadge();
-  setInterval(updateStatusBadge, 1000);
+  // createStatusBadge();
+  // updateStatusBadge();
+  // setInterval(updateStatusBadge, 1000);
 
   // === 2. STAR SYSTEM (Bintang Berkelip) ===
   const starContainer = document.getElementById("star-container");

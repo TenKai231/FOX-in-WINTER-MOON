@@ -12,6 +12,9 @@
 
   <!-- Tailwind CDN with same config as index.html -->
   <link rel="stylesheet" href="../dist/output.css" />
+
+  <!-- Favicon emoji (paling simpel, tidak perlu file) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦊</text></svg>"/>
 </head>
 
 <body class="bg-midnight-900 text-white font-body overflow-x-hidden">
@@ -69,12 +72,6 @@
         </div>
       </div>
 
-      <!-- Scroll hint -->
-      <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 opacity-0"
-           style="animation: fadeUp 1s 1.8s ease-out forwards">
-        <div class="w-px h-12 bg-gradient-to-b from-transparent to-blue-400/50"></div>
-        <span class="font-fantasy text-[10px] tracking-[0.3em] uppercase text-blue-400/60">Scroll Down</span>
-      </div>
     </section>
 
     <!-- ══════════════════════════════════════
@@ -192,7 +189,7 @@
               of the north. Our acoustic surveys during the winter months reveal how frequency
               modulation shifts with ambient temperature and territory density.
             </p>
-            <a href="data.json"
+            <a href="../data/data.json"
                class="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-blue-400/20 bg-blue-400/10 text-blue-400 font-fantasy text-xs tracking-[0.2em] uppercase hover:bg-blue-400/20 transition-all duration-300">
               ↓ Access Full Frequency Dataset (JSON)
             </a>
