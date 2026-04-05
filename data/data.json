@@ -4,33 +4,33 @@
     "common_name": "Red Fox",
     "source": "GBIF (Global Biodiversity Information Facility)",
     "source_url": "https://www.gbif.org/species/5219243",
-    "generated_at": "2026-03-19 13:40:47",
-    "total_records": 1757687
+    "generated_at": "2026-03-31 06:36:55",
+    "total_records": 1758998
   },
   "distribution": [
     {
       "continent": "Europe",
-      "count": 1509501,
+      "count": 1510417,
       "percentage": 85.9
     },
     {
       "continent": "Oceania",
-      "count": 157130,
+      "count": 157177,
       "percentage": 8.9
     },
     {
       "continent": "North America",
-      "count": 51202,
+      "count": 51486,
       "percentage": 2.9
     },
     {
       "continent": "Asia",
-      "count": 38659,
+      "count": 38722,
       "percentage": 2.2
     },
     {
       "continent": "Africa",
-      "count": 1195,
+      "count": 1196,
       "percentage": 0.1
     }
   ],
@@ -49,39 +49,39 @@
     },
     {
       "year": 2000,
-      "count": 5164,
+      "count": 5137,
       "normalized": 3.3,
-      "change_pct": 3.7
+      "change_pct": 3.2
     },
     {
       "year": 2005,
-      "count": 12238,
+      "count": 12225,
       "normalized": 7.9,
-      "change_pct": 145.8
+      "change_pct": 145.5
     },
     {
       "year": 2010,
-      "count": 30052,
+      "count": 30051,
       "normalized": 19.3,
       "change_pct": 503.6
     },
     {
       "year": 2015,
-      "count": 109144,
+      "count": 109141,
       "normalized": 70.2,
-      "change_pct": 2092.1
+      "change_pct": 2092.0
     },
     {
       "year": 2020,
-      "count": 155469,
+      "count": 155485,
       "normalized": 100.0,
-      "change_pct": 3022.5
+      "change_pct": 3022.8
     },
     {
       "year": 2024,
-      "count": 68315,
-      "normalized": 43.9,
-      "change_pct": 1272.1
+      "count": 68337,
+      "normalized": 44.0,
+      "change_pct": 1272.5
     }
   ]
 }
