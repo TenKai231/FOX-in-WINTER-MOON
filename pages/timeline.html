@@ -1,19 +1,26 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Timeline of the Fox | Fox.</title>
 
   <!-- Same fonts as index.html -->
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lato:wght@300;400&family=Pinyon+Script&display=swap" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lato:wght@300;400&family=Pinyon+Script&display=swap"
+    rel="stylesheet" />
 
   <link rel="stylesheet" href="../dist/output.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="../js/timeline.js" defer></script>
 
-  <!-- Favicon emoji (paling simpel, tidak perlu file) -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦊</text></svg>"/>
+  <!-- Favicon -->
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦊</text></svg>" />
 </head>
 
 <body class="bg-midnight-900 text-white font-body overflow-x-hidden">
@@ -32,18 +39,22 @@
   <div id="page-overlay"></div>
 
   <!-- ── NAV — same as index.html ── -->
-  <nav class="fixed w-full z-50 top-0 px-8 py-6 flex justify-between items-center bg-gradient-to-b from-midnight-900/90 to-transparent opacity-0"
-       style="animation: fadeUp 0.8s 0.5s ease-out forwards">
+  <nav
+    class="fixed w-full z-50 top-0 px-8 py-6 flex justify-between items-center bg-gradient-to-b from-midnight-900/90 to-transparent opacity-0"
+    style="animation: fadeUp 0.8s 0.5s ease-out forwards">
     <a href="../index.html" id="logo-link"
-       class="text-xl font-fantasy font-bold tracking-widest text-white hover:text-fox-orange transition-colors duration-300">
+      class="text-xl font-fantasy font-bold tracking-widest text-white hover:text-fox-orange transition-colors duration-300">
       FOX<span class="text-fox-orange">.</span>
     </a>
     <ul class="hidden md:flex space-x-8 text-xs tracking-[0.2em] uppercase text-white/70">
       <li class="hover:text-fox-orange transition-all cursor-pointer"><a href="../index.html#hero">Home</a></li>
-      <li class="hover:text-fox-orange transition-all cursor-pointer"><a href="../index.html#biography">Biography</a></li>
-      <li class="hover:text-fox-orange transition-all cursor-pointer"><a href="../index.html#documentary">Documentary</a></li>
+      <li class="hover:text-fox-orange transition-all cursor-pointer"><a href="../index.html#biography">Biography</a>
+      </li>
+      <li class="hover:text-fox-orange transition-all cursor-pointer"><a
+          href="../index.html#documentary">Documentary</a></li>
       <li class="hover:text-fox-orange transition-all cursor-pointer"><a href="../index.html#habitat">Habitat</a></li>
-      <li class="hover:text-fox-orange transition-all cursor-pointer"><a href="../index.html#population">Population</a></li>
+      <li class="hover:text-fox-orange transition-all cursor-pointer"><a href="../index.html#population">Population</a>
+      </li>
     </ul>
   </nav>
 
@@ -51,20 +62,25 @@
        HERO
   ══════════════════════════════════════ -->
   <header class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
-    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(167,139,250,0.08),transparent_70%)] pointer-events-none z-0"></div>
-    <div class="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-midnight-900 to-transparent z-0 pointer-events-none"></div>
+    <div
+      class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(167,139,250,0.08),transparent_70%)] pointer-events-none z-0">
+    </div>
+    <div
+      class="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-midnight-900 to-transparent z-0 pointer-events-none">
+    </div>
 
     <div class="relative z-10 text-center px-6 max-w-4xl">
       <p class="font-script text-purple-400 text-4xl mb-4 opacity-0"
-         style="animation: fadeUp 0.8s 0.7s ease-out forwards">
+        style="animation: fadeUp 0.8s 0.7s ease-out forwards">
         Chapter 02 · Evolution
       </p>
-      <h1 class="font-fantasy italic text-6xl md:text-8xl lg:text-9xl font-black text-white tracking-tight mb-8 opacity-0"
-          style="animation: fadeUp 0.9s 1s ease-out forwards">
+      <h1
+        class="font-fantasy italic text-6xl md:text-8xl lg:text-9xl font-black text-white tracking-tight mb-8 opacity-0"
+        style="animation: fadeUp 0.9s 1s ease-out forwards">
         TIMELINE <span class="text-purple-400">OF THE</span> FOX
       </h1>
       <div class="flex items-center justify-center gap-4 opacity-0"
-           style="animation: fadeUp 0.8s 1.3s ease-out forwards">
+        style="animation: fadeUp 0.8s 1.3s ease-out forwards">
         <div class="h-px w-12 bg-white/20"></div>
         <p class="uppercase tracking-[0.4em] text-xs text-gray-400 font-fantasy">
           Tracing the lineage across the frozen aeons
@@ -85,7 +101,7 @@
 
         <!-- Horizontal axis line -->
         <div class="absolute top-1/2 left-0 w-full h-px -translate-y-1/2"
-             style="background:linear-gradient(to right, transparent, rgba(167,139,250,0.4), transparent)"></div>
+          style="background:linear-gradient(to right, transparent, rgba(167,139,250,0.4), transparent)"></div>
 
         <div class="relative flex justify-between min-w-[900px] px-16" id="timeline-nav">
 
@@ -93,10 +109,13 @@
           <div class="flex flex-col items-center group timeline-dot" onclick="selectEra(0)">
             <div class="mb-10 h-16 flex flex-col items-center justify-end">
               <span class="font-fantasy text-lg text-purple-400" id="dot-year-0">10 Mya</span>
-              <span class="text-[10px] uppercase tracking-wider text-gray-500 text-center mt-1" id="dot-label-0">Canid Ancestor</span>
+              <span class="text-[10px] uppercase tracking-wider text-gray-500 text-center mt-1" id="dot-label-0">Canid
+                Ancestor</span>
             </div>
             <div class="relative">
-              <div class="w-4 h-4 rounded-full bg-purple-400 ring-4 ring-midnight-900 relative z-10 shadow-[0_0_15px_rgba(167,139,250,0.6)]"></div>
+              <div
+                class="w-4 h-4 rounded-full bg-purple-400 ring-4 ring-midnight-900 relative z-10 shadow-[0_0_15px_rgba(167,139,250,0.6)]">
+              </div>
             </div>
             <div class="mt-10 h-16 opacity-0">·</div>
           </div>
@@ -105,7 +124,9 @@
           <div class="flex flex-col items-center group timeline-dot" onclick="selectEra(1)">
             <div class="mb-10 h-16 opacity-0">·</div>
             <div class="relative">
-              <div class="w-4 h-4 rounded-full bg-purple-400/60 ring-4 ring-midnight-900 relative z-10 shadow-[0_0_10px_rgba(167,139,250,0.3)]"></div>
+              <div
+                class="w-4 h-4 rounded-full bg-purple-400/60 ring-4 ring-midnight-900 relative z-10 shadow-[0_0_10px_rgba(167,139,250,0.3)]">
+              </div>
             </div>
             <div class="mt-10 h-16 flex flex-col items-center justify-start">
               <span class="font-fantasy text-lg text-purple-400">5 Mya</span>
@@ -117,10 +138,13 @@
           <div class="flex flex-col items-center group timeline-dot" onclick="selectEra(2)">
             <div class="mb-10 h-16 flex flex-col items-center justify-end">
               <span class="font-fantasy text-lg text-white">1 Mya</span>
-              <span class="text-[10px] uppercase tracking-wider text-purple-400 font-bold text-center mt-1">Red Fox Emerges</span>
+              <span class="text-[10px] uppercase tracking-wider text-purple-400 font-bold text-center mt-1">Red Fox
+                Emerges</span>
             </div>
             <div class="relative">
-              <div class="w-6 h-6 rounded-full bg-purple-400 ring-4 ring-midnight-900 relative z-10 shadow-[0_0_20px_rgba(167,139,250,0.8)]" id="active-dot"></div>
+              <div
+                class="w-6 h-6 rounded-full bg-purple-400 ring-4 ring-midnight-900 relative z-10 shadow-[0_0_20px_rgba(167,139,250,0.8)]"
+                id="active-dot"></div>
               <div class="dot-ring"></div>
             </div>
             <div class="mt-10 h-16 opacity-0">·</div>
@@ -130,7 +154,9 @@
           <div class="flex flex-col items-center group timeline-dot" onclick="selectEra(3)">
             <div class="mb-10 h-16 opacity-0">·</div>
             <div class="relative">
-              <div class="w-4 h-4 rounded-full bg-purple-400/60 ring-4 ring-midnight-900 relative z-10 shadow-[0_0_10px_rgba(167,139,250,0.3)]"></div>
+              <div
+                class="w-4 h-4 rounded-full bg-purple-400/60 ring-4 ring-midnight-900 relative z-10 shadow-[0_0_10px_rgba(167,139,250,0.3)]">
+              </div>
             </div>
             <div class="mt-10 h-16 flex flex-col items-center justify-start">
               <span class="font-fantasy text-lg text-purple-400">500 Ka</span>
@@ -145,7 +171,9 @@
               <span class="text-[10px] uppercase tracking-wider text-gray-500 text-center mt-1">45 Subspecies</span>
             </div>
             <div class="relative">
-              <div class="w-4 h-4 rounded-full bg-fox-orange ring-4 ring-midnight-900 relative z-10 shadow-[0_0_15px_rgba(255,140,66,0.5)]"></div>
+              <div
+                class="w-4 h-4 rounded-full bg-fox-orange ring-4 ring-midnight-900 relative z-10 shadow-[0_0_15px_rgba(255,140,66,0.5)]">
+              </div>
             </div>
             <div class="mt-10 h-16 opacity-0">·</div>
           </div>
@@ -157,14 +185,17 @@
     <!-- ══════════════════════════════════════
          DETAIL SECTION
     ══════════════════════════════════════ -->
-    <section class="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-7xl mx-auto items-center reveal" style="transition-delay:150ms">
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-7xl mx-auto items-center reveal"
+      style="transition-delay:150ms">
 
       <!-- Image column -->
       <div class="lg:col-span-5 relative group">
-        <div class="absolute -inset-4 bg-purple-500/20 blur-3xl rounded-full opacity-30 group-hover:opacity-50 transition-opacity"></div>
+        <div
+          class="absolute -inset-4 bg-purple-500/20 blur-3xl rounded-full opacity-30 group-hover:opacity-50 transition-opacity">
+        </div>
         <div class="relative aspect-[4/5] rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-2xl">
           <img src="../assets/image/fox_forrest.jpg" alt="Red Fox in forest"
-               class="w-full h-full object-cover transition-transform duration-1000 scale-105 group-hover:scale-100"/>
+            class="w-full h-full object-cover transition-transform duration-1000 scale-105 group-hover:scale-100" />
           <div class="absolute inset-0 bg-gradient-to-t from-midnight-900 via-transparent to-transparent"></div>
           <div class="absolute bottom-8 left-8">
             <p class="font-script text-purple-400 text-3xl" id="detail-caption">The Red Fox Emerges</p>
@@ -184,14 +215,15 @@
           <div class="relative z-10">
             <header class="mb-8">
               <div class="flex items-center gap-4 mb-3">
-                <span class="px-3 py-1 rounded-full bg-purple-400/20 text-purple-400 text-[10px] font-fantasy font-bold uppercase tracking-widest border border-purple-400/30"
-                      id="detail-epoch">Pleistocene Epoch</span>
+                <span
+                  class="px-3 py-1 rounded-full bg-purple-400/20 text-purple-400 text-[10px] font-fantasy font-bold uppercase tracking-widest border border-purple-400/30"
+                  id="detail-epoch">Pleistocene Epoch</span>
                 <div class="h-px flex-grow bg-white/10"></div>
               </div>
-              <h2 class="font-fantasy text-4xl md:text-5xl font-bold text-white mb-2"
-                  id="detail-title">Vulpes vulpes</h2>
-              <p class="text-purple-400 font-fantasy text-xl tracking-widest"
-                 id="detail-subtitle">1,000,000 Years Ago</p>
+              <h2 class="font-fantasy text-4xl md:text-5xl font-bold text-white mb-2" id="detail-title">Vulpes vulpes
+              </h2>
+              <p class="text-purple-400 font-fantasy text-xl tracking-widest" id="detail-subtitle">1,000,000 Years Ago
+              </p>
             </header>
 
             <div class="space-y-5 text-gray-400 leading-relaxed mb-10 font-light">
@@ -203,24 +235,29 @@
               <ul class="space-y-4" id="detail-facts">
                 <li class="flex items-start gap-4">
                   <span class="text-purple-400 mt-1 flex-shrink-0">✦</span>
-                  <span>Extreme Cold Adaptation: Developed thicker pelts and specialized circulatory systems in paws.</span>
+                  <span>Extreme Cold Adaptation: Developed thicker pelts and specialized circulatory systems in
+                    paws.</span>
                 </li>
                 <li class="flex items-start gap-4">
                   <span class="text-purple-400 mt-1 flex-shrink-0">✦</span>
-                  <span>Eurasian Migration: Established dominance across the northern land bridge before spreading south.</span>
+                  <span>Eurasian Migration: Established dominance across the northern land bridge before spreading
+                    south.</span>
                 </li>
                 <li class="flex items-start gap-4">
                   <span class="text-purple-400 mt-1 flex-shrink-0">✦</span>
-                  <span>Cunning Evolution: Increased cranial capacity for sophisticated hunting strategies in deep snow.</span>
+                  <span>Cunning Evolution: Increased cranial capacity for sophisticated hunting strategies in deep
+                    snow.</span>
                 </li>
               </ul>
             </div>
 
             <div class="flex flex-wrap gap-4">
-              <button class="bg-purple-500 text-midnight-900 px-8 py-3 rounded-full font-fantasy font-bold text-sm tracking-widest flex items-center gap-2 hover:bg-purple-400 transition-all shadow-lg shadow-purple-500/20 active:scale-95">
+              <button id="explore-btn"
+                class="bg-purple-500 text-midnight-900 px-8 py-3 rounded-full font-fantasy font-bold text-sm tracking-widest flex items-center gap-2 hover:bg-purple-400 transition-all shadow-lg shadow-purple-500/20 active:scale-95">
                 Explore This Era →
               </button>
-              <button class="px-8 py-3 rounded-full border border-white/20 font-fantasy text-sm tracking-widest hover:bg-white/5 transition-all active:scale-95">
+              <button id="sci-btn"
+                class="px-8 py-3 rounded-full border border-white/20 font-fantasy text-sm tracking-widest hover:bg-white/5 transition-all active:scale-95">
                 View Scientific Data
               </button>
             </div>
@@ -232,7 +269,8 @@
     <!-- ══════════════════════════════════════
          BENTO GRID
     ══════════════════════════════════════ -->
-    <section class="max-w-7xl mx-auto mt-24 grid grid-cols-1 md:grid-cols-3 gap-6 reveal" style="transition-delay:200ms">
+    <section class="max-w-7xl mx-auto mt-24 grid grid-cols-1 md:grid-cols-3 gap-6 reveal"
+      style="transition-delay:200ms">
 
       <!-- Continental Shift -->
       <div class="glass-card p-8 rounded-2xl md:col-span-2 flex flex-col justify-between overflow-hidden group">
@@ -244,73 +282,48 @@
           </p>
         </div>
 
-        <!-- SVG map visualization -->
-        <div class="relative bg-black/40 rounded-xl overflow-hidden border border-white/5"
-             style="aspect-ratio:21/9">
-          <div class="absolute inset-0 opacity-20">
-            <div style="width:100%;height:100%;background:radial-gradient(ellipse at 30% 50%,rgba(167,139,250,0.3),transparent 60%), radial-gradient(ellipse at 70% 50%,rgba(96,165,250,0.2),transparent 60%)"></div>
-          </div>
-          <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 800 340">
-            <defs>
-              <filter id="glow">
-                <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
-                <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-            </defs>
-            <!-- Migration path -->
-            <path d="M200,150 Q400,100 600,180"
-                  fill="none" stroke="#A78BFA" stroke-width="2"
-                  stroke-dasharray="5,5" opacity="0.6"
-                  filter="url(#glow)"
-                  class="svg-path-anim"/>
-            <path d="M600,180 Q650,220 700,200"
-                  fill="none" stroke="#A78BFA" stroke-width="1.5"
-                  opacity="0.4" filter="url(#glow)"/>
-            <!-- Origin dot -->
-            <circle cx="200" cy="150" r="4" fill="#A78BFA" filter="url(#glow)">
-              <animate attributeName="r" values="3;5;3" dur="3s" repeatCount="indefinite"/>
-            </circle>
-            <!-- Destination dot -->
-            <circle cx="600" cy="180" r="4" fill="#A78BFA" filter="url(#glow)">
-              <animate attributeName="r" values="3;5;3" dur="2.5s" repeatCount="indefinite"/>
-            </circle>
-            <!-- Small star -->
-            <circle cx="450" cy="110" r="2" fill="white" opacity="0.5"/>
-            <!-- Labels -->
-            <text x="180" y="175" fill="#A78BFA" font-size="9" font-family="Cinzel,serif" opacity="0.8">N. America</text>
-            <text x="580" y="200" fill="#A78BFA" font-size="9" font-family="Cinzel,serif" opacity="0.8">Eurasia</text>
-          </svg>
-          <div class="absolute bottom-3 right-4 flex items-center gap-2">
+        <!-- Leaflet map — same style as index.html -->
+        <div class="relative rounded-xl overflow-hidden border border-white/5" style="height:280px">
+          <div id="migration-map" style="width:100%;height:100%;z-index:0"></div>
+          <div class="absolute bottom-3 right-4 flex items-center gap-2 z-10 pointer-events-none">
             <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
-            <span class="text-[10px] uppercase tracking-widest text-white/50 font-fantasy">Migration Vectors</span>
+            <span class="text-[10px] uppercase tracking-widest font-fantasy"
+              style="color:rgba(255,255,255,0.5);background:rgba(2,6,23,0.6);padding:2px 8px;border-radius:4px">
+              Migration Vectors
+            </span>
           </div>
         </div>
       </div>
 
-      <!-- Fossil Record card -->
-      <div class="rounded-2xl flex flex-col items-center justify-center text-center p-8 border border-purple-400/10 hover:border-purple-400/30 transition-colors group"
-           style="background:linear-gradient(135deg,rgba(167,139,250,0.15),rgba(2,6,23,1))">
+      <!-- Fossil Record card — now functional -->
+      <a href="https://www.gbif.org/species/5219243" target="_blank" rel="noopener"
+        class="rounded-2xl flex flex-col items-center justify-center text-center p-8 border border-purple-400/10 hover:border-purple-400/40 transition-all duration-300 group hover:-translate-y-1 cursor-pointer"
+        style="background:linear-gradient(135deg,rgba(167,139,250,0.15),rgba(2,6,23,1));text-decoration:none">
         <span class="text-6xl mb-4 group-hover:scale-110 transition-transform" style="color:#A78BFA">📜</span>
-        <h3 class="font-fantasy text-xl font-bold mb-3 tracking-wide">The Fossil Record</h3>
+        <h3 class="font-fantasy text-xl font-bold mb-3 tracking-wide text-white">The Fossil Record</h3>
         <p class="text-sm text-gray-400 font-light leading-relaxed">
-          Access the archival excavation logs from over 200 sites worldwide.
+          Access the archival excavation logs from over 200 sites worldwide via GBIF.
         </p>
-        <div class="mt-8 flex gap-2">
+        <div
+          class="mt-6 px-5 py-2 rounded-full border border-purple-400/30 text-purple-400 font-fantasy text-xs tracking-widest group-hover:bg-purple-400/10 transition-colors">
+          Open Archive →
+        </div>
+        <div class="mt-4 flex gap-2">
           <div class="w-12 h-1 bg-purple-400 rounded-full"></div>
           <div class="w-12 h-1 bg-purple-400/30 rounded-full"></div>
           <div class="w-12 h-1 bg-purple-400/30 rounded-full"></div>
         </div>
-      </div>
+      </a>
 
     </section>
 
     <!-- ── Back to More ── -->
     <div class="mt-32 flex flex-col items-center gap-6 reveal">
       <div class="h-24 w-px bg-gradient-to-b from-purple-400/40 to-transparent"></div>
-      <a href="more.html" id="back-btn"
-         class="group flex flex-col items-center gap-3">
+      <a href="more.html" id="back-btn" class="group flex flex-col items-center gap-3">
         <span class="text-purple-400 text-2xl group-hover:-translate-y-1 transition-transform">↑</span>
-        <span class="px-8 py-3 rounded-full border border-purple-400/30 text-purple-400 font-fantasy text-xs font-bold uppercase tracking-widest hover:bg-purple-400/10 transition-colors">
+        <span
+          class="px-8 py-3 rounded-full border border-purple-400/30 text-purple-400 font-fantasy text-xs font-bold uppercase tracking-widest hover:bg-purple-400/10 transition-colors">
           Back to More
         </span>
       </a>
@@ -319,7 +332,8 @@
   </main>
 
   <!-- Footer — same as index.html -->
-  <footer class="relative z-20 bg-black py-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center px-12 mt-16">
+  <footer
+    class="relative z-20 bg-black py-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center px-12 mt-16">
     <div class="font-fantasy text-xl font-bold tracking-widest text-white/20 mb-4 md:mb-0">
       FOX<span class="text-fox-orange">.</span>
     </div>
@@ -327,11 +341,14 @@
       © 2026 The Frozen Forest. Crafted for educational purposes.
     </p>
     <div class="flex gap-8">
-      <a href="more.html" class="text-gray-700 hover:text-fox-orange transition-colors font-body text-xs tracking-[0.1em] uppercase">Back to More</a>
-      <a href="#" class="text-gray-700 hover:text-fox-orange transition-colors font-body text-xs tracking-[0.1em] uppercase">Privacy</a>
+      <a href="more.html"
+        class="text-gray-700 hover:text-fox-orange transition-colors font-body text-xs tracking-[0.1em] uppercase">Back
+        to More</a>
+      <a href="#"
+        class="text-gray-700 hover:text-fox-orange transition-colors font-body text-xs tracking-[0.1em] uppercase">Privacy</a>
     </div>
   </footer>
 
-  <script src="../js/timeline.js" defer></script>
 </body>
+
 </html>
