@@ -23,7 +23,8 @@
 
 
   <!-- Favicon emoji (paling simpel, tidak perlu file) -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦊</text></svg>"/>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦊</text></svg>" />
 </head>
 
 <body class="bg-midnight-900 text-white font-body overflow-x-hidden w-full relative">
@@ -113,6 +114,65 @@
         <div class="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
         </div>
       </a>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       DAILY FOX FACT
+  ══════════════════════════════════════ -->
+  <section id="daily-fact" class="relative w-full bg-midnight-900 z-40 py-12 px-6 overflow-hidden">
+    <div class="max-w-5xl mx-auto relative z-10 reveal">
+      <!-- Premium Glassmorphism Card -->
+      <div
+        class="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl md:rounded-3xl p-6 md:p-10 shadow-[0_0_40px_rgba(0,0,0,0.3)] overflow-hidden group hover:border-white/20 transition-all duration-500">
+        <!-- Subtle inner glows -->
+        <div
+          class="absolute -top-32 -right-32 w-64 h-64 bg-fox-orange/10 rounded-full blur-[80px] pointer-events-none group-hover:bg-fox-orange/20 transition-colors duration-1000">
+        </div>
+        <div
+          class="absolute -bottom-32 -left-32 w-64 h-64 bg-blue-500/10 rounded-full blur-[80px] pointer-events-none group-hover:bg-blue-500/20 transition-colors duration-1000">
+        </div>
+
+        <div class="relative z-10 flex flex-col md:flex-row items-center md:items-stretch gap-8 md:gap-10">
+
+          <!-- Left: label -->
+          <div
+            class="flex-shrink-0 flex flex-col items-center justify-center md:items-start gap-3 md:border-r md:border-white/10 md:pr-10">
+            <span class="font-fantasy text-[10px] tracking-[0.4em] uppercase text-fox-orange">Daily Fact</span>
+            <div id="daily-date" class="font-fantasy text-xs text-gray-400 tracking-widest"></div>
+            <!-- Progress bar showing day of year -->
+            <div class="w-32 h-px bg-white/10 mt-2 relative overflow-hidden rounded-full">
+              <div id="day-progress"
+                class="h-full bg-gradient-to-r from-fox-orange/40 to-fox-orange rounded-full transition-all duration-1000"
+                style="width:0%; box-shadow: 0 0 10px rgba(255,140,66,0.5);"></div>
+            </div>
+            <span class="text-[10px] text-gray-500 font-body" id="day-label"></span>
+          </div>
+
+          <!-- Right: fact content -->
+          <div class="flex-1 flex flex-col justify-center">
+            <div class="flex flex-col md:flex-row items-start gap-5">
+              <!-- Icon -->
+              <div id="fact-icon" class="text-4xl flex-shrink-0 mt-1 mix-blend-screen drop-shadow-lg">🦊</div>
+              <div class="flex-1">
+                <h3 id="fact-title" class="font-fantasy text-xl md:text-2xl text-white mb-3 leading-snug"></h3>
+                <p id="fact-body" class="font-body text-sm md:text-base text-gray-400 font-light leading-relaxed"></p>
+                <div class="mt-5 flex items-center gap-4">
+                  <span id="fact-source"
+                    class="text-[10px] font-fantasy uppercase tracking-widest text-fox-orange/70"></span>
+                  <div class="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent"></div>
+                  <button onclick="nextFact()"
+                    class="group/btn flex items-center gap-2 text-[10px] font-fantasy uppercase tracking-widest text-gray-400 hover:text-white transition-colors cursor-pointer px-4 py-2 rounded-full border border-white/5 hover:border-fox-orange/50 hover:bg-white/5">
+                    Next Fact <i
+                      class="ph-bold ph-arrow-right text-fox-orange group-hover/btn:translate-x-1 transition-transform"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
   </section>
 

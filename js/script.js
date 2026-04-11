@@ -230,34 +230,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Buat burst 15-20 butir salju
     const burstCount = Math.floor(Math.random() * 6) + 15;
-    
+
     for (let i = 0; i < burstCount; i++) {
       const sf = document.createElement("div");
       sf.classList.add("snowflake");
-      
+
       // Sebar sedikit dari titik klik awal
       const offsetX = (Math.random() - 0.5) * 100;
       sf.style.left = `calc(${clickX}px + ${offsetX}px)`;
-      
+
       // Override posisi top agar mulai dari titik kursor (atau dikit di atas/bawah)
       const offsetY = (Math.random() - 0.5) * 40;
       sf.style.top = `calc(${clickY}px + ${offsetY}px)`;
-      
+
       const size = Math.random() * 3 + 2 + "px";
       sf.style.width = size;
       sf.style.height = size;
       sf.style.opacity = (Math.random() * 0.6 + 0.4).toFixed(2);
-      
+
       // Animasi jatuh lebih cepat untuk efek burst
       sf.style.animationDuration = Math.random() * 3 + 2 + "s";
       // Tanpa delay
       sf.style.animationDelay = "0s";
-      
+
       container.appendChild(sf);
 
       // Bersihkan flake setelah efek selesai
       setTimeout(() => {
-        if(sf.parentNode === container) sf.remove();
+        if (sf.parentNode === container) sf.remove();
       }, 5000);
     }
   }
@@ -380,3 +380,177 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
+
+// ══════════════════════════════════════════════════════
+// DAILY FOX FACT SYSTEM
+// Data pipeline: current date → seed → select fact
+// Facts rotate automatically every day
+// ══════════════════════════════════════════════════════
+
+const FOX_FACTS = [
+  {
+    icon: "ph-light ph-magnet text-blue-400",
+    title: "Magnetic Navigation",
+    body: "Foxes use the Earth's magnetic field to hunt. They dive into the snow facing northeast with 73% accuracy — significantly higher than any other direction.",
+    source: "Červený et al., 2011 — Czech University"
+  },
+  {
+    icon: "ph-light ph-thermometer text-fox-orange",
+    title: "Extreme Temperature Tolerance",
+    body: "The Red Fox is the only carnivore that can survive across a 90°C temperature range — from the -70°C Siberian tundra to the warm Mediterranean regions.",
+    source: "IUCN Red List — Vulpes vulpes"
+  },
+  {
+    icon: "ph-light ph-ear text-white",
+    title: "Supersonic Hearing",
+    body: "Foxes can hear mice moving under 3 feet of dense snow. They can rotate their ears 150° independently to pinpoint prey with extreme precision.",
+    source: "Wildlife Online — Red Fox Biology"
+  },
+  {
+    icon: "ph-light ph-globe-hemisphere-west text-cyan-400",
+    title: "Widest Distribution",
+    body: "Spanning over 70 million km² across 4 continents, the Red Fox is the most widely distributed terrestrial land carnivore on Earth — beating both wolves and bears.",
+    source: "GBIF — Occurrence Data 2024"
+  },
+  {
+    icon: "ph-light ph-paw-print text-fox-gold",
+    title: "45 Subspecies",
+    body: "Vulpes vulpes has 45 scientifically recognized subspecies, ranging from the white-furred Arctic Fox in the tundra to the sleek desert subspecies in the Middle East.",
+    source: "Mammal Species of the World, 3rd Ed."
+  },
+  {
+    icon: "ph-light ph-buildings text-gray-400",
+    title: "Urban Foxes",
+    body: "London alone is home to approximately 150,000 urban foxes — the highest density in the world. They have adapted by eating discarded food and hunting at night.",
+    source: "University of Reading — Urban Fox Survey 2016"
+  },
+  {
+    icon: "ph-light ph-snowflake text-blue-300",
+    title: "The Winter Coat",
+    body: "As temperatures drop, the Red Fox grows a dense secondary coat. This fur is so efficient at trapping heat that they don't shiver until temperatures hit -70°C.",
+    source: "Voigt, D.R. — Wild Furbearer Management"
+  },
+  {
+    icon: "ph-light ph-lightning text-yellow-400",
+    title: "Hunting Speed",
+    body: "A Red Fox can run up to 72 km/h in short sprints. When hunting, they use a technique called 'mousing' — leaping high and diving headfirst into the snow.",
+    source: "Wildlife Online — Hunting Behaviour"
+  },
+  {
+    icon: "ph-light ph-moon-stars text-indigo-300",
+    title: "January Mating Season",
+    body: "The iconic 'vixen scream' is heard every January and February. This female call can be heard from up to 1 km away and is often mistaken for a human screaming.",
+    source: "Harris & Yalden — Mammals of the British Isles"
+  },
+  {
+    icon: "ph-light ph-dna text-emerald-400",
+    title: "10 Million Year Ancestry",
+    body: "The ancestor of the Red Fox, Eucyon davisi, emerged in North America around 10 million years ago. They crossed the Bering Land Bridge before evolving into Vulpes vulpes.",
+    source: "Prevosti & Rincón, 2007 — Canid Phylogeny"
+  },
+  {
+    icon: "ph-light ph-moon text-white",
+    title: "Sleeping in Open Snow",
+    body: "When sleeping in open terrain, foxes curl their bodies and wrap their tails around their snouts. The thick bushy tail acts as a blanket that warms the air they breathe.",
+    source: "Macdonald, D.W. — Running with the Fox"
+  },
+  {
+    icon: "ph-light ph-database text-blue-400",
+    title: "1.4 Million GBIF Records",
+    body: "The GBIF database has recorded over 1.4 million occurrences of the Red Fox worldwide — making it one of the species with the most observation data globally.",
+    source: "GBIF.org — Species 5219243"
+  },
+  {
+    icon: "ph-light ph-map-trifold text-fox-orange",
+    title: "Home Range",
+    body: "A Red Fox can roam an average of 10 km per night during winter to hunt. In urban areas, their home range can expand up to 4 km² per individual.",
+    source: "Canids.org — Home Range Data"
+  },
+  {
+    icon: "ph-light ph-flask text-purple-400",
+    title: "Domestication Experiment",
+    body: "Since 1959, Russian scientists have run a fox domestication experiment. After 50+ generations of selection, these foxes display dog-like behaviors — wagging their tails and seeking human affection.",
+    source: "Trut, L. — Novosibirsk Fox Experiment"
+  },
+  {
+    icon: "ph-light ph-leaf text-green-400",
+    title: "True Omnivores",
+    body: "Red Foxes eat everything: mice, rabbits, insects, berries, worms, and human leftovers. This dietary flexibility is the primary reason they succeed in all habitats.",
+    source: "IUCN — Vulpes vulpes Diet Analysis"
+  }
+];
+
+let currentFactIndex = 0;
+
+function getDayOfYear() {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const diff = now - start;
+  return Math.floor(diff / 86400000);
+}
+
+function loadDailyFact() {
+  const today = new Date();
+  const dayOfYear = getDayOfYear();
+  const totalDays = 365;
+
+  // Seed based on date — changes daily, consistent throughout the day
+  currentFactIndex = dayOfYear % FOX_FACTS.length;
+  renderFact(currentFactIndex);
+
+  // Show date
+  const dateEl = document.getElementById("daily-date");
+  if (dateEl) {
+    dateEl.textContent = today.toLocaleDateString("en-US", {
+      weekday: "long", day: "numeric", month: "long", year: "numeric"
+    });
+  }
+
+  // Progress bar day of the year
+  const progress = document.getElementById("day-progress");
+  const dayLabel = document.getElementById("day-label");
+  if (progress) {
+    setTimeout(() => {
+      progress.style.width = ((dayOfYear / totalDays) * 100) + "%";
+    }, 500);
+  }
+  if (dayLabel) {
+    dayLabel.textContent = `Day ${dayOfYear} of ${totalDays}`;
+  }
+}
+
+function renderFact(index) {
+  const fact = FOX_FACTS[index];
+  if (!fact) return;
+
+  const iconEl = document.getElementById("fact-icon");
+  const titleEl = document.getElementById("fact-title");
+  const bodyEl = document.getElementById("fact-body");
+  const sourceEl = document.getElementById("fact-source");
+
+  // Fade out
+  [iconEl, titleEl, bodyEl, sourceEl].forEach(el => {
+    if (el) { el.style.opacity = "0"; el.style.transform = "translateY(6px)"; el.style.transition = "opacity 0.3s ease, transform 0.3s ease"; }
+  });
+
+  setTimeout(() => {
+    if (iconEl) iconEl.innerHTML = `<i class="${fact.icon}"></i>`;
+    if (titleEl) titleEl.textContent = fact.title;
+    if (bodyEl) bodyEl.textContent = fact.body;
+    if (sourceEl) sourceEl.textContent = "Source: " + fact.source;
+
+    // Fade in
+    [iconEl, titleEl, bodyEl, sourceEl].forEach(el => {
+      if (el) { el.style.opacity = "1"; el.style.transform = "translateY(0)"; }
+    });
+  }, 300);
+}
+
+// "Next Fact" button — for manual exploration
+window.nextFact = function () {
+  currentFactIndex = (currentFactIndex + 1) % FOX_FACTS.length;
+  renderFact(currentFactIndex);
+};
+
+// Run on DOM ready
+document.addEventListener("DOMContentLoaded", loadDailyFact);
