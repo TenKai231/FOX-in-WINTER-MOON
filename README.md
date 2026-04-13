@@ -5,7 +5,7 @@
 
 <div align="center">
   <a href="https://www.youtube.com/watch?v=yitilpItV68" target="_blank">
-    <img src="https://img.youtube.com/vi/yitilpItV68/maxresdefault.jpg" alt="Video Demo The Fox & The Winter Moon" width="100%">
+    <img src="https://img.youtube.com/vi/yitilpItV68/hqdefault.jpg" alt="Video Demo The Fox & The Winter Moon" width="80%">
   </a>
   <p><em>Klik gambar di atas untuk memutar video demo proyek di YouTube.</em></p>
 </div>
