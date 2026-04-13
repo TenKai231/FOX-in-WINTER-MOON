@@ -1,7 +1,11 @@
 # 🦊 The Fox & The Winter Moon
 
 > Interactive educational web experience about Red Fox ecology.
-> [🔗 Live Demo](https://your-demo-link.com) | [📊 View Architecture](./ARCHITECTURE.md) | [📚 View References](./REFERENCES.md)
+> [🔗 Live Demo](https://tenkai231.github.io/web-for-uts-/) | [📊 View Architecture](./ARCHITECTURE.md) | [📚 View References](./REFERENCES.md)
+
+<video src="./assets/video/video_for_reeadme.mp4" controls="controls" width="100%">
+  Maaf, browser Anda tidak mendukung pemutaran video.
+</video>
 
 ## 🎯 Tujuan Proyek
 

@@ -1,7 +1,7 @@
 """
 ETL Pipeline — The Fox & The Winter Moon
 =========================================
-Extract  : GBIF API (Vulpes vulpes / Red Fox)
+Extract   : GBIF API (Vulpes vulpes / Red Fox)
 Transform : Pandas — hitung total per benua & tren per tahun
 Load      : Simpan ke data.json (dibaca langsung oleh website)
 
@@ -19,11 +19,11 @@ from datetime import datetime
 # ──────────────────────────────────────────────
 # CONFIG
 # ──────────────────────────────────────────────
-SPECIES_KEY = 5219243          # Vulpes vulpes di GBIF
+SPECIES_KEY = 5219243          # Kode spesies Vulpes vulpes di GBIF
 BASE_URL    = "https://api.gbif.org/v1/occurrence/search"
 OUTPUT_FILE = "data.json"
 
-# Benua yang tersedia di GBIF API
+# Benua yang tersedia di GBIF API beserta label pelaporannya
 CONTINENTS = {
     "EUROPE"        : "Europe",
     "ASIA"          : "Asia",
@@ -32,7 +32,7 @@ CONTINENTS = {
     "OCEANIA"       : "Oceania",
 }
 
-# Tahun yang ingin dianalisis
+# Tahun yang ingin dianalisis untuk data tren populasi
 YEARS = [1980, 1990, 2000, 2005, 2010, 2015, 2020, 2024]
 
 
@@ -41,8 +41,19 @@ YEARS = [1980, 1990, 2000, 2005, 2010, 2015, 2020, 2024]
 # ──────────────────────────────────────────────
 def extract_continent_count(continent_code: str) -> int:
     """
-    Ambil jumlah total record kemunculan Red Fox per benua dari GBIF API.
-    Parameter limit=0 artinya tidak download record, hanya ambil 'count'.
+    Mengambil jumlah total rekam jejak (occurrences) spesies Red Fox
+    berdasarkan benua dari GBIF API.
+
+    Args:
+        continent_code (str): Kode benua menurut standar GBIF (misal: "EUROPE", "ASIA")
+
+    Returns:
+        int: Jumlah total observasi spesies di benua tersebut.
+             Mengembalikan nilai 0 jika terjadi koneksi error (Timeout/HTTP Error).
+
+    Notes:
+        Parameter `limit=0` digunakan karena kita hanya membutuhkan agregasi
+        `count` metadata dari header response, bukan list datanya utuh.
     """
     params = {
         "speciesKey" : SPECIES_KEY,
@@ -62,8 +73,15 @@ def extract_continent_count(continent_code: str) -> int:
 
 def extract_yearly_trend(year: int) -> int:
     """
-    Ambil jumlah total kemunculan Red Fox di seluruh dunia untuk satu tahun.
-    Ini dipakai untuk membuat grafik tren historis.
+    Mengambil jumlah total kemunculan spesies Red Fox di seluruh dunia
+    untuk tahun pencatatan tertentu dari GBIF API.
+
+    Args:
+        year (int): Tahun target ekstraksi data (misal: 2020, 2024).
+
+    Returns:
+        int: Total jumlah observasi spesies pada tahun target yang diminta.
+             Mengembalikan nilai 0 jika terjadi exception.
     """
     params = {
         "speciesKey" : SPECIES_KEY,
@@ -86,10 +104,17 @@ def extract_yearly_trend(year: int) -> int:
 # ──────────────────────────────────────────────
 def transform(continent_raw: dict, yearly_raw: dict) -> dict:
     """
-    Bersihkan dan olah data mentah menjadi format yang siap dipakai website.
-    - Hitung persentase distribusi per benua
-    - Normalisasi tren tahunan ke skala 0–100
-    - Tambah metadata
+    Mengolah data dictionary raw dari tahap Extract menjadi format terstruktur
+    (JSON/Dict objects) siap pakai (*client-ready*) menggunakan library Pandas.
+
+    Args:
+        continent_raw (dict): Data jumlah populasi dipetakan berdasarkan benua.
+        yearly_raw (dict): Data historis jumlah penemuan per tahun.
+
+    Returns:
+        dict: Data yang sudah distrukturisasi, terbagi menjadi `meta`,
+              `distribution` (persentase tiap benua), dan `trend` (data tren tahunan
+              lengkap dengan persentase pertumbuhan dan indeks bar chart normalisasi).
     """
     # --- Distribusi per benua ---
     df_continent = pd.DataFrame([
@@ -98,10 +123,12 @@ def transform(continent_raw: dict, yearly_raw: dict) -> dict:
     ])
 
     total = df_continent["count"].sum()
+    # Hitung persentase populasi tiap benua terhadap total keseluruhan
     df_continent["percentage"] = (
         (df_continent["count"] / total * 100).round(1)
         if total > 0 else 0
     )
+    # Urutkan benua dari populasi red fox yang terbesar
     df_continent = df_continent.sort_values("percentage", ascending=False)
 
     # --- Tren tahunan ---
@@ -110,20 +137,21 @@ def transform(continent_raw: dict, yearly_raw: dict) -> dict:
         for year, count in yearly_raw.items()
     ]).sort_values("year")
 
-    # Normalisasi ke skala 0–100 biar bisa langsung jadi tinggi bar chart
+    # Normalisation scale 0-100 untuk keperluan Bar Chart di Frontend (CSS Height)
     max_count = df_trend["count"].max()
     df_trend["normalized"] = (
         (df_trend["count"] / max_count * 100).round(1)
         if max_count > 0 else 0
     )
 
-    # --- Hitung % perubahan dari tahun pertama ---
+    # Hitung persentase fluktuasi pertumbuhan/penurunan tahun-ke-tahun
     baseline = df_trend.iloc[0]["count"] if len(df_trend) > 0 else 1
     df_trend["change_pct"] = (
         ((df_trend["count"] - baseline) / baseline * 100).round(1)
         if baseline > 0 else 0
     )
 
+    # Dictionary final yang siap di-convert jadi JSON file untuk konsumsi client fetch()
     return {
         "meta": {
             "species"     : "Vulpes vulpes",
@@ -142,7 +170,13 @@ def transform(continent_raw: dict, yearly_raw: dict) -> dict:
 # STEP 3: LOAD
 # ──────────────────────────────────────────────
 def load(data: dict, output_file: str):
-    """Simpan hasil transform ke file JSON."""
+    """
+    Menyimpan final payload dictionary JSON ke dalam file statis.
+
+    Args:
+        data (dict): Hasil olah data dari fungsi transform().
+        output_file (str): Direktori+Nama file target (misal: "data.json").
+    """
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
     print(f"\n[Load] Berhasil! Data disimpan ke: {output_file}")

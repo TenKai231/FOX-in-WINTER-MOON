@@ -1,5 +1,4 @@
 # References
-
 This project utilizes several open-source assets, datasets, and technologies. The citations below follow the APA (American Psychological Association) 7th Edition guidelines to ensure proper attribution and academic integrity.
 
 ## 3D Assets
