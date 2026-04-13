@@ -1,808 +1,1229 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Fox & The Winter Moon</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Fox & The Winter Moon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lato:wght@300;400&family=Pinyon+Script&display=swap"
+      rel="stylesheet"
+    />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lato:wght@300;400&family=Pinyon+Script&display=swap"
-    rel="stylesheet" />
+    <link rel="stylesheet" href="dist/output.css" />
 
-  <link rel="stylesheet" href="dist/output.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      crossorigin=""
+    ></script>
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <script
+      type="module"
+      src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"
+    ></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Favicon emoji (paling simpel, tidak perlu file) -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦊</text></svg>"
+    />
+  </head>
 
-
-
-  <!-- Favicon emoji (paling simpel, tidak perlu file) -->
-  <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦊</text></svg>" />
-</head>
-
-<body class="bg-midnight-900 text-white font-body overflow-x-hidden w-full relative">
-  <div id="preloader"
-    class="fixed inset-0 z-[100] bg-midnight-900 flex flex-col items-center justify-center transition-opacity duration-1000">
-    <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-fox-orange mb-4"></div>
-    <p class="font-fantasy tracking-[0.3em] text-sm animate-pulse text-white/70">
-      SUMMONING THE FOX...
-    </p>
-  </div>
-
-  <nav
-    class="fixed w-full z-50 top-0 px-8 py-6 flex justify-between items-center bg-gradient-to-b from-midnight-900/90 to-transparent opacity-0 animate-fade-up"
-    style="animation-delay: 1.5s">
+  <body
+    class="bg-midnight-900 text-white font-body overflow-x-hidden w-full relative"
+  >
     <div
-      class="text-xl font-fantasy font-bold tracking-widest text-white hover:text-fox-orange transition-colors duration-300">
-      FOX<span class="text-fox-orange">.</span>
-    </div>
-    <ul class="hidden md:flex space-x-8 text-xs tracking-[0.2em] uppercase text-white/70">
-      <li class="hover:text-fox-orange hover:glow transition-all cursor-pointer">
-        <a href="#hero">Home</a>
-      </li>
-      <li class="hover:text-fox-orange hover:glow transition-all cursor-pointer">
-        <a href="#biography">Biography</a>
-      </li>
-      <li class="hover:text-fox-orange hover:glow transition-all cursor-pointer">
-        <a href="#documentary">Documentary</a>
-      </li>
-      <li class="hover:text-fox-orange hover:glow transition-all cursor-pointer">
-        <a href="#habitat">Habitat</a>
-      </li>
-      <li class="hover:text-fox-orange hover:glow transition-all cursor-pointer">
-        <a href="#population">Population</a>
-      </li>
-    </ul>
-  </nav>
-
-  <section id="hero" class="relative w-full h-screen overflow-hidden">
-    <div
-      class="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-midnight-900 to-black">
-      <div id="star-container" class="absolute inset-0 w-full h-full opacity-60"></div>
+      id="preloader"
+      class="fixed inset-0 z-[100] bg-midnight-900 flex flex-col items-center justify-center transition-opacity duration-1000"
+    >
+      <div
+        class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-fox-orange mb-4"
+      ></div>
+      <p
+        class="font-fantasy tracking-[0.3em] text-sm animate-pulse text-white/70"
+      >
+        SUMMONING THE FOX...
+      </p>
     </div>
 
-    <div
-      class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none z-0 mix-blend-screen">
-    </div>
-
-    <div id="snow-container" class="absolute inset-0 z-10 w-full h-full pointer-events-none"></div>
-
-    <div class="absolute inset-0 z-30 flex flex-col items-center justify-start pt-32 md:pt-40 pointer-events-none">
-      <div class="text-center drop-shadow-2xl">
-
-        <!-- THE FOX: clip-reveal slide up + orange glow flash -->
-        <div style="overflow:hidden; padding-bottom:0.08em">
-          <h1 class="text-5xl md:text-8xl font-fantasy font-black text-white tracking-widest leading-none"
-            style="animation: heroReveal 1s cubic-bezier(0.16,1,0.3,1) 0.9s both,
-                             heroFoxGlow 2s ease-out 1.1s both;">
-            THE FOX
-          </h1>
-        </div>
-
-        <!-- and the: elegant script fade + rise -->
-        <div class="py-2 md:py-3">
-          <p class="text-2xl md:text-4xl font-script text-fox-gold drop-shadow-lg"
-            style="animation: heroAndThe 1.1s cubic-bezier(0.16,1,0.3,1) 1.9s both;">
-            and the
-          </p>
-        </div>
-
-        <!-- Thin gold accent line -->  
-        <div style="display:flex; justify-content:center; margin-bottom:0.4rem">
-          <div style="animation: heroLineGrow 0.9s ease-out 2.5s both;
-                      width:0; height:1px;
-                      background:linear-gradient(to right, transparent, rgba(210,163,60,0.65), transparent)">
-          </div>
-        </div>
-
-        <!-- WINTER MOON: clip-reveal slide up (slightly slower) -->
-        <div style="overflow:hidden; padding-bottom:0.08em">
-          <h2 class="text-4xl md:text-7xl font-fantasy font-bold text-white/90 tracking-wide leading-none"
-            style="animation: heroReveal 1.3s cubic-bezier(0.16,1,0.3,1) 2.6s both;">
-            WINTER MOON
-          </h2>
-        </div>
-
+    <nav
+      class="fixed w-full z-50 top-0 px-8 py-6 flex justify-between items-center bg-gradient-to-b from-midnight-900/90 to-transparent opacity-0 animate-fade-up"
+      style="animation-delay: 1.5s"
+    >
+      <div
+        class="text-xl font-fantasy font-bold tracking-widest text-white hover:text-fox-orange transition-colors duration-300"
+      >
+        FOX<span class="text-fox-orange">.</span>
       </div>
-    </div>
+      <ul
+        class="hidden md:flex space-x-8 text-xs tracking-[0.2em] uppercase text-white/70"
+      >
+        <li
+          class="hover:text-fox-orange hover:glow transition-all cursor-pointer"
+        >
+          <a href="#hero">Home</a>
+        </li>
+        <li
+          class="hover:text-fox-orange hover:glow transition-all cursor-pointer"
+        >
+          <a href="#biography">Biography</a>
+        </li>
+        <li
+          class="hover:text-fox-orange hover:glow transition-all cursor-pointer"
+        >
+          <a href="#documentary">Documentary</a>
+        </li>
+        <li
+          class="hover:text-fox-orange hover:glow transition-all cursor-pointer"
+        >
+          <a href="#habitat">Habitat</a>
+        </li>
+        <li
+          class="hover:text-fox-orange hover:glow transition-all cursor-pointer"
+        >
+          <a href="#population">Population</a>
+        </li>
+      </ul>
+    </nav>
 
-    <div class="absolute inset-0 z-20 flex items-end justify-center pointer-events-none pb-0">
-      <div class="w-full h-[75vh] md:h-[85vh] pointer-events-auto" id="model-wrapper">
-        <model-viewer id="fox-3d" src="assets/models/Untitled.glb" alt="Winter Fox" camera-orbit="-180deg 80deg 40%"
-          field-of-view="25deg" shadow-intensity="2" disable-zoom interaction-prompt="none" class="w-full h-full"
-          style="--poster-color: transparent">
-        </model-viewer>
+    <section id="hero" class="relative w-full h-screen overflow-hidden">
+      <div
+        class="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-midnight-900 to-black"
+      >
+        <div
+          id="star-container"
+          class="absolute inset-0 w-full h-full opacity-60"
+        ></div>
       </div>
 
       <div
-        class="absolute bottom-0 w-full h-1/2 bg-gradient-to-t from-midnight-900 via-midnight-900/80 to-transparent pointer-events-none z-20">
-      </div>
-    </div>
+        class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none z-0 mix-blend-screen"
+      ></div>
 
-    <div class="absolute bottom-12 w-full flex justify-center z-50 pointer-events-auto opacity-0 animate-fade-up"
-      style="animation-delay: 2s">
-      <a href="#biography"
-        class="group relative px-10 py-3 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm text-sm font-fantasy tracking-widest overflow-hidden transition-all duration-500 hover:border-fox-orange hover:shadow-[0_0_30px_rgba(255,140,66,0.4)]">
-        <span class="relative z-10 group-hover:text-fox-orange transition-colors">EXPLORE</span>
-        <div class="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+      <div
+        id="snow-container"
+        class="absolute inset-0 z-10 w-full h-full pointer-events-none"
+      ></div>
+
+      <div
+        class="absolute inset-0 z-30 flex flex-col items-center justify-start pt-32 md:pt-40 pointer-events-none"
+      >
+        <div class="text-center drop-shadow-2xl">
+          <!-- THE FOX: clip-reveal slide up + orange glow flash -->
+          <div style="overflow: hidden; padding-bottom: 0.08em">
+            <h1
+              class="text-5xl md:text-8xl font-fantasy font-black text-white tracking-widest leading-none"
+              style="
+                animation:
+                  heroReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 0.9s both,
+                  heroFoxGlow 2s ease-out 1.1s both;
+              "
+            >
+              THE FOX
+            </h1>
+          </div>
+
+          <!-- and the: elegant script fade + rise -->
+          <div class="py-2 md:py-3">
+            <p
+              class="text-2xl md:text-4xl font-script text-fox-gold drop-shadow-lg"
+              style="
+                animation: heroAndThe 1.1s cubic-bezier(0.16, 1, 0.3, 1) 1.9s
+                  both;
+              "
+            >
+              and the
+            </p>
+          </div>
+
+          <!-- Thin gold accent line -->
+          <div
+            style="
+              display: flex;
+              justify-content: center;
+              margin-bottom: 0.4rem;
+            "
+          >
+            <div
+              style="
+                animation: heroLineGrow 0.9s ease-out 2.5s both;
+                width: 0;
+                height: 1px;
+                background: linear-gradient(
+                  to right,
+                  transparent,
+                  rgba(210, 163, 60, 0.65),
+                  transparent
+                );
+              "
+            ></div>
+          </div>
+
+          <!-- WINTER MOON: clip-reveal slide up (slightly slower) -->
+          <div style="overflow: hidden; padding-bottom: 0.08em">
+            <h2
+              class="text-4xl md:text-7xl font-fantasy font-bold text-white/90 tracking-wide leading-none"
+              style="
+                animation: heroReveal 1.3s cubic-bezier(0.16, 1, 0.3, 1) 2.6s
+                  both;
+              "
+            >
+              WINTER MOON
+            </h2>
+          </div>
         </div>
-      </a>
-    </div>
-  </section>
+      </div>
 
-  <!-- ══════════════════════════════════════
+      <div
+        class="absolute inset-0 z-20 flex items-end justify-center pointer-events-none pb-0"
+      >
+        <div
+          class="w-full h-[75vh] md:h-[85vh] pointer-events-auto"
+          id="model-wrapper"
+        >
+          <model-viewer
+            id="fox-3d"
+            src="assets/models/Untitled.glb"
+            alt="Winter Fox"
+            camera-orbit="-180deg 80deg 40%"
+            field-of-view="25deg"
+            shadow-intensity="2"
+            disable-zoom
+            interaction-prompt="none"
+            class="w-full h-full"
+            style="--poster-color: transparent"
+          >
+          </model-viewer>
+        </div>
+
+        <div
+          class="absolute bottom-0 w-full h-1/2 bg-gradient-to-t from-midnight-900 via-midnight-900/80 to-transparent pointer-events-none z-20"
+        ></div>
+      </div>
+
+      <div
+        class="absolute bottom-12 w-full flex justify-center z-50 pointer-events-auto opacity-0 animate-fade-up"
+        style="animation-delay: 2s"
+      >
+        <a
+          href="#biography"
+          class="group relative px-10 py-3 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm text-sm font-fantasy tracking-widest overflow-hidden transition-all duration-500 hover:border-fox-orange hover:shadow-[0_0_30px_rgba(255,140,66,0.4)]"
+        >
+          <span
+            class="relative z-10 group-hover:text-fox-orange transition-colors"
+            >EXPLORE</span
+          >
+          <div
+            class="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          ></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
        DAILY FOX FACT
   ══════════════════════════════════════ -->
-  <section id="daily-fact" class="relative w-full bg-midnight-900 z-40 py-12 px-6 overflow-hidden">
-    <div class="max-w-5xl mx-auto relative z-10 reveal">
-      <!-- Premium Glassmorphism Card -->
-      <div
-        class="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl md:rounded-3xl p-6 md:p-10 shadow-[0_0_40px_rgba(0,0,0,0.3)] overflow-hidden group hover:border-white/20 transition-all duration-500">
-        <!-- Subtle inner glows -->
+    <section
+      id="daily-fact"
+      class="relative w-full bg-midnight-900 z-40 py-12 px-6 overflow-hidden"
+    >
+      <div class="max-w-5xl mx-auto relative z-10 reveal">
+        <!-- Premium Glassmorphism Card -->
         <div
-          class="absolute -top-32 -right-32 w-64 h-64 bg-fox-orange/10 rounded-full blur-[80px] pointer-events-none group-hover:bg-fox-orange/20 transition-colors duration-1000">
-        </div>
-        <div
-          class="absolute -bottom-32 -left-32 w-64 h-64 bg-blue-500/10 rounded-full blur-[80px] pointer-events-none group-hover:bg-blue-500/20 transition-colors duration-1000">
-        </div>
-
-        <div class="relative z-10 flex flex-col md:flex-row items-center md:items-stretch gap-8 md:gap-10">
-
-          <!-- Left: label -->
+          class="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl md:rounded-3xl p-6 md:p-10 shadow-[0_0_40px_rgba(0,0,0,0.3)] overflow-hidden group hover:border-white/20 transition-all duration-500"
+        >
+          <!-- Subtle inner glows -->
           <div
-            class="flex-shrink-0 flex flex-col items-center justify-center md:items-start gap-3 md:border-r md:border-white/10 md:pr-10">
-            <span class="font-fantasy text-[10px] tracking-[0.4em] uppercase text-fox-orange">Daily Fact</span>
-            <div id="daily-date" class="font-fantasy text-xs text-gray-400 tracking-widest"></div>
-            <!-- Progress bar showing day of year -->
-            <div class="w-32 h-px bg-white/10 mt-2 relative overflow-hidden rounded-full">
-              <div id="day-progress"
-                class="h-full bg-gradient-to-r from-fox-orange/40 to-fox-orange rounded-full transition-all duration-1000"
-                style="width:0%; box-shadow: 0 0 10px rgba(255,140,66,0.5);"></div>
-            </div>
-            <span class="text-[10px] text-gray-500 font-body" id="day-label"></span>
-          </div>
+            class="absolute -top-32 -right-32 w-64 h-64 bg-fox-orange/10 rounded-full blur-[80px] pointer-events-none group-hover:bg-fox-orange/20 transition-colors duration-1000"
+          ></div>
+          <div
+            class="absolute -bottom-32 -left-32 w-64 h-64 bg-blue-500/10 rounded-full blur-[80px] pointer-events-none group-hover:bg-blue-500/20 transition-colors duration-1000"
+          ></div>
 
-          <!-- Right: fact content -->
-          <div class="flex-1 flex flex-col justify-center">
-            <div class="flex flex-col md:flex-row items-start gap-5">
-              <!-- Icon -->
-              <div id="fact-icon" class="text-4xl flex-shrink-0 mt-1 mix-blend-screen drop-shadow-lg">🦊</div>
-              <div class="flex-1">
-                <h3 id="fact-title" class="font-fantasy text-xl md:text-2xl text-white mb-3 leading-snug"></h3>
-                <p id="fact-body" class="font-body text-sm md:text-base text-gray-400 font-light leading-relaxed"></p>
-                <div class="mt-5 flex items-center gap-4">
-                  <span id="fact-source"
-                    class="text-[10px] font-fantasy uppercase tracking-widest text-fox-orange/70"></span>
-                  <div class="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent"></div>
-                  <button onclick="nextFact()"
-                    class="group/btn flex items-center gap-2 text-[10px] font-fantasy uppercase tracking-widest text-gray-400 hover:text-white transition-colors cursor-pointer px-4 py-2 rounded-full border border-white/5 hover:border-fox-orange/50 hover:bg-white/5">
-                    Next Fact <i
-                      class="ph-bold ph-arrow-right text-fox-orange group-hover/btn:translate-x-1 transition-transform"></i>
-                  </button>
+          <div
+            class="relative z-10 flex flex-col md:flex-row items-center md:items-stretch gap-8 md:gap-10"
+          >
+            <!-- Left: label -->
+            <div
+              class="flex-shrink-0 flex flex-col items-center justify-center md:items-start gap-3 md:border-r md:border-white/10 md:pr-10"
+            >
+              <span
+                class="font-fantasy text-[10px] tracking-[0.4em] uppercase text-fox-orange"
+                >Daily Fact</span
+              >
+              <div
+                id="daily-date"
+                class="font-fantasy text-xs text-gray-400 tracking-widest"
+              ></div>
+              <!-- Progress bar showing day of year -->
+              <div
+                class="w-32 h-px bg-white/10 mt-2 relative overflow-hidden rounded-full"
+              >
+                <div
+                  id="day-progress"
+                  class="h-full bg-gradient-to-r from-fox-orange/40 to-fox-orange rounded-full transition-all duration-1000"
+                  style="
+                    width: 0%;
+                    box-shadow: 0 0 10px rgba(255, 140, 66, 0.5);
+                  "
+                ></div>
+              </div>
+              <span
+                class="text-[10px] text-gray-500 font-body"
+                id="day-label"
+              ></span>
+            </div>
+
+            <!-- Right: fact content -->
+            <div class="flex-1 flex flex-col justify-center">
+              <div class="flex flex-col md:flex-row items-start gap-5">
+                <!-- Icon -->
+                <div
+                  id="fact-icon"
+                  class="text-4xl flex-shrink-0 mt-1 mix-blend-screen drop-shadow-lg"
+                >
+                  🦊
+                </div>
+                <div class="flex-1">
+                  <h3
+                    id="fact-title"
+                    class="font-fantasy text-xl md:text-2xl text-white mb-3 leading-snug"
+                  ></h3>
+                  <p
+                    id="fact-body"
+                    class="font-body text-sm md:text-base text-gray-400 font-light leading-relaxed"
+                  ></p>
+                  <div class="mt-5 flex items-center gap-4">
+                    <span
+                      id="fact-source"
+                      class="text-[10px] font-fantasy uppercase tracking-widest text-fox-orange/70"
+                    ></span>
+                    <div
+                      class="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent"
+                    ></div>
+                    <button
+                      onclick="nextFact()"
+                      class="group/btn flex items-center gap-2 text-[10px] font-fantasy uppercase tracking-widest text-gray-400 hover:text-white transition-colors cursor-pointer px-4 py-2 rounded-full border border-white/5 hover:border-fox-orange/50 hover:bg-white/5"
+                    >
+                      Next Fact
+                      <i
+                        class="ph-bold ph-arrow-right text-fox-orange group-hover/btn:translate-x-1 transition-transform"
+                      ></i>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="biography"
-    class="relative w-full min-h-screen bg-midnight-900 text-white py-24 px-6 z-40 overflow-hidden">
-    <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none" style="
+    <section
+      id="biography"
+      class="relative w-full min-h-screen bg-midnight-900 text-white py-24 px-6 z-40 overflow-hidden"
+    >
+      <div
+        class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none"
+        style="
           background-image: radial-gradient(#ffffff 1px, transparent 1px);
           background-size: 40px 40px;
-        "></div>
+        "
+      ></div>
 
-    <div class="max-w-7xl mx-auto">
-      <div class="text-center mb-20 reveal">
-        <span class="text-fox-orange font-fantasy tracking-[0.4em] text-xs md:text-sm uppercase animate-pulse">
-          Vulpes Vulpes
-        </span>
-        <h2 class="text-4xl md:text-6xl font-fantasy font-bold mt-4">
-          SURVIVING THE
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">DEEP FREEZE</span>
-        </h2>
-        <p class="text-gray-400 mt-6 max-w-2xl mx-auto font-body font-light leading-relaxed">
-          Unlike bears, foxes do not hibernate. Instead, they adapt. Their
-          biology transforms to conquer the sub-zero landscape.
-        </p>
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-20 reveal">
+          <span
+            class="text-fox-orange font-fantasy tracking-[0.4em] text-xs md:text-sm uppercase animate-pulse"
+          >
+            Vulpes Vulpes
+          </span>
+          <h2 class="text-4xl md:text-6xl font-fantasy font-bold mt-4">
+            SURVIVING THE
+            <span
+              class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600"
+              >DEEP FREEZE</span
+            >
+          </h2>
+          <p
+            class="text-gray-400 mt-6 max-w-2xl mx-auto font-body font-light leading-relaxed"
+          >
+            Unlike bears, foxes do not hibernate. Instead, they adapt. Their
+            biology transforms to conquer the sub-zero landscape.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div
+            class="reveal group relative bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-all duration-500 hover:-translate-y-2"
+          >
+            <div
+              class="absolute -top-6 left-8 bg-midnight-900 border border-fox-orange p-3 rounded-full text-fox-orange"
+            >
+              <i class="ph-fill ph-coat-hanger text-2xl"></i>
+            </div>
+            <h3
+              class="text-2xl font-fantasy mt-4 mb-3 group-hover:text-fox-orange transition-colors"
+            >
+              The Winter Coat
+            </h3>
+            <p class="text-gray-400 text-sm leading-relaxed font-body">
+              As temperatures drop, the Red Fox grows a dense secondary layer of
+              fur. This heavy coat covers their paws and ears, trapping body
+              heat so effectively that they don't shiver until -70°C.
+            </p>
+            <div
+              class="w-12 h-0.5 bg-fox-orange/50 mt-6 group-hover:w-full transition-all duration-700"
+            ></div>
+          </div>
+
+          <div
+            class="reveal group relative bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-all duration-500 hover:-translate-y-2"
+            style="transition-delay: 200ms"
+          >
+            <div
+              class="absolute -top-6 left-8 bg-midnight-900 border border-blue-400 p-3 rounded-full text-blue-400"
+            >
+              <i class="ph-fill ph-crosshair text-2xl"></i>
+            </div>
+            <h3
+              class="text-2xl font-fantasy mt-4 mb-3 group-hover:text-blue-400 transition-colors"
+            >
+              Magnetic Hunting
+            </h3>
+            <p class="text-gray-400 text-sm leading-relaxed font-body">
+              Scientists believe foxes use the Earth's magnetic field to hunt.
+              They can hear a mouse moving under 3 feet of snow and dive
+              headfirst ("mousing") with deadly precision.
+            </p>
+            <div
+              class="w-12 h-0.5 bg-blue-400/50 mt-6 group-hover:w-full transition-all duration-700"
+            ></div>
+          </div>
+
+          <div
+            class="reveal group relative bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-all duration-500 hover:-translate-y-2"
+            style="transition-delay: 400ms"
+          >
+            <div
+              class="absolute -top-6 left-8 bg-midnight-900 border border-white p-3 rounded-full text-white"
+            >
+              <i class="ph-fill ph-moon text-2xl"></i>
+            </div>
+            <h3
+              class="text-2xl font-fantasy mt-4 mb-3 group-hover:text-white transition-colors"
+            >
+              The Living Blanket
+            </h3>
+            <p class="text-gray-400 text-sm leading-relaxed font-body">
+              Their bushy tail isn't just for balance. When sleeping in open
+              snow, they curl into a tight ball and wrap their tail around their
+              nose to breathe warm air.
+            </p>
+            <div
+              class="w-12 h-0.5 bg-white/50 mt-6 group-hover:w-full transition-all duration-700"
+            ></div>
+          </div>
+        </div>
+
+        <div
+          class="reveal mt-16 relative w-full h-[400px] md:h-[500px] rounded-3xl overflow-hidden border border-white/10 group"
+          style="transition-delay: 200ms"
+        >
+          <img
+            src="assets/image/fox_forrest.jpg"
+            alt="Fox sleeping in snow"
+            class="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000"
+          />
+          <div
+            class="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-midnight-900 to-transparent"
+          >
+            <p class="font-fantasy text-xl text-white">
+              "Silence is their loudest weapon."
+            </p>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div
-          class="reveal group relative bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-all duration-500 hover:-translate-y-2">
-          <div class="absolute -top-6 left-8 bg-midnight-900 border border-fox-orange p-3 rounded-full text-fox-orange">
-            <i class="ph-fill ph-coat-hanger text-2xl"></i>
-          </div>
-          <h3 class="text-2xl font-fantasy mt-4 mb-3 group-hover:text-fox-orange transition-colors">
-            The Winter Coat
-          </h3>
-          <p class="text-gray-400 text-sm leading-relaxed font-body">
-            As temperatures drop, the Red Fox grows a dense secondary layer of
-            fur. This heavy coat covers their paws and ears, trapping body
-            heat so effectively that they don't shiver until -70°C.
-          </p>
-          <div class="w-12 h-0.5 bg-fox-orange/50 mt-6 group-hover:w-full transition-all duration-700"></div>
-        </div>
-
-        <div
-          class="reveal group relative bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-all duration-500 hover:-translate-y-2"
-          style="transition-delay: 200ms">
-          <div class="absolute -top-6 left-8 bg-midnight-900 border border-blue-400 p-3 rounded-full text-blue-400">
-            <i class="ph-fill ph-crosshair text-2xl"></i>
-          </div>
-          <h3 class="text-2xl font-fantasy mt-4 mb-3 group-hover:text-blue-400 transition-colors">
-            Magnetic Hunting
-          </h3>
-          <p class="text-gray-400 text-sm leading-relaxed font-body">
-            Scientists believe foxes use the Earth's magnetic field to hunt.
-            They can hear a mouse moving under 3 feet of snow and dive
-            headfirst ("mousing") with deadly precision.
-          </p>
-          <div class="w-12 h-0.5 bg-blue-400/50 mt-6 group-hover:w-full transition-all duration-700"></div>
-        </div>
-
-        <div
-          class="reveal group relative bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-all duration-500 hover:-translate-y-2"
-          style="transition-delay: 400ms">
-          <div class="absolute -top-6 left-8 bg-midnight-900 border border-white p-3 rounded-full text-white">
-            <i class="ph-fill ph-moon text-2xl"></i>
-          </div>
-          <h3 class="text-2xl font-fantasy mt-4 mb-3 group-hover:text-white transition-colors">
-            The Living Blanket
-          </h3>
-          <p class="text-gray-400 text-sm leading-relaxed font-body">
-            Their bushy tail isn't just for balance. When sleeping in open
-            snow, they curl into a tight ball and wrap their tail around their
-            nose to breathe warm air.
-          </p>
-          <div class="w-12 h-0.5 bg-white/50 mt-6 group-hover:w-full transition-all duration-700"></div>
-        </div>
-      </div>
-
+    <section
+      id="documentary"
+      class="relative w-full min-h-screen bg-midnight-900 flex flex-col justify-center items-center py-24 px-6 z-40 overflow-hidden"
+    >
       <div
-        class="reveal mt-16 relative w-full h-[400px] md:h-[500px] rounded-3xl overflow-hidden border border-white/10 group"
-        style="transition-delay: 200ms">
-        <img src="assets/image/fox_forrest.jpg" alt="Fox sleeping in snow"
-          class="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000" />
-        <div class="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-midnight-900 to-transparent">
-          <p class="font-fantasy text-xl text-white">
-            "Silence is their loudest weapon."
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[500px] bg-blue-500/5 rounded-full blur-[150px] pointer-events-none z-0"
+      ></div>
+
+      <div class="max-w-5xl mx-auto w-full relative z-10">
+        <div class="text-center mb-12 reveal">
+          <span
+            class="text-blue-400 font-fantasy tracking-[0.4em] text-xs md:text-sm uppercase"
+          >
+            The Reality
+          </span>
+          <h2
+            class="text-4xl md:text-5xl font-fantasy font-bold mt-4 text-white"
+          >
+            INTO THE WILD
+          </h2>
+          <p
+            class="text-gray-400 mt-4 max-w-xl mx-auto font-body font-light leading-relaxed"
+          >
+            Witness the silent hunter in its natural habitat. See how the facts
+            come alive in the frozen wilderness.
+          </p>
+        </div>
+
+        <div
+          class="reveal relative w-full max-w-6xl mx-auto aspect-video rounded-3xl overflow-hidden group border border-white/10 shadow-[0_0_50px_rgba(56,189,248,0.1)]"
+          style="transition-delay: 200ms"
+        >
+          <video
+            id="doc-video"
+            class="w-full h-full object-cover relative z-10 opacity-90 group-hover:opacity-100 transition-opacity duration-1000"
+            controls
+            muted
+            playsinline
+            controlsList="nodownload"
+            poster="assets/image/fox_forrest.jpg"
+            preload="metadata"
+          >
+            <source
+              src="assets/video/Fox Dives Headfirst Into Snow _ North America.mp4"
+              type="video/mp4"
+            />
+
+            Browser kamu tidak mendukung tag video.
+          </video>
+
+          <div
+            class="absolute inset-0 z-20 pointer-events-none"
+            style="
+              background: radial-gradient(
+                ellipse at center,
+                transparent 50%,
+                #020617 100%
+              );
+            "
+          ></div>
+
+          <div
+            class="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-midnight-900 via-transparent to-midnight-900 opacity-70"
+          ></div>
+
+          <div
+            class="absolute inset-0 z-30 pointer-events-none border border-white/5 rounded-3xl group-hover:border-blue-500/30 transition-all duration-700"
+          ></div>
+        </div>
+
+        <div class="mt-8 text-center reveal">
+          <p
+            class="font-fantasy tracking-widest text-sm text-gray-500 uppercase"
+          >
+            Captured in the harsh winters of the Northern Hemisphere.
           </p>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section id="documentary"
-    class="relative w-full min-h-screen bg-midnight-900 flex flex-col justify-center items-center py-24 px-6 z-40 overflow-hidden">
-
-    <div
-      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[500px] bg-blue-500/5 rounded-full blur-[150px] pointer-events-none z-0">
-    </div>
-
-    <div class="max-w-5xl mx-auto w-full relative z-10">
-
-      <div class="text-center mb-12 reveal">
-        <span class="text-blue-400 font-fantasy tracking-[0.4em] text-xs md:text-sm uppercase">
-          The Reality
-        </span>
-        <h2 class="text-4xl md:text-5xl font-fantasy font-bold mt-4 text-white">
-          INTO THE WILD
-        </h2>
-        <p class="text-gray-400 mt-4 max-w-xl mx-auto font-body font-light leading-relaxed">
-          Witness the silent hunter in its natural habitat. See how the facts come alive in the frozen wilderness.
-        </p>
-      </div>
-
+    </section>
+    <section
+      id="habitat"
+      class="relative w-full min-h-screen bg-midnight-900 py-24 px-6 z-40 overflow-hidden flex flex-col justify-center"
+    >
       <div
-        class="reveal relative w-full max-w-6xl mx-auto aspect-video rounded-3xl overflow-hidden group border border-white/10 shadow-[0_0_50px_rgba(56,189,248,0.1)]"
-        style="transition-delay: 200ms;">
+        class="absolute inset-0 z-0 opacity-10 pointer-events-none"
+        style="
+          background-image:
+            linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+            linear-gradient(
+              90deg,
+              rgba(255, 255, 255, 0.1) 1px,
+              transparent 1px
+            );
+          background-size: 100px 100px;
+        "
+      ></div>
 
-        <video id="doc-video"
-          class="w-full h-full object-cover relative z-10 opacity-90 group-hover:opacity-100 transition-opacity duration-1000"
-          controls muted playsinline controlsList="nodownload" poster="assets/image/fox_forrest.jpg" preload="metadata">
-
-          <source src="assets/video/Fox Dives Headfirst Into Snow _ North America.mp4" type="video/mp4">
-
-          Browser kamu tidak mendukung tag video.
-        </video>
-
-        <div class="absolute inset-0 z-20 pointer-events-none"
-          style="background: radial-gradient(ellipse at center, transparent 50%, #020617 100%);">
+      <div class="max-w-7xl mx-auto w-full relative z-10">
+        <div class="text-center mb-16 reveal">
+          <span
+            class="text-fox-gold font-fantasy tracking-[0.4em] text-xs md:text-sm uppercase"
+          >
+            Global Presence
+          </span>
+          <h2
+            class="text-4xl md:text-5xl font-fantasy font-bold mt-4 text-white"
+          >
+            THE NORTHERN REALM
+          </h2>
+          <p
+            class="text-gray-400 mt-4 max-w-xl mx-auto font-body font-light leading-relaxed"
+          >
+            Red foxes are the most widely distributed carnivores in the world,
+            thriving across the entire Northern Hemisphere.
+          </p>
         </div>
 
-        <div
-          class="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-midnight-900 via-transparent to-midnight-900 opacity-70">
-        </div>
-
-        <div
-          class="absolute inset-0 z-30 pointer-events-none border border-white/5 rounded-3xl group-hover:border-blue-500/30 transition-all duration-700">
-        </div>
-
-      </div>
-
-      <div class="mt-8 text-center reveal">
-        <p class="font-fantasy tracking-widest text-sm text-gray-500 uppercase">
-          Captured in the harsh winters of the Northern Hemisphere.
-        </p>
-      </div>
-
-    </div>
-  </section>
-  <section id="habitat"
-    class="relative w-full min-h-screen bg-midnight-900 py-24 px-6 z-40 overflow-hidden flex flex-col justify-center">
-
-    <div class="absolute inset-0 z-0 opacity-10 pointer-events-none"
-      style="background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px); background-size: 100px 100px;">
-    </div>
-
-    <div class="max-w-7xl mx-auto w-full relative z-10">
-
-      <div class="text-center mb-16 reveal">
-        <span class="text-fox-gold font-fantasy tracking-[0.4em] text-xs md:text-sm uppercase">
-          Global Presence
-        </span>
-        <h2 class="text-4xl md:text-5xl font-fantasy font-bold mt-4 text-white">
-          THE NORTHERN REALM
-        </h2>
-        <p class="text-gray-400 mt-4 max-w-xl mx-auto font-body font-light leading-relaxed">
-          Red foxes are the most widely distributed carnivores in the world, thriving across the entire Northern
-          Hemisphere.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-
-        <div class="lg:col-span-4 space-y-8">
-
-          <div
-            class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm border-l-4 border-l-fox-orange">
-            <p class="text-gray-400 font-body text-sm uppercase tracking-widest mb-1">Conservation Status</p>
-            <h3 class="text-3xl font-fantasy text-white">Least Concern</h3>
-            <p class="text-xs text-gray-500 mt-2">Population trend is stable globally.</p>
-          </div>
-
-          <div
-            class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm border-l-4 border-l-blue-400"
-            style="transition-delay: 200ms;">
-            <p class="text-gray-400 font-body text-sm uppercase tracking-widest mb-1">Territory Cover</p>
-            <h3 class="text-3xl font-fantasy text-white">70+ Million <span class="text-xl">km²</span></h3>
-            <p class="text-xs text-gray-500 mt-2">Spanning across 4 continents.</p>
-          </div>
-
-          <div
-            class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm border-l-4 border-l-white"
-            style="transition-delay: 400ms;">
-            <p class="text-gray-400 font-body text-sm uppercase tracking-widest mb-1">Subspecies</p>
-            <h3 class="text-3xl font-fantasy text-white">45 Types</h3>
-            <p class="text-xs text-gray-500 mt-2">Adapted to various extreme climates.</p>
-          </div>
-
-        </div>
-
-        <div class="lg:col-span-8 relative reveal" style="transition-delay: 300ms;">
-          <div
-            class="w-full aspect-[4/3] md:aspect-[21/9] rounded-3xl bg-midnight-800 border border-white/10 overflow-hidden relative shadow-[0_0_40px_rgba(0,0,0,0.5)]">
-
-            <div id="fox-map" class="w-full h-[400px] md:h-[500px] z-0"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div class="lg:col-span-4 space-y-8">
+            <div
+              class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm border-l-4 border-l-fox-orange"
+            >
+              <p
+                class="text-gray-400 font-body text-sm uppercase tracking-widest mb-1"
+              >
+                Conservation Status
+              </p>
+              <h3 class="text-3xl font-fantasy text-white">Least Concern</h3>
+              <p class="text-xs text-gray-500 mt-2">
+                Population trend is stable globally.
+              </p>
+            </div>
 
             <div
-              class="absolute bottom-6 right-6 text-right pointer-events-none z-20 bg-midnight-900/60 backdrop-blur-md p-4 rounded-2xl border border-white/10">
-              <p class="font-fantasy text-fox-orange tracking-widest text-lg">NORTHERN HEMISPHERE</p>
-              <p class="font-body text-xs text-gray-400 uppercase">Interactive Habitat Range</p>
+              class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm border-l-4 border-l-blue-400"
+              style="transition-delay: 200ms"
+            >
+              <p
+                class="text-gray-400 font-body text-sm uppercase tracking-widest mb-1"
+              >
+                Territory Cover
+              </p>
+              <h3 class="text-3xl font-fantasy text-white">
+                70+ Million <span class="text-xl">km²</span>
+              </h3>
+              <p class="text-xs text-gray-500 mt-2">
+                Spanning across 4 continents.
+              </p>
             </div>
 
+            <div
+              class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm border-l-4 border-l-white"
+              style="transition-delay: 400ms"
+            >
+              <p
+                class="text-gray-400 font-body text-sm uppercase tracking-widest mb-1"
+              >
+                Subspecies
+              </p>
+              <h3 class="text-3xl font-fantasy text-white">45 Types</h3>
+              <p class="text-xs text-gray-500 mt-2">
+                Adapted to various extreme climates.
+              </p>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section id="population"
-    class="relative w-full min-h-screen bg-midnight-900 py-24 px-6 z-40 overflow-hidden flex flex-col justify-center">
-
-    <div
-      class="absolute top-1/2 left-0 w-[400px] h-[400px] bg-fox-orange/5 rounded-full blur-[120px] pointer-events-none z-0 -translate-y-1/2">
-    </div>
-    <div
-      class="absolute top-1/2 right-0 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none z-0 -translate-y-1/2">
-    </div>
-
-    <div class="max-w-7xl mx-auto w-full relative z-10">
-
-      <div class="text-center mb-16 reveal">
-        <span class="text-white font-fantasy tracking-[0.4em] text-xs md:text-sm uppercase">
-          Data & Statistics
-        </span>
-        <h2
-          class="text-4xl md:text-5xl font-fantasy font-bold mt-4 text-transparent bg-clip-text bg-gradient-to-r from-fox-orange to-blue-400">
-          GLOBAL DEMOGRAPHICS
-        </h2>
-        <p class="text-gray-400 mt-4 max-w-xl mx-auto font-body font-light leading-relaxed">
-          Analyzing the spatial distribution and the historical population growth of the Red Fox.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-
-        <div
-          class="reveal relative bg-white/5 border border-white/10 backdrop-blur-md rounded-3xl p-8 shadow-[0_0_40px_rgba(0,0,0,0.3)]">
-          <h3 class="font-fantasy text-xl text-fox-orange mb-2 border-b border-white/10 pb-4">Territory Distribution
-          </h3>
 
           <div
-            class="relative h-[250px] md:h-[300px] w-full flex items-end justify-around gap-2 md:gap-4 border-b border-l border-white/20 pb-4 pl-4 mt-8">
+            class="lg:col-span-8 relative reveal"
+            style="transition-delay: 300ms"
+          >
+            <div
+              class="w-full aspect-[4/3] md:aspect-[21/9] rounded-3xl bg-midnight-800 border border-white/10 overflow-hidden relative shadow-[0_0_40px_rgba(0,0,0,0.5)]"
+            >
+              <div id="fox-map" class="w-full h-[400px] md:h-[500px] z-0"></div>
 
-            <div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-20 ml-4 pb-4">
-              <div class="w-full border-b border-white/30 border-dashed relative"><span
-                  class="absolute -left-8 -top-3 text-xs">50%</span></div>
-              <div class="w-full border-b border-white/30 border-dashed relative"><span
-                  class="absolute -left-8 -top-3 text-xs">25%</span></div>
-              <div class="w-full border-b border-transparent relative"><span
-                  class="absolute -left-6 -top-3 text-xs">0%</span></div>
-            </div>
-
-            <div class="relative flex flex-col justify-end items-center group w-1/4 h-full">
               <div
-                class="bar-fill w-full md:w-16 bg-gradient-to-t from-fox-orange/20 to-fox-orange rounded-t-md shadow-[0_0_15px_rgba(255,140,66,0.5)] transition-all duration-[1.5s] ease-out flex justify-center items-start pt-2"
-                data-target="90%">
-                <span
-                  class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-sm">45%</span>
+                class="absolute bottom-6 right-6 text-right pointer-events-none z-20 bg-midnight-900/60 backdrop-blur-md p-4 rounded-2xl border border-white/10"
+              >
+                <p class="font-fantasy text-fox-orange tracking-widest text-lg">
+                  NORTHERN HEMISPHERE
+                </p>
+                <p class="font-body text-xs text-gray-400 uppercase">
+                  Interactive Habitat Range
+                </p>
               </div>
-              <p class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full">Eurasia
-              </p>
-            </div>
-
-            <div class="relative flex flex-col justify-end items-center group w-1/4 h-full">
-              <div
-                class="bar-fill w-full md:w-16 bg-gradient-to-t from-fox-orange/10 to-fox-orange/70 rounded-t-md transition-all duration-[1.5s] ease-out delay-200 flex justify-center items-start pt-2"
-                data-target="60%">
-                <span
-                  class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-sm">30%</span>
-              </div>
-              <p class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full">America
-              </p>
-            </div>
-
-            <div class="relative flex flex-col justify-end items-center group w-1/4 h-full">
-              <div
-                class="bar-fill w-full md:w-16 bg-gradient-to-t from-fox-orange/5 to-fox-orange/50 rounded-t-md transition-all duration-[1.5s] ease-out delay-300 flex justify-center items-start pt-2"
-                data-target="30%">
-                <span
-                  class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-sm">15%</span>
-              </div>
-              <p class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full">Mid-East
-              </p>
-            </div>
-
-            <div class="relative flex flex-col justify-end items-center group w-1/4 h-full">
-              <div
-                class="bar-fill w-full md:w-16 bg-gradient-to-t from-gray-600/20 to-gray-500 rounded-t-md transition-all duration-[1.5s] ease-out delay-500 flex justify-center items-start pt-2"
-                data-target="20%">
-                <span
-                  class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-sm">10%</span>
-              </div>
-              <p class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full">Australia
-              </p>
             </div>
           </div>
         </div>
+      </div>
+    </section>
+    <section
+      id="population"
+      class="relative w-full min-h-screen bg-midnight-900 py-24 px-6 z-40 overflow-hidden flex flex-col justify-center"
+    >
+      <div
+        class="absolute top-1/2 left-0 w-[400px] h-[400px] bg-fox-orange/5 rounded-full blur-[120px] pointer-events-none z-0 -translate-y-1/2"
+      ></div>
+      <div
+        class="absolute top-1/2 right-0 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none z-0 -translate-y-1/2"
+      ></div>
 
+      <div class="max-w-7xl mx-auto w-full relative z-10">
+        <div class="text-center mb-16 reveal">
+          <span
+            class="text-white font-fantasy tracking-[0.4em] text-xs md:text-sm uppercase"
+          >
+            Data & Statistics
+          </span>
+          <h2
+            class="text-4xl md:text-5xl font-fantasy font-bold mt-4 text-transparent bg-clip-text bg-gradient-to-r from-fox-orange to-blue-400"
+          >
+            GLOBAL DEMOGRAPHICS
+          </h2>
+          <p
+            class="text-gray-400 mt-4 max-w-xl mx-auto font-body font-light leading-relaxed"
+          >
+            Analyzing the spatial distribution and the historical population
+            growth of the Red Fox.
+          </p>
+        </div>
 
-        <div
-          class="reveal relative bg-white/5 border border-white/10 backdrop-blur-md rounded-3xl p-8 shadow-[0_0_40px_rgba(0,0,0,0.3)]"
-          style="transition-delay: 200ms;">
-          <h3 class="font-fantasy text-xl text-blue-400 mb-2 border-b border-white/10 pb-4">Global Population Index
-            (1980 - 2026)</h3>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div
+            class="reveal relative bg-white/5 border border-white/10 backdrop-blur-md rounded-3xl p-8 shadow-[0_0_40px_rgba(0,0,0,0.3)]"
+          >
+            <h3
+              class="font-fantasy text-xl text-fox-orange mb-2 border-b border-white/10 pb-4"
+            >
+              Territory Distribution
+            </h3>
+
+            <div
+              class="relative h-[250px] md:h-[300px] w-full flex items-end justify-around gap-2 md:gap-4 border-b border-l border-white/20 pb-4 pl-4 mt-8"
+            >
+              <div
+                class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-20 ml-4 pb-4"
+              >
+                <div
+                  class="w-full border-b border-white/30 border-dashed relative"
+                >
+                  <span class="absolute -left-8 -top-3 text-xs">50%</span>
+                </div>
+                <div
+                  class="w-full border-b border-white/30 border-dashed relative"
+                >
+                  <span class="absolute -left-8 -top-3 text-xs">25%</span>
+                </div>
+                <div class="w-full border-b border-transparent relative">
+                  <span class="absolute -left-6 -top-3 text-xs">0%</span>
+                </div>
+              </div>
+
+              <div
+                class="relative flex flex-col justify-end items-center group w-1/4 h-full"
+              >
+                <div
+                  class="bar-fill w-full md:w-16 bg-gradient-to-t from-fox-orange/20 to-fox-orange rounded-t-md shadow-[0_0_15px_rgba(255,140,66,0.5)] transition-all duration-[1.5s] ease-out flex justify-center items-start pt-2"
+                  data-target="90%"
+                >
+                  <span
+                    class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-sm"
+                    >45%</span
+                  >
+                </div>
+                <p
+                  class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full"
+                >
+                  Eurasia
+                </p>
+              </div>
+
+              <div
+                class="relative flex flex-col justify-end items-center group w-1/4 h-full"
+              >
+                <div
+                  class="bar-fill w-full md:w-16 bg-gradient-to-t from-fox-orange/10 to-fox-orange/70 rounded-t-md transition-all duration-[1.5s] ease-out delay-200 flex justify-center items-start pt-2"
+                  data-target="60%"
+                >
+                  <span
+                    class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-sm"
+                    >30%</span
+                  >
+                </div>
+                <p
+                  class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full"
+                >
+                  America
+                </p>
+              </div>
+
+              <div
+                class="relative flex flex-col justify-end items-center group w-1/4 h-full"
+              >
+                <div
+                  class="bar-fill w-full md:w-16 bg-gradient-to-t from-fox-orange/5 to-fox-orange/50 rounded-t-md transition-all duration-[1.5s] ease-out delay-300 flex justify-center items-start pt-2"
+                  data-target="30%"
+                >
+                  <span
+                    class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-sm"
+                    >15%</span
+                  >
+                </div>
+                <p
+                  class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full"
+                >
+                  Mid-East
+                </p>
+              </div>
+
+              <div
+                class="relative flex flex-col justify-end items-center group w-1/4 h-full"
+              >
+                <div
+                  class="bar-fill w-full md:w-16 bg-gradient-to-t from-gray-600/20 to-gray-500 rounded-t-md transition-all duration-[1.5s] ease-out delay-500 flex justify-center items-start pt-2"
+                  data-target="20%"
+                >
+                  <span
+                    class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-sm"
+                    >10%</span
+                  >
+                </div>
+                <p
+                  class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full"
+                >
+                  Australia
+                </p>
+              </div>
+            </div>
+          </div>
 
           <div
-            class="relative h-[250px] md:h-[300px] w-full flex items-end justify-around gap-2 md:gap-4 border-b border-l border-white/20 pb-4 pl-4 mt-8">
+            class="reveal relative bg-white/5 border border-white/10 backdrop-blur-md rounded-3xl p-8 shadow-[0_0_40px_rgba(0,0,0,0.3)]"
+            style="transition-delay: 200ms"
+          >
+            <h3
+              class="font-fantasy text-xl text-blue-400 mb-2 border-b border-white/10 pb-4"
+            >
+              Global Population Index (1980 - 2026)
+            </h3>
 
-            <div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-20 ml-4 pb-4">
-              <div class="w-full border-b border-white/30 border-dashed relative"><span
-                  class="absolute -left-8 -top-3 text-xs">Max</span></div>
-              <div class="w-full border-b border-white/30 border-dashed relative"><span
-                  class="absolute -left-8 -top-3 text-xs">Avg</span></div>
-              <div class="w-full border-b border-transparent relative"><span
-                  class="absolute -left-6 -top-3 text-xs">Min</span></div>
-            </div>
-
-            <div class="relative flex flex-col justify-end items-center group w-1/5 h-full">
+            <div
+              class="relative h-[250px] md:h-[300px] w-full flex items-end justify-around gap-2 md:gap-4 border-b border-l border-white/20 pb-4 pl-4 mt-8"
+            >
               <div
-                class="bar-fill w-full md:w-12 bg-gradient-to-t from-blue-500/10 to-blue-600/50 rounded-t-md transition-all duration-[1.5s] ease-out flex justify-center items-start pt-2"
-                data-target="55%">
-                <span
-                  class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-xs">Stable</span>
+                class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-20 ml-4 pb-4"
+              >
+                <div
+                  class="w-full border-b border-white/30 border-dashed relative"
+                >
+                  <span class="absolute -left-8 -top-3 text-xs">Max</span>
+                </div>
+                <div
+                  class="w-full border-b border-white/30 border-dashed relative"
+                >
+                  <span class="absolute -left-8 -top-3 text-xs">Avg</span>
+                </div>
+                <div class="w-full border-b border-transparent relative">
+                  <span class="absolute -left-6 -top-3 text-xs">Min</span>
+                </div>
               </div>
-              <p class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full">1980</p>
-            </div>
 
-            <div class="relative flex flex-col justify-end items-center group w-1/5 h-full">
               <div
-                class="bar-fill w-full md:w-12 bg-gradient-to-t from-blue-500/10 to-blue-500/60 rounded-t-md transition-all duration-[1.5s] ease-out delay-100 flex justify-center items-start pt-2"
-                data-target="65%">
-                <span
-                  class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-xs">+12%</span>
+                class="relative flex flex-col justify-end items-center group w-1/5 h-full"
+              >
+                <div
+                  class="bar-fill w-full md:w-12 bg-gradient-to-t from-blue-500/10 to-blue-600/50 rounded-t-md transition-all duration-[1.5s] ease-out flex justify-center items-start pt-2"
+                  data-target="55%"
+                >
+                  <span
+                    class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-xs"
+                    >Stable</span
+                  >
+                </div>
+                <p
+                  class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full"
+                >
+                  1980
+                </p>
               </div>
-              <p class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full">1990</p>
-            </div>
 
-            <div class="relative flex flex-col justify-end items-center group w-1/5 h-full">
               <div
-                class="bar-fill w-full md:w-12 bg-gradient-to-t from-blue-400/20 to-blue-400/80 rounded-t-md transition-all duration-[1.5s] ease-out delay-200 flex justify-center items-start pt-2"
-                data-target="75%">
-                <span
-                  class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-xs">+18%</span>
+                class="relative flex flex-col justify-end items-center group w-1/5 h-full"
+              >
+                <div
+                  class="bar-fill w-full md:w-12 bg-gradient-to-t from-blue-500/10 to-blue-500/60 rounded-t-md transition-all duration-[1.5s] ease-out delay-100 flex justify-center items-start pt-2"
+                  data-target="65%"
+                >
+                  <span
+                    class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-xs"
+                    >+12%</span
+                  >
+                </div>
+                <p
+                  class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full"
+                >
+                  1990
+                </p>
               </div>
-              <p class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full">2005</p>
-            </div>
 
-            <div class="relative flex flex-col justify-end items-center group w-1/5 h-full">
               <div
-                class="bar-fill w-full md:w-12 bg-gradient-to-t from-cyan-400/20 to-cyan-400/90 rounded-t-md shadow-[0_0_10px_rgba(34,211,238,0.3)] transition-all duration-[1.5s] ease-out delay-300 flex justify-center items-start pt-2"
-                data-target="88%">
-                <span
-                  class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-xs">+25%</span>
+                class="relative flex flex-col justify-end items-center group w-1/5 h-full"
+              >
+                <div
+                  class="bar-fill w-full md:w-12 bg-gradient-to-t from-blue-400/20 to-blue-400/80 rounded-t-md transition-all duration-[1.5s] ease-out delay-200 flex justify-center items-start pt-2"
+                  data-target="75%"
+                >
+                  <span
+                    class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-xs"
+                    >+18%</span
+                  >
+                </div>
+                <p
+                  class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full"
+                >
+                  2005
+                </p>
               </div>
-              <p class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full">2015</p>
-            </div>
 
-            <div class="relative flex flex-col justify-end items-center group w-1/5 h-full">
               <div
-                class="bar-fill w-full md:w-12 bg-gradient-to-t from-cyan-300/30 to-cyan-300 rounded-t-md shadow-[0_0_20px_rgba(103,232,249,0.6)] transition-all duration-[1.5s] ease-out delay-400 flex justify-center items-start pt-2"
-                data-target="100%">
-                <span
-                  class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-xs">Peak</span>
+                class="relative flex flex-col justify-end items-center group w-1/5 h-full"
+              >
+                <div
+                  class="bar-fill w-full md:w-12 bg-gradient-to-t from-cyan-400/20 to-cyan-400/90 rounded-t-md shadow-[0_0_10px_rgba(34,211,238,0.3)] transition-all duration-[1.5s] ease-out delay-300 flex justify-center items-start pt-2"
+                  data-target="88%"
+                >
+                  <span
+                    class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-xs"
+                    >+25%</span
+                  >
+                </div>
+                <p
+                  class="absolute -bottom-8 text-[10px] md:text-xs text-gray-400 font-body text-center w-full"
+                >
+                  2015
+                </p>
               </div>
-              <p class="absolute -bottom-8 text-[10px] md:text-xs text-fox-gold font-body text-center w-full">2026</p>
-            </div>
 
+              <div
+                class="relative flex flex-col justify-end items-center group w-1/5 h-full"
+              >
+                <div
+                  class="bar-fill w-full md:w-12 bg-gradient-to-t from-cyan-300/30 to-cyan-300 rounded-t-md shadow-[0_0_20px_rgba(103,232,249,0.6)] transition-all duration-[1.5s] ease-out delay-400 flex justify-center items-start pt-2"
+                  data-target="100%"
+                >
+                  <span
+                    class="text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-xs"
+                    >Peak</span
+                  >
+                </div>
+                <p
+                  class="absolute -bottom-8 text-[10px] md:text-xs text-fox-gold font-body text-center w-full"
+                >
+                  2026
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CTA Section -->
-  <section class="relative z-40 bg-black py-20 px-6 text-center overflow-visible">
-
-    <!-- ✦ Tumpukan salju tepat di batas warna midnight-900 → black ✦ -->
-    <div id="snow-pile-cta" class="snow-pile-top" style="cursor:pointer;" title="Klik untuk menjatuhkan salju!">
-      <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
-        style="height:120px; transform:scaleY(-1);">
-        <!-- bayangan es biru dalam (kedalaman) -->
-        <path
-          d="M0,120 L0,80 Q90,52 180,70 Q270,88 360,58 Q450,28 540,50 Q630,72 720,42 Q810,12 900,38 Q990,64 1080,38 Q1170,12 1260,40 Q1350,68 1440,52 L1440,120 Z"
-          fill="rgba(120,175,230,0.45)" />
-        <!-- lapisan es biru tengah -->
-        <path
-          d="M0,120 L0,92 Q120,68 240,84 Q360,100 480,76 Q600,52 720,68 Q840,84 960,62 Q1080,40 1200,62 Q1320,84 1440,72 L1440,120 Z"
-          fill="rgba(185,220,255,0.65)" />
-        <!-- lapisan salju putih-biru organik -->
-        <path
-          d="M0,120 L0,105 Q60,94 120,102 Q180,110 240,98 Q310,84 380,96 Q440,107 510,97 Q570,87 640,97 Q700,107 770,97 Q840,86 910,96 Q970,106 1040,96 Q1110,85 1180,96 Q1240,106 1310,98 Q1370,90 1440,99 L1440,120 Z"
-          fill="rgba(230,245,255,0.88)" />
-        <!-- lapisan permukaan salju - putih bersih -->
-        <path
-          d="M0,120 L0,112 Q50,106 100,111 Q160,117 210,109 Q270,100 330,110 Q380,118 440,110 Q500,101 560,110 Q610,118 670,110 Q730,101 790,110 Q850,118 910,110 Q960,101 1020,110 Q1080,118 1140,111 Q1190,103 1260,111 Q1320,118 1380,112 Q1410,108 1440,112 L1440,120 Z"
-          fill="rgba(255,255,255,0.97)" />
-        <!-- garis tepi kristal salju -->
-        <path
-          d="M0,112 Q50,106 100,112 Q160,118 210,109 Q270,100 330,110 Q380,119 440,111 Q500,102 560,111 Q610,119 670,111 Q730,102 790,111 Q850,119 910,110 Q960,101 1020,111 Q1080,119 1140,111 Q1190,103 1260,111 Q1320,119 1380,112 Q1410,108 1440,113"
-          fill="none" stroke="white" stroke-width="2.5" />
-        <!-- kilap kristal salju (highlight titik-titik) -->
-        <circle cx="120" cy="110" r="2.5" fill="white" opacity="0.9" />
-        <circle cx="360" cy="104" r="2" fill="white" opacity="0.8" />
-        <circle cx="540" cy="108" r="3" fill="white" opacity="0.95" />
-        <circle cx="720" cy="102" r="2" fill="white" opacity="0.85" />
-        <circle cx="900" cy="108" r="2.5" fill="white" opacity="0.9" />
-        <circle cx="1080" cy="103" r="2" fill="white" opacity="0.8" />
-        <circle cx="1260" cy="109" r="3" fill="white" opacity="0.9" />
-        <circle cx="1440" cy="105" r="2" fill="white" opacity="0.85" />
-      </svg>
-    </div>
-
-    <!-- decorative border line -->
-    <div class="relative z-10 w-full max-w-2xl mx-auto mb-12 flex items-center justify-center gap-4"
-      style="margin-top: 80px;">
-      <div class="flex-1 h-px bg-gradient-to-r from-transparent via-fox-orange/50 to-transparent"></div>
-      <span class="font-fantasy tracking-[0.4em] text-xs text-fox-orange/60 uppercase whitespace-nowrap">Discover
-        More</span>
-      <div class="flex-1 h-px bg-gradient-to-r from-transparent via-fox-orange/50 to-transparent"></div>
-    </div>
-
-    <!-- glow backdrop -->
-    <div class="absolute inset-0 pointer-events-none z-0">
+    <!-- CTA Section -->
+    <section
+      class="relative z-40 bg-black py-20 px-6 text-center overflow-visible"
+    >
+      <!-- ✦ Tumpukan salju tepat di batas warna midnight-900 → black ✦ -->
       <div
-        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[200px] bg-fox-orange/5 rounded-full blur-[80px]">
+        id="snow-pile-cta"
+        class="snow-pile-top"
+        style="cursor: pointer"
+        title="Klik untuk menjatuhkan salju!"
+      >
+        <svg
+          viewBox="0 0 1440 120"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+          style="height: 120px; transform: scaleY(-1)"
+        >
+          <!-- bayangan es biru dalam (kedalaman) -->
+          <path
+            d="M0,120 L0,80 Q90,52 180,70 Q270,88 360,58 Q450,28 540,50 Q630,72 720,42 Q810,12 900,38 Q990,64 1080,38 Q1170,12 1260,40 Q1350,68 1440,52 L1440,120 Z"
+            fill="rgba(120,175,230,0.45)"
+          />
+          <!-- lapisan es biru tengah -->
+          <path
+            d="M0,120 L0,92 Q120,68 240,84 Q360,100 480,76 Q600,52 720,68 Q840,84 960,62 Q1080,40 1200,62 Q1320,84 1440,72 L1440,120 Z"
+            fill="rgba(185,220,255,0.65)"
+          />
+          <!-- lapisan salju putih-biru organik -->
+          <path
+            d="M0,120 L0,105 Q60,94 120,102 Q180,110 240,98 Q310,84 380,96 Q440,107 510,97 Q570,87 640,97 Q700,107 770,97 Q840,86 910,96 Q970,106 1040,96 Q1110,85 1180,96 Q1240,106 1310,98 Q1370,90 1440,99 L1440,120 Z"
+            fill="rgba(230,245,255,0.88)"
+          />
+          <!-- lapisan permukaan salju - putih bersih -->
+          <path
+            d="M0,120 L0,112 Q50,106 100,111 Q160,117 210,109 Q270,100 330,110 Q380,118 440,110 Q500,101 560,110 Q610,118 670,110 Q730,101 790,110 Q850,118 910,110 Q960,101 1020,110 Q1080,118 1140,111 Q1190,103 1260,111 Q1320,118 1380,112 Q1410,108 1440,112 L1440,120 Z"
+            fill="rgba(255,255,255,0.97)"
+          />
+          <!-- garis tepi kristal salju -->
+          <path
+            d="M0,112 Q50,106 100,112 Q160,118 210,109 Q270,100 330,110 Q380,119 440,111 Q500,102 560,111 Q610,119 670,111 Q730,102 790,111 Q850,119 910,110 Q960,101 1020,111 Q1080,119 1140,111 Q1190,103 1260,111 Q1320,119 1380,112 Q1410,108 1440,113"
+            fill="none"
+            stroke="white"
+            stroke-width="2.5"
+          />
+          <!-- kilap kristal salju (highlight titik-titik) -->
+          <circle cx="120" cy="110" r="2.5" fill="white" opacity="0.9" />
+          <circle cx="360" cy="104" r="2" fill="white" opacity="0.8" />
+          <circle cx="540" cy="108" r="3" fill="white" opacity="0.95" />
+          <circle cx="720" cy="102" r="2" fill="white" opacity="0.85" />
+          <circle cx="900" cy="108" r="2.5" fill="white" opacity="0.9" />
+          <circle cx="1080" cy="103" r="2" fill="white" opacity="0.8" />
+          <circle cx="1260" cy="109" r="3" fill="white" opacity="0.9" />
+          <circle cx="1440" cy="105" r="2" fill="white" opacity="0.85" />
+        </svg>
       </div>
-    </div>
 
-    <p class="relative z-10 text-white/50 font-body text-sm tracking-widest uppercase mb-3">Want to go deeper?</p>
-    <h2 class="relative z-10 text-3xl md:text-4xl font-fantasy font-bold text-white mb-8">
-      There's More to the <span
-        class="text-transparent bg-clip-text bg-gradient-to-r from-fox-orange to-fox-gold">Fox</span>
-    </h2>
-
-    <a id="more-link" href="pages/more.html"
-      class="relative z-10 group inline-flex items-center gap-4 px-14 py-5 rounded-full border border-fox-orange/40 bg-fox-orange/10 backdrop-blur-sm font-fantasy tracking-widest text-base overflow-hidden transition-all duration-500 hover:bg-fox-orange/20 hover:border-fox-orange hover:shadow-[0_0_60px_rgba(255,140,66,0.5)] hover:scale-105">
-      <span class="relative z-10 text-fox-orange group-hover:text-white transition-colors duration-300">EXPLORE
-        MORE</span>
-      <i
-        class="ph-fill ph-arrow-right relative z-10 text-fox-orange group-hover:text-white group-hover:translate-x-2 transition-all duration-300 text-lg"></i>
+      <!-- decorative border line -->
       <div
-        class="absolute inset-0 bg-gradient-to-r from-fox-orange/0 via-fox-orange/10 to-fox-orange/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        class="relative z-10 w-full max-w-2xl mx-auto mb-12 flex items-center justify-center gap-4"
+        style="margin-top: 80px"
+      >
+        <div
+          class="flex-1 h-px bg-gradient-to-r from-transparent via-fox-orange/50 to-transparent"
+        ></div>
+        <span
+          class="font-fantasy tracking-[0.4em] text-xs text-fox-orange/60 uppercase whitespace-nowrap"
+          >Discover More</span
+        >
+        <div
+          class="flex-1 h-px bg-gradient-to-r from-transparent via-fox-orange/50 to-transparent"
+        ></div>
       </div>
-    </a>
 
-  </section>
-
-  <footer class="relative z-40 bg-black pb-8 pt-0 border-t border-white/5 overflow-hidden">
-    <!-- Tumpukan salju di atas footer (lebih pendek agar tak menimpa teks) -->
-    <div id="snow-pile-footer" class="snow-pile-top" style="cursor:pointer;" title="Klik untuk menjatuhkan salju!">
-      <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
-        style="height:60px; transform:scaleY(-1);">
-        <!-- bayangan es biru dalam -->
-        <path
-          d="M0,60 L0,30 Q90,10 180,24 Q270,38 360,14 Q450,0 540,18 Q630,36 720,12 Q810,0 900,16 Q990,32 1080,10 Q1170,0 1260,18 Q1350,34 1440,18 L1440,60 Z"
-          fill="rgba(120,175,230,0.45)" />
-        <!-- lapisan es biru tengah -->
-        <path
-          d="M0,60 L0,38 Q120,22 240,34 Q360,46 480,26 Q600,10 720,28 Q840,44 960,24 Q1080,8 1200,26 Q1320,42 1440,28 L1440,60 Z"
-          fill="rgba(185,220,255,0.65)" />
-        <!-- lapisan salju putih-biru organik -->
-        <path
-          d="M0,60 L0,50 Q60,43 120,50 Q180,57 240,48 Q310,38 380,48 Q440,57 510,48 Q570,38 640,48 Q700,57 770,48 Q840,38 910,48 Q970,57 1040,48 Q1110,38 1180,48 Q1240,57 1310,50 Q1370,43 1440,50 L1440,60 Z"
-          fill="rgba(230,245,255,0.88)" />
-        <!-- permukaan salju putih bersih -->
-        <path
-          d="M0,60 L0,55 Q50,51 100,55 Q160,59 210,53 Q270,47 330,53 Q388,59 440,53 Q500,47 560,53 Q614,59 670,53 Q730,47 790,53 Q850,59 910,53 Q964,47 1020,53 Q1080,59 1140,54 Q1194,48 1260,54 Q1318,59 1380,55 Q1412,52 1440,55 L1440,60 Z"
-          fill="rgba(255,255,255,0.97)" />
-        <!-- garis kristal tepi salju -->
-        <path
-          d="M0,55 Q50,51 100,56 Q160,59 210,53 Q270,47 330,54 Q388,59 440,53 Q500,47 560,54 Q614,59 670,53 Q730,47 790,54 Q850,59 910,53 Q964,47 1020,54 Q1080,59 1140,54 Q1194,48 1260,54 Q1318,59 1380,55 Q1412,52 1440,56"
-          fill="none" stroke="white" stroke-width="2" />
-        <!-- kilap kristal -->
-        <circle cx="180" cy="53" r="1.5" fill="white" opacity="0.9" />
-        <circle cx="480" cy="51" r="1.5" fill="white" opacity="0.85" />
-        <circle cx="720" cy="52" r="2" fill="white" opacity="0.95" />
-        <circle cx="960" cy="51" r="1.5" fill="white" opacity="0.85" />
-        <circle cx="1260" cy="53" r="1.5" fill="white" opacity="0.9" />
-      </svg>
-    </div>
-
-    <!-- Konten footer — mt-16 agar tepat di bawah salju 60px -->
-    <div class="relative z-10 mt-16 flex flex-col md:flex-row justify-between items-center px-12">
-      <div class="font-fantasy text-xl font-bold tracking-widest text-white/20 mb-4 md:mb-0">
-        FOX<span class="text-fox-orange">.</span>
+      <!-- glow backdrop -->
+      <div class="absolute inset-0 pointer-events-none z-0">
+        <div
+          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[200px] bg-fox-orange/5 rounded-full blur-[80px]"
+        ></div>
       </div>
-      <p class="text-gray-700 font-body text-xs tracking-[0.15em] uppercase text-center mb-4 md:mb-0">
-        &copy; 2026 The Frozen Forest. Crafted for educational purposes.
+
+      <p
+        class="relative z-10 text-white/50 font-body text-sm tracking-widest uppercase mb-3"
+      >
+        Want to go deeper?
       </p>
-      <div class="flex gap-8">
-        <a href="#"
-          class="text-gray-700 hover:text-fox-orange transition-colors font-body text-xs tracking-[0.1em] uppercase">Terms
-          of Observation</a>
-        <a href="#"
-          class="text-gray-700 hover:text-fox-orange transition-colors font-body text-xs tracking-[0.1em] uppercase">Privacy</a>
+      <h2
+        class="relative z-10 text-3xl md:text-4xl font-fantasy font-bold text-white mb-8"
+      >
+        There's More to the
+        <span
+          class="text-transparent bg-clip-text bg-gradient-to-r from-fox-orange to-fox-gold"
+          >Fox</span
+        >
+      </h2>
+
+      <a
+        id="more-link"
+        href="pages/more.html"
+        class="relative z-10 group inline-flex items-center gap-4 px-14 py-5 rounded-full border border-fox-orange/40 bg-fox-orange/10 backdrop-blur-sm font-fantasy tracking-widest text-base overflow-hidden transition-all duration-500 hover:bg-fox-orange/20 hover:border-fox-orange hover:shadow-[0_0_60px_rgba(255,140,66,0.5)] hover:scale-105"
+      >
+        <span
+          class="relative z-10 text-fox-orange group-hover:text-white transition-colors duration-300"
+          >EXPLORE MORE</span
+        >
+        <i
+          class="ph-fill ph-arrow-right relative z-10 text-fox-orange group-hover:text-white group-hover:translate-x-2 transition-all duration-300 text-lg"
+        ></i>
+        <div
+          class="absolute inset-0 bg-gradient-to-r from-fox-orange/0 via-fox-orange/10 to-fox-orange/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        ></div>
+      </a>
+    </section>
+
+    <footer
+      class="relative z-40 bg-black pb-8 pt-0 border-t border-white/5 overflow-hidden"
+    >
+      <!-- Tumpukan salju di atas footer (lebih pendek agar tak menimpa teks) -->
+      <div
+        id="snow-pile-footer"
+        class="snow-pile-top"
+        style="cursor: pointer"
+        title="Klik untuk menjatuhkan salju!"
+      >
+        <svg
+          viewBox="0 0 1440 60"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+          style="height: 60px; transform: scaleY(-1)"
+        >
+          <!-- bayangan es biru dalam -->
+          <path
+            d="M0,60 L0,30 Q90,10 180,24 Q270,38 360,14 Q450,0 540,18 Q630,36 720,12 Q810,0 900,16 Q990,32 1080,10 Q1170,0 1260,18 Q1350,34 1440,18 L1440,60 Z"
+            fill="rgba(120,175,230,0.45)"
+          />
+          <!-- lapisan es biru tengah -->
+          <path
+            d="M0,60 L0,38 Q120,22 240,34 Q360,46 480,26 Q600,10 720,28 Q840,44 960,24 Q1080,8 1200,26 Q1320,42 1440,28 L1440,60 Z"
+            fill="rgba(185,220,255,0.65)"
+          />
+          <!-- lapisan salju putih-biru organik -->
+          <path
+            d="M0,60 L0,50 Q60,43 120,50 Q180,57 240,48 Q310,38 380,48 Q440,57 510,48 Q570,38 640,48 Q700,57 770,48 Q840,38 910,48 Q970,57 1040,48 Q1110,38 1180,48 Q1240,57 1310,50 Q1370,43 1440,50 L1440,60 Z"
+            fill="rgba(230,245,255,0.88)"
+          />
+          <!-- permukaan salju putih bersih -->
+          <path
+            d="M0,60 L0,55 Q50,51 100,55 Q160,59 210,53 Q270,47 330,53 Q388,59 440,53 Q500,47 560,53 Q614,59 670,53 Q730,47 790,53 Q850,59 910,53 Q964,47 1020,53 Q1080,59 1140,54 Q1194,48 1260,54 Q1318,59 1380,55 Q1412,52 1440,55 L1440,60 Z"
+            fill="rgba(255,255,255,0.97)"
+          />
+          <!-- garis kristal tepi salju -->
+          <path
+            d="M0,55 Q50,51 100,56 Q160,59 210,53 Q270,47 330,54 Q388,59 440,53 Q500,47 560,54 Q614,59 670,53 Q730,47 790,54 Q850,59 910,53 Q964,47 1020,54 Q1080,59 1140,54 Q1194,48 1260,54 Q1318,59 1380,55 Q1412,52 1440,56"
+            fill="none"
+            stroke="white"
+            stroke-width="2"
+          />
+          <!-- kilap kristal -->
+          <circle cx="180" cy="53" r="1.5" fill="white" opacity="0.9" />
+          <circle cx="480" cy="51" r="1.5" fill="white" opacity="0.85" />
+          <circle cx="720" cy="52" r="2" fill="white" opacity="0.95" />
+          <circle cx="960" cy="51" r="1.5" fill="white" opacity="0.85" />
+          <circle cx="1260" cy="53" r="1.5" fill="white" opacity="0.9" />
+        </svg>
       </div>
-    </div>
-  </footer>
 
+      <!-- Konten footer — mt-16 agar tepat di bawah salju 60px -->
+      <div
+        class="relative z-10 mt-16 flex flex-col md:flex-row justify-between items-center px-12"
+      >
+        <div
+          class="font-fantasy text-xl font-bold tracking-widest text-white/20 mb-4 md:mb-0"
+        >
+          FOX<span class="text-fox-orange">.</span>
+        </div>
+        <p
+          class="text-gray-700 font-body text-xs tracking-[0.15em] uppercase text-center mb-4 md:mb-0"
+        >
+          &copy; 2026 The Frozen Forest. Crafted for educational purposes.
+        </p>
+        <div class="flex gap-8">
+          <a
+            href="#"
+            class="text-gray-700 hover:text-fox-orange transition-colors font-body text-xs tracking-[0.1em] uppercase"
+            >Terms of Observation</a
+          >
+          <a
+            href="#"
+            class="text-gray-700 hover:text-fox-orange transition-colors font-body text-xs tracking-[0.1em] uppercase"
+            >Privacy</a
+          >
+        </div>
+      </div>
+    </footer>
 
-  <script src="js/fetch_data.js" defer></script>
-  <script src="js/script.js" defer></script>
-  <script src="js/three-setup.js" defer></script>
+    <script src="js/fetch_data.js" defer></script>
+    <script src="js/script.js" defer></script>
+    <script src="js/three-setup.js" defer></script>
 
-  <!-- Page transition overlay -->
-  <div id="page-overlay"
-    style="position:fixed;inset:0;z-index:9998;background:#020617;opacity:0;pointer-events:none;transition:opacity 0.6s ease;">
-  </div>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const moreLink = document.getElementById("more-link");
-      if (moreLink) {
-        moreLink.addEventListener("click", e => {
-          e.preventDefault();
-          const overlay = document.getElementById("page-overlay");
-          overlay.style.opacity = "1";
-          overlay.style.pointerEvents = "all";
-          setTimeout(() => { window.location.href = "pages/more.html"; }, 650);
-        });
-      }
-    });
-  </script>
+    <!-- Page transition overlay -->
+    <div
+      id="page-overlay"
+      style="
+        position: fixed;
+        inset: 0;
+        z-index: 9998;
+        background: #020617;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.6s ease;
+      "
+    ></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const moreLink = document.getElementById("more-link");
+        if (moreLink) {
+          moreLink.addEventListener("click", (e) => {
+            e.preventDefault();
+            const overlay = document.getElementById("page-overlay");
+            overlay.style.opacity = "1";
+            overlay.style.pointerEvents = "all";
+            setTimeout(() => {
+              window.location.href = "pages/more.html";
+            }, 650);
+          });
+        }
+      });
+    </script>
 
-  <!-- Diagnostic overlay script -->
-  <script>
-    (async function () {
-      function showDiag(msg, important = false) {
-        if (document.getElementById("diag-overlay")) return;
-        const o = document.createElement("div");
-        o.id = "diag-overlay";
-        o.style.position = "fixed";
-        o.style.left = "12px";
-        o.style.right = "12px";
-        o.style.top = "12px";
-        o.style.zIndex = "9999";
-        o.style.padding = "14px 16px";
-        o.style.borderRadius = "8px";
-        o.style.background = important ? "rgba(200,40,40,0.95)" : "rgba(0,0,0,0.8)";
-        o.style.color = "white";
-        o.style.fontFamily = "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial";
-        o.style.fontSize = "13px";
-        o.innerHTML = msg;
-        document.body.appendChild(o);
-      }
+    <!-- Diagnostic overlay script -->
+    <script>
+      (async function () {
+        function showDiag(msg, important = false) {
+          if (document.getElementById("diag-overlay")) return;
+          const o = document.createElement("div");
+          o.id = "diag-overlay";
+          o.style.position = "fixed";
+          o.style.left = "12px";
+          o.style.right = "12px";
+          o.style.top = "12px";
+          o.style.zIndex = "9999";
+          o.style.padding = "14px 16px";
+          o.style.borderRadius = "8px";
+          o.style.background = important
+            ? "rgba(200,40,40,0.95)"
+            : "rgba(0,0,0,0.8)";
+          o.style.color = "white";
+          o.style.fontFamily =
+            "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial";
+          o.style.fontSize = "13px";
+          o.innerHTML = msg;
+          document.body.appendChild(o);
+        }
 
-      // 1) check if opened via file://
-      if (location.protocol === "file:") {
-        showDiag(
-          "<strong>Warning:</strong> You're opening the page via <code>file://</code>. Start a local server (e.g. <code>python -m http.server 8000</code>) so assets like model & CSS load correctly.",
-          true
-        );
-        return;
-      }
-
-      // 2) check built CSS exists
-      try {
-        const cssRes = await fetch("dist/output.css", { method: "HEAD" });
-        if (!cssRes.ok) {
+        // 1) check if opened via file://
+        if (location.protocol === "file:") {
           showDiag(
-            "<strong>CSS not found:</strong> dist/output.css missing. Build Tailwind CSS: <code>npm install</code> then <code>npm run build:css</code> (or <code>npx postcss css/input.css -o dist/output.css</code>)",
-            true
+            "<strong>Warning:</strong> You're opening the page via <code>file://</code>. Start a local server (e.g. <code>python -m http.server 8000</code>) so assets like model & CSS load correctly.",
+            true,
           );
           return;
         }
-      } catch (e) {
-        showDiag(
-          "<strong>CSS fetch failed:</strong> unable to fetch dist/output.css. Run the build command and ensure the file is served.",
-          true
-        );
-        return;
-      }
 
-      // 3) check model asset availability
-      const modelEl = document.getElementById("fox-3d");
-      if (modelEl) {
-        const src = modelEl.getAttribute("src");
-        if (src) {
-          try {
-            const r = await fetch(src, { method: "HEAD" });
-            if (!r.ok) {
-              showDiag(
-                `<strong>3D model not found:</strong> ${src} returned ${r.status}. Place the model in assets/models/ or fix the path.`,
-                true
-              );
-              return;
-            }
-          } catch (e) {
+        // 2) check built CSS exists
+        try {
+          const cssRes = await fetch("dist/output.css", { method: "HEAD" });
+          if (!cssRes.ok) {
             showDiag(
-              `<strong>3D model fetch error:</strong> Could not reach ${src}. Check path/CORS and server. (${e.message})`,
-              true
+              "<strong>CSS not found:</strong> dist/output.css missing. Build Tailwind CSS: <code>npm install</code> then <code>npm run build:css</code> (or <code>npx postcss css/input.css -o dist/output.css</code>)",
+              true,
             );
             return;
           }
+        } catch (e) {
+          showDiag(
+            "<strong>CSS fetch failed:</strong> unable to fetch dist/output.css. Run the build command and ensure the file is served.",
+            true,
+          );
+          return;
         }
-      }
 
-      // 4) no issues detected by quick tests
-      // Optionally remove any existing diag overlay
-      const existing = document.getElementById("diag-overlay");
-      if (existing) existing.remove();
-    })();
-  </script>
-</body>
+        // 3) check model asset availability
+        const modelEl = document.getElementById("fox-3d");
+        if (modelEl) {
+          const src = modelEl.getAttribute("src");
+          if (src) {
+            try {
+              const r = await fetch(src, { method: "HEAD" });
+              if (!r.ok) {
+                showDiag(
+                  `<strong>3D model not found:</strong> ${src} returned ${r.status}. Place the model in assets/models/ or fix the path.`,
+                  true,
+                );
+                return;
+              }
+            } catch (e) {
+              showDiag(
+                `<strong>3D model fetch error:</strong> Could not reach ${src}. Check path/CORS and server. (${e.message})`,
+                true,
+              );
+              return;
+            }
+          }
+        }
 
+        // 4) no issues detected by quick tests
+        // Optionally remove any existing diag overlay
+        const existing = document.getElementById("diag-overlay");
+        if (existing) existing.remove();
+      })();
+    </script>
+  </body>
 </html>

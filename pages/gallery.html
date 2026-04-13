@@ -1,363 +1,531 @@
 <!doctype html>
 <html class="dark" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wild Gallery | The Fox &amp; The Winter Moon</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wild Gallery | The Fox &amp; The Winter Moon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lato:wght@300;400&family=Pinyon+Script&display=swap"
+      rel="stylesheet"
+    />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lato:wght@300;400&family=Pinyon+Script&display=swap"
-    rel="stylesheet" />
+    <!-- Project shared CSS (fonts, stars, snow, page-overlay, reveal, fox-orange, font-fantasy, etc.) -->
+    <link rel="stylesheet" href="../dist/output.css" />
 
-  <!-- Project shared CSS (fonts, stars, snow, page-overlay, reveal, fox-orange, font-fantasy, etc.) -->
-  <link rel="stylesheet" href="../dist/output.css" />
-
-  <!-- Tailwind CDN for gallery-specific utilities (aspect-ratio, grayscale, translate-y, etc.) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "emerald-brand": "#34D399",
-            "fox-orange": "#FF8C42",
+    <!-- Tailwind CDN for gallery-specific utilities (aspect-ratio, grayscale, translate-y, etc.) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "emerald-brand": "#34D399",
+              "fox-orange": "#FF8C42",
+            },
+            fontFamily: {
+              fantasy: ["Cinzel", "serif"],
+              script: ["Pinyon Script", "cursive"],
+              body: ["Lato", "sans-serif"],
+            },
           },
-          fontFamily: {
-            "fantasy": ["Cinzel", "serif"],
-            "script": ["Pinyon Script", "cursive"],
-            "body": ["Lato", "sans-serif"],
-          }
+        },
+      };
+    </script>
+
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦊</text></svg>"
+    />
+
+    <style>
+      body {
+        background-color: #020617;
+        overflow-x: hidden;
+        color: #fff;
+      }
+
+      /* ── Glass surfaces ── */
+      .glass {
+        background: rgba(21, 27, 45, 0.5);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(52, 211, 153, 0.15);
+      }
+
+      /* ── Shimmer skeleton ── */
+      @keyframes shimmer {
+        0% {
+          background-position: 200% 0;
+        }
+
+        100% {
+          background-position: -200% 0;
         }
       }
-    }
-  </script>
 
-  <!-- Phosphor Icons -->
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
-
-  <!-- Favicon -->
-  <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦊</text></svg>" />
-
-  <style>
-    body {
-      background-color: #020617;
-      overflow-x: hidden;
-      color: #fff;
-    }
-
-    /* ── Glass surfaces ── */
-    .glass {
-      background: rgba(21, 27, 45, 0.5);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(52, 211, 153, 0.15);
-    }
-
-    /* ── Shimmer skeleton ── */
-    @keyframes shimmer {
-      0% {
-        background-position: 200% 0;
+      .shimmer {
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.05) 50%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 2s infinite;
       }
 
-      100% {
-        background-position: -200% 0;
-      }
-    }
-
-    .shimmer {
-      background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0) 100%);
-      background-size: 200% 100%;
-      animation: shimmer 2s infinite;
-    }
-
-    /* ── Gallery card ── */
-    .gallery-card {
-      transition: transform 0.5s ease, border-color 0.4s ease, box-shadow 0.4s ease, opacity 0.3s ease;
-      border: 1px solid rgba(52, 211, 153, 0.1);
-    }
-
-    .gallery-card:hover {
-      transform: scale(1.03);
-      border-color: #34D399;
-      box-shadow: 0 0 30px rgba(52, 211, 153, 0.12);
-    }
-
-    .gallery-card img {
-      filter: grayscale(30%);
-      transition: filter 0.7s ease;
-    }
-
-    .gallery-card:hover img {
-      filter: grayscale(0%);
-    }
-
-    /* ── Filter buttons ── */
-    .filter-btn {
-      font-family: 'Cinzel', serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 0.45rem 1.25rem;
-      border-radius: 9999px;
-      border: 1px solid transparent;
-      background: transparent;
-      color: rgba(255, 255, 255, 0.65);
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .filter-btn.active {
-      background: #34D399;
-      color: #020617;
-      font-weight: 700;
-      border-color: #34D399;
-    }
-
-    .filter-btn:not(.active):hover {
-      background: rgba(52, 211, 153, 0.1);
-      border-color: rgba(52, 211, 153, 0.3);
-      color: #34D399;
-    }
-
-    /* ── Blinking cursor ── */
-    @keyframes blink {
-      50% {
-        opacity: 0;
-      }
-    }
-
-    .cursor-blink {
-      display: inline-block;
-      width: 7px;
-      height: 13px;
-      background: #34D399;
-      animation: blink 1s step-end infinite;
-      vertical-align: middle;
-      margin-left: 3px;
-    }
-
-    /* ── Scroll indicator ── */
-    @keyframes scrollBounce {
-
-      0%,
-      100% {
-        transform: translateY(0);
-        opacity: .7;
+      /* ── Gallery card ── */
+      .gallery-card {
+        transition:
+          transform 0.5s ease,
+          border-color 0.4s ease,
+          box-shadow 0.4s ease,
+          opacity 0.3s ease;
+        border: 1px solid rgba(52, 211, 153, 0.1);
       }
 
-      50% {
-        transform: translateY(8px);
-        opacity: 1;
+      .gallery-card:hover {
+        transform: scale(1.03);
+        border-color: #34d399;
+        box-shadow: 0 0 30px rgba(52, 211, 153, 0.12);
       }
-    }
 
-    .scroll-bounce {
-      animation: scrollBounce 2s ease-in-out infinite;
-    }
-  </style>
-</head>
+      .gallery-card img {
+        filter: grayscale(30%);
+        transition: filter 0.7s ease;
+      }
 
-<body class="font-body">
+      .gallery-card:hover img {
+        filter: grayscale(0%);
+      }
 
-  <!-- Page fade overlay (same as all pages) -->
-  <div id="page-overlay"
-    style="position:fixed;inset:0;z-index:9999;background:#020617;opacity:1;pointer-events:all;transition:opacity 0.8s ease;">
-  </div>
+      /* ── Filter buttons ── */
+      .filter-btn {
+        font-family: "Cinzel", serif;
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 0.45rem 1.25rem;
+        border-radius: 9999px;
+        border: 1px solid transparent;
+        background: transparent;
+        color: rgba(255, 255, 255, 0.65);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
 
-  <!-- Background particles (JS fills these) -->
-  <div id="star-container" class="fixed inset-0 z-0 opacity-60 pointer-events-none"></div>
-  <div id="snow-container" class="fixed inset-0 z-10 pointer-events-none"></div>
+      .filter-btn.active {
+        background: #34d399;
+        color: #020617;
+        font-weight: 700;
+        border-color: #34d399;
+      }
 
-  <!-- ── NAV (same structure as more.html) ── -->
-  <nav
-    class="fixed w-full z-50 top-0 px-8 py-6 flex justify-between items-center bg-gradient-to-b from-[#020617]/90 to-transparent"
-    style="opacity:0; animation:fadeUp 0.8s 0.5s ease-out forwards">
-    <a href="../index.html" id="logo-link"
-      class="text-xl font-fantasy font-bold tracking-widest text-white hover:text-fox-orange transition-colors duration-300">
-      FOX<span class="text-fox-orange">.</span>
-    </a>
-    <ul class="hidden md:flex space-x-8 text-xs tracking-[0.2em] uppercase text-white/70">
-      <li class="hover:text-fox-orange transition-all cursor-pointer"><a href="../index.html#hero">Home</a></li>
-      <li class="hover:text-fox-orange transition-all cursor-pointer"><a href="../index.html#biography">Biography</a>
-      </li>
-      <li class="hover:text-fox-orange transition-all cursor-pointer"><a
-          href="../index.html#documentary">Documentary</a></li>
-      <li class="hover:text-fox-orange transition-all cursor-pointer"><a href="../index.html#habitat">Habitat</a></li>
-      <li class="hover:text-fox-orange transition-all cursor-pointer"><a href="../index.html#population">Population</a>
-      </li>
-    </ul>
-  </nav>
+      .filter-btn:not(.active):hover {
+        background: rgba(52, 211, 153, 0.1);
+        border-color: rgba(52, 211, 153, 0.3);
+        color: #34d399;
+      }
 
-  <!-- ── HERO ── -->
-  <header class="relative h-[80vh] w-full flex flex-col items-center justify-center text-center px-6 overflow-hidden">
-    <!-- Emerald radial glow -->
-    <div class="absolute inset-0 pointer-events-none"
-      style="background:radial-gradient(circle at center, rgba(52,211,153,0.1) 0%, transparent 70%)"></div>
+      /* ── Blinking cursor ── */
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
 
-    <p class="font-script text-2xl md:text-3xl mb-4"
-      style="color:#34D399; opacity:0; animation:fadeUp 0.8s 0.8s ease-out forwards">
-      Chapter 04 &middot; Photography
-    </p>
-    <h1 class="font-fantasy text-6xl md:text-8xl font-black tracking-[0.18em] text-white mb-6 uppercase"
-      style="opacity:0; animation:fadeUp 0.8s 1s ease-out forwards">
-      Wild Gallery
-    </h1>
-    <p class="font-body max-w-2xl text-base md:text-lg text-white/50 leading-relaxed"
-      style="opacity:0; animation:fadeUp 0.8s 1.2s ease-out forwards">
-      Real observations of <em>Vulpes vulpes</em> captured by researchers and wildlife photographers worldwide.
-      Sourced from iNaturalist via GBIF API.
-    </p>
+      .cursor-blink {
+        display: inline-block;
+        width: 7px;
+        height: 13px;
+        background: #34d399;
+        animation: blink 1s step-end infinite;
+        vertical-align: middle;
+        margin-left: 3px;
+      }
 
-    <!-- Scroll indicator -->
-    <div class="absolute bottom-12 flex flex-col items-center scroll-bounce"
-      style="opacity:0; animation:fadeUp 0.8s 1.6s ease-out forwards">
-      <span class="font-fantasy text-xs tracking-widest uppercase mb-4" style="color:#34D399">Scroll Down</span>
-      <div class="w-px h-16" style="background:linear-gradient(to bottom, #34D399, transparent)"></div>
-    </div>
-  </header>
+      /* ── Scroll indicator ── */
+      @keyframes scrollBounce {
+        0%,
+        100% {
+          transform: translateY(0);
+          opacity: 0.7;
+        }
 
-  <!-- ── STATS BAR ── -->
-  <section class="w-full py-8 glass" style="border-left:none;border-right:none; border-color:rgba(52,211,153,0.12)">
+        50% {
+          transform: translateY(8px);
+          opacity: 1;
+        }
+      }
+
+      .scroll-bounce {
+        animation: scrollBounce 2s ease-in-out infinite;
+      }
+    </style>
+  </head>
+
+  <body class="font-body">
+    <!-- Page fade overlay (same as all pages) -->
     <div
-      class="max-w-7xl mx-auto px-6 flex flex-wrap justify-center md:justify-between gap-8 font-fantasy text-xs tracking-widest uppercase"
-      style="color:rgba(255,255,255,0.5)">
-      <div class="flex items-center gap-3"><i class="ph-bold ph-globe-hemisphere-east"
-          style="color:#34D399;font-size:1.2rem"></i> 1.4M+ Records</div>
-      <div class="flex items-center gap-3"><i class="ph-bold ph-camera" style="color:#34D399;font-size:1.2rem"></i>
-        Sourced from iNaturalist</div>
-      <div class="flex items-center gap-3"><i class="ph-bold ph-calendar-blank"
-          style="color:#34D399;font-size:1.2rem"></i> Updated Daily</div>
-      <div class="flex items-center gap-3"><i class="ph-bold ph-check-circle"
-          style="color:#34D399;font-size:1.2rem"></i> Research Grade Only</div>
-    </div>
-  </section>
+      id="page-overlay"
+      style="
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: #020617;
+        opacity: 1;
+        pointer-events: all;
+        transition: opacity 0.8s ease;
+      "
+    ></div>
 
-  <!-- ── MAIN ── -->
-  <main class="max-w-7xl mx-auto px-6 py-24">
+    <!-- Background particles (JS fills these) -->
+    <div
+      id="star-container"
+      class="fixed inset-0 z-0 opacity-60 pointer-events-none"
+    ></div>
+    <div
+      id="snow-container"
+      class="fixed inset-0 z-10 pointer-events-none"
+    ></div>
 
-    <!-- Filter Bar -->
-    <div class="sticky top-24 z-40 mb-16 flex justify-center reveal">
-      <div class="glass p-2 rounded-full flex flex-wrap justify-center gap-2">
-        <button class="filter-btn active" data-region="ALL">All</button>
-        <button class="filter-btn" data-region="EUROPE">Europe</button>
-        <button class="filter-btn" data-region="ASIA">Asia</button>
-        <button class="filter-btn" data-region="NORTH AMERICA">North America</button>
-        <button class="filter-btn" data-region="AFRICA">Africa</button>
-        <button class="filter-btn" data-region="OCEANIA">Oceania</button>
+    <!-- ── NAV (same structure as more.html) ── -->
+    <nav
+      class="fixed w-full z-50 top-0 px-8 py-6 flex justify-between items-center bg-gradient-to-b from-[#020617]/90 to-transparent"
+      style="opacity: 0; animation: fadeUp 0.8s 0.5s ease-out forwards"
+    >
+      <a
+        href="../index.html"
+        id="logo-link"
+        class="text-xl font-fantasy font-bold tracking-widest text-white hover:text-fox-orange transition-colors duration-300"
+      >
+        FOX<span class="text-fox-orange">.</span>
+      </a>
+      <ul
+        class="hidden md:flex space-x-8 text-xs tracking-[0.2em] uppercase text-white/70"
+      >
+        <li class="hover:text-fox-orange transition-all cursor-pointer">
+          <a href="../index.html#hero">Home</a>
+        </li>
+        <li class="hover:text-fox-orange transition-all cursor-pointer">
+          <a href="../index.html#biography">Biography</a>
+        </li>
+        <li class="hover:text-fox-orange transition-all cursor-pointer">
+          <a href="../index.html#documentary">Documentary</a>
+        </li>
+        <li class="hover:text-fox-orange transition-all cursor-pointer">
+          <a href="../index.html#habitat">Habitat</a>
+        </li>
+        <li class="hover:text-fox-orange transition-all cursor-pointer">
+          <a href="../index.html#population">Population</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- ── HERO ── -->
+    <header
+      class="relative h-[80vh] w-full flex flex-col items-center justify-center text-center px-6 overflow-hidden"
+    >
+      <!-- Emerald radial glow -->
+      <div
+        class="absolute inset-0 pointer-events-none"
+        style="
+          background: radial-gradient(
+            circle at center,
+            rgba(52, 211, 153, 0.1) 0%,
+            transparent 70%
+          );
+        "
+      ></div>
+
+      <p
+        class="font-script text-2xl md:text-3xl mb-4"
+        style="
+          color: #34d399;
+          opacity: 0;
+          animation: fadeUp 0.8s 0.8s ease-out forwards;
+        "
+      >
+        Chapter 04 &middot; Photography
+      </p>
+      <h1
+        class="font-fantasy text-6xl md:text-8xl font-black tracking-[0.18em] text-white mb-6 uppercase"
+        style="opacity: 0; animation: fadeUp 0.8s 1s ease-out forwards"
+      >
+        Wild Gallery
+      </h1>
+      <p
+        class="font-body max-w-2xl text-base md:text-lg text-white/50 leading-relaxed"
+        style="opacity: 0; animation: fadeUp 0.8s 1.2s ease-out forwards"
+      >
+        Real observations of <em>Vulpes vulpes</em> captured by researchers and
+        wildlife photographers worldwide. Sourced from iNaturalist via GBIF API.
+      </p>
+
+      <!-- Scroll indicator -->
+      <div
+        class="absolute bottom-12 flex flex-col items-center scroll-bounce"
+        style="opacity: 0; animation: fadeUp 0.8s 1.6s ease-out forwards"
+      >
+        <span
+          class="font-fantasy text-xs tracking-widest uppercase mb-4"
+          style="color: #34d399"
+          >Scroll Down</span
+        >
+        <div
+          class="w-px h-16"
+          style="background: linear-gradient(to bottom, #34d399, transparent)"
+        ></div>
       </div>
-    </div>
+    </header>
 
-    <!-- Gallery Grid — diisi oleh gallery.js via iNaturalist API -->
-    <div id="gallery-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 reveal">
-      <!-- Skeleton loading ditampilkan JS saat fetch -->
-    </div>
-
-    <!-- Empty state (hidden by default) -->
-    <div id="gallery-empty" class="hidden mt-8 text-center py-20">
-      <p class="font-fantasy text-white/30 tracking-widest uppercase text-sm">No observations in this region yet.</p>
-    </div>
-
-    <!-- Load More -->
-    <div class="mt-16 flex justify-center reveal">
-      <button id="load-more-btn"
-        class="px-10 py-3 rounded-full font-fantasy text-sm tracking-widest uppercase transition-all duration-500 hover:shadow-[0_0_30px_rgba(52,211,153,0.25)]"
-        style="border:1px solid #34D399; color:#34D399; background:transparent; cursor:pointer">
-        LOAD MORE OBSERVATIONS
-      </button>
-    </div>
-
-    <!-- ── DATA PIPELINE SECTION ── -->
-    <section class="mt-32 w-full glass rounded-3xl p-12 relative overflow-hidden reveal">
-      <div class="absolute top-0 right-0 w-64 h-64 rounded-full blur-3xl pointer-events-none"
-        style="background:rgba(52,211,153,0.05)"></div>
-      <div class="relative z-10 grid md:grid-cols-2 gap-12 items-center">
-
-        <div>
-          <h2 class="font-fantasy text-3xl font-bold mb-6 text-white uppercase">The Data Pipeline</h2>
-          <p class="font-body text-white/50 text-base leading-relaxed mb-8">
-            Our gallery isn't just a static collection. It is a live-fed window into the world of
-            <em>Vulpes vulpes</em>. Utilizing the GBIF API, we aggregate Research Grade observations from iNaturalist,
-            ensuring every photograph represents a verified scientific record in its natural habitat.
-          </p>
-          <div class="flex flex-wrap gap-4">
-            <button id="raw-data-btn"
-              class="px-8 py-4 font-fantasy text-sm tracking-widest rounded-full font-bold transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(52,211,153,0.3)]"
-              style="background:#34D399; color:#020617;">
-              VIEW RAW DATA (JSON)
-            </button>
-            <button id="inaturalist-btn"
-              class="px-8 py-4 font-fantasy text-sm tracking-widest rounded-full transition-colors duration-300 hover:bg-[rgba(52,211,153,0.1)]"
-              style="border:1px solid rgba(52,211,153,0.4); color:#34D399; background:transparent; cursor:pointer">
-              OPEN INATURALIST
-            </button>
-          </div>
+    <!-- ── STATS BAR ── -->
+    <section
+      class="w-full py-8 glass"
+      style="
+        border-left: none;
+        border-right: none;
+        border-color: rgba(52, 211, 153, 0.12);
+      "
+    >
+      <div
+        class="max-w-7xl mx-auto px-6 flex flex-wrap justify-center md:justify-between gap-8 font-fantasy text-xs tracking-widest uppercase"
+        style="color: rgba(255, 255, 255, 0.5)"
+      >
+        <div class="flex items-center gap-3">
+          <i
+            class="ph-bold ph-globe-hemisphere-east"
+            style="color: #34d399; font-size: 1.2rem"
+          ></i>
+          1.4M+ Records
         </div>
-
-        <!-- Terminal card -->
-        <div class="rounded-2xl p-8 border flex flex-col justify-between gap-6"
-          style="background:rgba(0,0,0,0.4); border-color:rgba(52,211,153,0.2); aspect-ratio:1">
-          <div class="space-y-3">
-            <div class="flex justify-between items-center font-fantasy uppercase"
-              style="font-size:9px; letter-spacing:0.2em; color:rgba(52,211,153,0.55)">
-              <span>Status: Connection Secure</span><span>Ping: 42ms</span>
-            </div>
-            <div class="h-1 rounded-full overflow-hidden" style="background:rgba(52,211,153,0.1)">
-              <div class="h-full rounded-full" style="width:75%; background:#34D399; box-shadow:0 0 8px #34D399"></div>
-            </div>
-          </div>
-          <div class="font-fantasy space-y-1 text-xs" style="color:rgba(52,211,153,0.75)">
-            <p id="terminal-line-1" class="animate-pulse">&gt; Fetching occurrence data...</p>
-            <p>&gt; Species: Vulpes vulpes</p>
-            <p>&gt; Filter: hasImage = true</p>
-            <p>&gt; Filter: qualityGrade = RESEARCH</p>
-            <p>&gt; Found 1,422,903 records.</p>
-            <p>&gt; Syncing image CDN...</p>
-            <p>&gt; Done.<span class="cursor-blink"></span></p>
-          </div>
-          <div class="flex items-center gap-3 font-fantasy font-bold" style="color:#34D399; font-size:1.1rem">
-            <i class="ph-bold ph-globe" style="font-size:1.8rem"></i>
-            <span>GBIF NETWORK</span>
-          </div>
+        <div class="flex items-center gap-3">
+          <i
+            class="ph-bold ph-camera"
+            style="color: #34d399; font-size: 1.2rem"
+          ></i>
+          Sourced from iNaturalist
         </div>
-
+        <div class="flex items-center gap-3">
+          <i
+            class="ph-bold ph-calendar-blank"
+            style="color: #34d399; font-size: 1.2rem"
+          ></i>
+          Updated Daily
+        </div>
+        <div class="flex items-center gap-3">
+          <i
+            class="ph-bold ph-check-circle"
+            style="color: #34d399; font-size: 1.2rem"
+          ></i>
+          Research Grade Only
+        </div>
       </div>
     </section>
 
-    <!-- ── BACK BUTTON ── -->
-    <div class="mt-24 flex justify-center reveal">
-      <a href="more.html" id="back-more-btn"
-        class="group relative px-10 py-3 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm text-sm font-fantasy tracking-widest overflow-hidden transition-all duration-500 hover:border-fox-orange hover:shadow-[0_0_30px_rgba(255,140,66,0.3)]">
-        <span class="relative z-10 group-hover:text-fox-orange transition-colors flex items-center gap-2"><i
-            class="ph-bold ph-arrow-left"></i> BACK TO MORE</span>
-      </a>
-    </div>
+    <!-- ── MAIN ── -->
+    <main class="max-w-7xl mx-auto px-6 py-24">
+      <!-- Filter Bar -->
+      <div class="sticky top-24 z-40 mb-16 flex justify-center reveal">
+        <div class="glass p-2 rounded-full flex flex-wrap justify-center gap-2">
+          <button class="filter-btn active" data-region="ALL">All</button>
+          <button class="filter-btn" data-region="EUROPE">Europe</button>
+          <button class="filter-btn" data-region="ASIA">Asia</button>
+          <button class="filter-btn" data-region="NORTH AMERICA">
+            North America
+          </button>
+          <button class="filter-btn" data-region="AFRICA">Africa</button>
+          <button class="filter-btn" data-region="OCEANIA">Oceania</button>
+        </div>
+      </div>
 
-  </main>
+      <!-- Gallery Grid — diisi oleh gallery.js via iNaturalist API -->
+      <div
+        id="gallery-grid"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 reveal"
+      >
+        <!-- Skeleton loading ditampilkan JS saat fetch -->
+      </div>
 
-  <!-- ── FOOTER (identical to more.html) ── -->
-  <footer
-    class="relative z-20 bg-black py-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center px-12">
-    <div class="font-fantasy text-xl font-bold tracking-widest text-white/20 mb-4 md:mb-0">
-      FOX<span class="text-fox-orange">.</span>
-    </div>
-    <p class="text-gray-700 font-body text-xs tracking-[0.15em] uppercase text-center mb-4 md:mb-0">
-      © 2026 The Frozen Forest. Crafted for educational purposes.
-    </p>
-    <div class="flex gap-8">
-      <a href="#"
-        class="text-gray-700 hover:text-fox-orange transition-colors font-body text-xs tracking-[0.1em] uppercase">Terms
-        of Observation</a>
-      <a href="#"
-        class="text-gray-700 hover:text-fox-orange transition-colors font-body text-xs tracking-[0.1em] uppercase">Privacy</a>
-    </div>
-  </footer>
+      <!-- Empty state (hidden by default) -->
+      <div id="gallery-empty" class="hidden mt-8 text-center py-20">
+        <p class="font-fantasy text-white/30 tracking-widest uppercase text-sm">
+          No observations in this region yet.
+        </p>
+      </div>
 
-  <script src="../js/gallery.js" defer></script>
-</body>
+      <!-- Load More -->
+      <div class="mt-16 flex justify-center reveal">
+        <button
+          id="load-more-btn"
+          class="px-10 py-3 rounded-full font-fantasy text-sm tracking-widest uppercase transition-all duration-500 hover:shadow-[0_0_30px_rgba(52,211,153,0.25)]"
+          style="
+            border: 1px solid #34d399;
+            color: #34d399;
+            background: transparent;
+            cursor: pointer;
+          "
+        >
+          LOAD MORE OBSERVATIONS
+        </button>
+      </div>
 
+      <!-- ── DATA PIPELINE SECTION ── -->
+      <section
+        class="mt-32 w-full glass rounded-3xl p-12 relative overflow-hidden reveal"
+      >
+        <div
+          class="absolute top-0 right-0 w-64 h-64 rounded-full blur-3xl pointer-events-none"
+          style="background: rgba(52, 211, 153, 0.05)"
+        ></div>
+        <div class="relative z-10 grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <h2
+              class="font-fantasy text-3xl font-bold mb-6 text-white uppercase"
+            >
+              The Data Pipeline
+            </h2>
+            <p class="font-body text-white/50 text-base leading-relaxed mb-8">
+              Our gallery isn't just a static collection. It is a live-fed
+              window into the world of
+              <em>Vulpes vulpes</em>. Utilizing the GBIF API, we aggregate
+              Research Grade observations from iNaturalist, ensuring every
+              photograph represents a verified scientific record in its natural
+              habitat.
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <button
+                id="raw-data-btn"
+                class="px-8 py-4 font-fantasy text-sm tracking-widest rounded-full font-bold transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(52,211,153,0.3)]"
+                style="background: #34d399; color: #020617"
+              >
+                VIEW RAW DATA (JSON)
+              </button>
+              <button
+                id="inaturalist-btn"
+                class="px-8 py-4 font-fantasy text-sm tracking-widest rounded-full transition-colors duration-300 hover:bg-[rgba(52,211,153,0.1)]"
+                style="
+                  border: 1px solid rgba(52, 211, 153, 0.4);
+                  color: #34d399;
+                  background: transparent;
+                  cursor: pointer;
+                "
+              >
+                OPEN INATURALIST
+              </button>
+            </div>
+          </div>
+
+          <!-- Terminal card -->
+          <div
+            class="rounded-2xl p-8 border flex flex-col justify-between gap-6"
+            style="
+              background: rgba(0, 0, 0, 0.4);
+              border-color: rgba(52, 211, 153, 0.2);
+              aspect-ratio: 1;
+            "
+          >
+            <div class="space-y-3">
+              <div
+                class="flex justify-between items-center font-fantasy uppercase"
+                style="
+                  font-size: 9px;
+                  letter-spacing: 0.2em;
+                  color: rgba(52, 211, 153, 0.55);
+                "
+              >
+                <span>Status: Connection Secure</span><span>Ping: 42ms</span>
+              </div>
+              <div
+                class="h-1 rounded-full overflow-hidden"
+                style="background: rgba(52, 211, 153, 0.1)"
+              >
+                <div
+                  class="h-full rounded-full"
+                  style="
+                    width: 75%;
+                    background: #34d399;
+                    box-shadow: 0 0 8px #34d399;
+                  "
+                ></div>
+              </div>
+            </div>
+            <div
+              class="font-fantasy space-y-1 text-xs"
+              style="color: rgba(52, 211, 153, 0.75)"
+            >
+              <p id="terminal-line-1" class="animate-pulse">
+                &gt; Fetching occurrence data...
+              </p>
+              <p>&gt; Species: Vulpes vulpes</p>
+              <p>&gt; Filter: hasImage = true</p>
+              <p>&gt; Filter: qualityGrade = RESEARCH</p>
+              <p>&gt; Found 1,422,903 records.</p>
+              <p>&gt; Syncing image CDN...</p>
+              <p>&gt; Done.<span class="cursor-blink"></span></p>
+            </div>
+            <div
+              class="flex items-center gap-3 font-fantasy font-bold"
+              style="color: #34d399; font-size: 1.1rem"
+            >
+              <i class="ph-bold ph-globe" style="font-size: 1.8rem"></i>
+              <span>GBIF NETWORK</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── BACK BUTTON ── -->
+      <div class="mt-24 flex justify-center reveal">
+        <a
+          href="more.html"
+          id="back-more-btn"
+          class="group relative px-10 py-3 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm text-sm font-fantasy tracking-widest overflow-hidden transition-all duration-500 hover:border-fox-orange hover:shadow-[0_0_30px_rgba(255,140,66,0.3)]"
+        >
+          <span
+            class="relative z-10 group-hover:text-fox-orange transition-colors flex items-center gap-2"
+            ><i class="ph-bold ph-arrow-left"></i> BACK TO MORE</span
+          >
+        </a>
+      </div>
+    </main>
+
+    <!-- ── FOOTER (identical to more.html) ── -->
+    <footer
+      class="relative z-20 bg-black py-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center px-12"
+    >
+      <div
+        class="font-fantasy text-xl font-bold tracking-widest text-white/20 mb-4 md:mb-0"
+      >
+        FOX<span class="text-fox-orange">.</span>
+      </div>
+      <p
+        class="text-gray-700 font-body text-xs tracking-[0.15em] uppercase text-center mb-4 md:mb-0"
+      >
+        © 2026 The Frozen Forest. Crafted for educational purposes.
+      </p>
+      <div class="flex gap-8">
+        <a
+          href="#"
+          class="text-gray-700 hover:text-fox-orange transition-colors font-body text-xs tracking-[0.1em] uppercase"
+          >Terms of Observation</a
+        >
+        <a
+          href="#"
+          class="text-gray-700 hover:text-fox-orange transition-colors font-body text-xs tracking-[0.1em] uppercase"
+          >Privacy</a
+        >
+      </div>
+    </footer>
+
+    <script src="../js/gallery.js" defer></script>
+  </body>
 </html>

@@ -1,446 +1,887 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deeper Knowledge | Fox.</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Deeper Knowledge | Fox.</title>
+    <!-- Same fonts as index.html -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lato:wght@300;400&family=Pinyon+Script&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- Same fonts as index.html -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lato:wght@300;400&family=Pinyon+Script&display=swap"
-    rel="stylesheet" />
+    <!-- Tailwind CDN (karena output.css hanya compile class dari index.html) -->
+    <link rel="stylesheet" href="../dist/output.css" />
 
-  <!-- Tailwind CDN (karena output.css hanya compile class dari index.html) -->
-  <link rel="stylesheet" href="../dist/output.css" />
+    <!-- Favicon emoji (paling simpel, tidak perlu file) -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦊</text></svg>"
+    />
+    <!-- Fox Facts cinematic styles -->
+    <style>
+      .ff-speed-card:hover .ff-speed-img {
+        transform: scale(1) !important;
+        opacity: 0.62 !important;
+      }
 
-  <!-- Favicon emoji (paling simpel, tidak perlu file) -->
-  <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦊</text></svg>" />
-  <!-- Fox Facts cinematic styles -->
-  <style>
-    .ff-speed-card:hover .ff-speed-img {
-      transform: scale(1) !important;
-      opacity: 0.62 !important;
-    }
+      .ff-speed-card:hover {
+        border-color: rgba(255, 140, 66, 0.4) !important;
+        box-shadow: 0 0 40px rgba(255, 140, 66, 0.08);
+      }
 
-    .ff-speed-card:hover {
-      border-color: rgba(255, 140, 66, 0.4) !important;
-      box-shadow: 0 0 40px rgba(255, 140, 66, 0.08);
-    }
+      .ff-range-card:hover .ff-range-img {
+        opacity: 0.35 !important;
+      }
 
-    .ff-range-card:hover .ff-range-img {
-      opacity: 0.35 !important;
-    }
+      .ff-stat-card {
+        transition:
+          border-color 0.5s ease,
+          box-shadow 0.5s ease;
+      }
 
-    .ff-stat-card {
-      transition: border-color .5s ease, box-shadow .5s ease;
-    }
+      .ff-stat-card:hover {
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+      }
 
-    .ff-stat-card:hover {
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-    }
+      .ff-stat-purple:hover {
+        border-color: rgba(167, 139, 250, 0.35) !important;
+      }
 
-    .ff-stat-purple:hover {
-      border-color: rgba(167, 139, 250, 0.35) !important;
-    }
+      .ff-stat-orange:hover {
+        border-color: rgba(255, 140, 66, 0.35) !important;
+      }
 
-    .ff-stat-orange:hover {
-      border-color: rgba(255, 140, 66, 0.35) !important;
-    }
+      .ff-stat-gold:hover {
+        border-color: rgba(210, 163, 60, 0.35) !important;
+      }
 
-    .ff-stat-gold:hover {
-      border-color: rgba(210, 163, 60, 0.35) !important;
-    }
+      .ff-hearing:hover {
+        border-color: rgba(96, 165, 250, 0.35) !important;
+      }
+    </style>
+  </head>
 
-    .ff-hearing:hover {
-      border-color: rgba(96, 165, 250, 0.35) !important;
-    }
-  </style>
-</head>
+  <body class="bg-midnight-900 text-white font-body overflow-x-hidden">
+    <!-- Stars & Snow (same as index.html) -->
+    <div
+      id="star-container"
+      class="fixed inset-0 z-0 opacity-60 pointer-events-none"
+    ></div>
+    <div
+      id="snow-container"
+      class="fixed inset-0 z-10 pointer-events-none"
+    ></div>
 
-<body class="bg-midnight-900 text-white font-body overflow-x-hidden">
+    <!-- Page overlay -->
+    <div id="page-overlay"></div>
 
-  <!-- Stars & Snow (same as index.html) -->
-  <div id="star-container" class="fixed inset-0 z-0 opacity-60 pointer-events-none"></div>
-  <div id="snow-container" class="fixed inset-0 z-10 pointer-events-none"></div>
+    <!-- ── NAV (same structure as index.html) ── -->
+    <nav
+      class="fixed w-full z-50 top-0 px-8 py-6 flex justify-between items-center bg-gradient-to-b from-midnight-900/90 to-transparent opacity-0 animate-fade-up"
+      style="animation-delay: 0.5s"
+    >
+      <a
+        href="../index.html"
+        id="logo-link"
+        class="text-xl font-fantasy font-bold tracking-widest text-white hover:text-fox-orange transition-colors duration-300"
+      >
+        FOX<span class="text-fox-orange">.</span>
+      </a>
+      <ul
+        class="hidden md:flex space-x-8 text-xs tracking-[0.2em] uppercase text-white/70"
+      >
+        <li class="hover:text-fox-orange transition-all cursor-pointer">
+          <a href="../index.html#hero">Home</a>
+        </li>
+        <li class="hover:text-fox-orange transition-all cursor-pointer">
+          <a href="../index.html#biography">Biography</a>
+        </li>
+        <li class="hover:text-fox-orange transition-all cursor-pointer">
+          <a href="../index.html#documentary">Documentary</a>
+        </li>
+        <li class="hover:text-fox-orange transition-all cursor-pointer">
+          <a href="../index.html#habitat">Habitat</a>
+        </li>
+        <li class="hover:text-fox-orange transition-all cursor-pointer">
+          <a href="../index.html#population">Population</a>
+        </li>
+      </ul>
+    </nav>
 
-  <!-- Page overlay -->
-  <div id="page-overlay"></div>
-
-  <!-- ── NAV (same structure as index.html) ── -->
-  <nav
-    class="fixed w-full z-50 top-0 px-8 py-6 flex justify-between items-center bg-gradient-to-b from-midnight-900/90 to-transparent opacity-0 animate-fade-up"
-    style="animation-delay:.5s">
-    <a href="../index.html" id="logo-link"
-      class="text-xl font-fantasy font-bold tracking-widest text-white hover:text-fox-orange transition-colors duration-300">
-      FOX<span class="text-fox-orange">.</span>
-    </a>
-    <ul class="hidden md:flex space-x-8 text-xs tracking-[0.2em] uppercase text-white/70">
-      <li class="hover:text-fox-orange transition-all cursor-pointer"><a href="../index.html#hero">Home</a></li>
-      <li class="hover:text-fox-orange transition-all cursor-pointer"><a href="../index.html#biography">Biography</a>
-      </li>
-      <li class="hover:text-fox-orange transition-all cursor-pointer"><a
-          href="../index.html#documentary">Documentary</a></li>
-      <li class="hover:text-fox-orange transition-all cursor-pointer"><a href="../index.html#habitat">Habitat</a></li>
-      <li class="hover:text-fox-orange transition-all cursor-pointer"><a href="../index.html#population">Population</a>
-      </li>
-    </ul>
-  </nav>
-
-  <main class="relative">
-
-    <!-- ══════════════════════════════════════
+    <main class="relative">
+      <!-- ══════════════════════════════════════
          HERO
     ══════════════════════════════════════ -->
-    <section class="relative h-screen flex flex-col items-center justify-center overflow-hidden">
-
-      <!-- Background image (pakai gambar lokal) -->
-      <div class="absolute inset-0 z-0">
-        <img src="../assets/image/wp2652335-fox-wallpaper.jpg" alt="Fox forest"
-          class="w-full h-full object-cover opacity-25" />
-        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_40%,rgba(30,50,120,0.3),transparent_70%)]">
+      <section
+        class="relative h-screen flex flex-col items-center justify-center overflow-hidden"
+      >
+        <!-- Background image (pakai gambar lokal) -->
+        <div class="absolute inset-0 z-0">
+          <img
+            src="../assets/image/wp2652335-fox-wallpaper.jpg"
+            alt="Fox forest"
+            class="w-full h-full object-cover opacity-25"
+          />
+          <div
+            class="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_40%,rgba(30,50,120,0.3),transparent_70%)]"
+          ></div>
+          <div
+            class="absolute inset-0 bg-gradient-to-b from-midnight-900/50 via-transparent to-midnight-900"
+          ></div>
         </div>
-        <div class="absolute inset-0 bg-gradient-to-b from-midnight-900/50 via-transparent to-midnight-900"></div>
-      </div>
 
-      <!-- Content -->
-      <div class="relative z-20 text-center px-6">
-        <span
-          class="font-fantasy tracking-[0.4em] text-fox-orange uppercase text-xs mb-6 block opacity-0 animate-fade-up"
-          style="animation-delay:.6s">Archive 024</span>
-        <h1
-          class="font-fantasy text-6xl md:text-8xl font-black tracking-tight italic text-white opacity-0 animate-fade-up"
-          style="animation-delay:.9s; text-shadow:0 0 40px rgba(255,185,95,0.3)">
-          DEEPER KNOWLEDGE
-        </h1>
-        <p class="font-body text-gray-400 mt-6 max-w-2xl mx-auto text-base leading-relaxed font-light opacity-0 animate-fade-up"
-          style="animation-delay:1.2s">
-          Beyond the visible silhouette lies a master of adaptation. Explore the intricate
-          biology and the vast territories of the world's most resilient predator.
-        </p>
-      </div>
+        <!-- Content -->
+        <div class="relative z-20 text-center px-6">
+          <span
+            class="font-fantasy tracking-[0.4em] text-fox-orange uppercase text-xs mb-6 block opacity-0 animate-fade-up"
+            style="animation-delay: 0.6s"
+            >Archive 024</span
+          >
+          <h1
+            class="font-fantasy text-6xl md:text-8xl font-black tracking-tight italic text-white opacity-0 animate-fade-up"
+            style="
+              animation-delay: 0.9s;
+              text-shadow: 0 0 40px rgba(255, 185, 95, 0.3);
+            "
+          >
+            DEEPER KNOWLEDGE
+          </h1>
+          <p
+            class="font-body text-gray-400 mt-6 max-w-2xl mx-auto text-base leading-relaxed font-light opacity-0 animate-fade-up"
+            style="animation-delay: 1.2s"
+          >
+            Beyond the visible silhouette lies a master of adaptation. Explore
+            the intricate biology and the vast territories of the world's most
+            resilient predator.
+          </p>
+        </div>
+      </section>
 
-    </section>
-
-    <!-- ══════════════════════════════════════
+      <!-- ══════════════════════════════════════
          FOX FACTS — Cinematic Redesign
     ══════════════════════════════════════ -->
-    <section class="py-24 px-6 max-w-7xl mx-auto relative z-20">
-
-      <!-- Section header -->
-      <div class="flex items-end justify-between mb-16 reveal">
-        <div class="relative">
-          <span class="absolute pointer-events-none select-none font-fantasy font-black"
-            style="top:-2.5rem;left:0;font-size:8rem;line-height:1;color:rgba(255,255,255,0.03)">01</span>
-          <h2 class="font-fantasy text-4xl font-bold tracking-widest relative">FOX FACTS</h2>
-          <div class="h-0.5 w-20 bg-fox-orange mt-4"></div>
-        </div>
-        <div class="hidden md:block text-gray-600 font-fantasy text-xs tracking-[0.2em] uppercase">
-          Categorical Data / Vulpes vulpes
-        </div>
-      </div>
-
-      <!-- Row 1: Hero image + hearing stat -->
-      <div class="grid grid-cols-1 lg:grid-cols-5 gap-5 mb-5 reveal" style="transition-delay:100ms">
-
-        <!-- SPEED: image card (3/5) -->
-        <div class="ff-speed-card lg:col-span-3 relative rounded-2xl overflow-hidden cursor-default"
-          style="height:320px; border:1px solid rgba(255,255,255,0.06); transition:border-color .6s ease">
-          <img class="ff-speed-img absolute inset-0 w-full h-full object-cover" src="../assets/image/Fox_standing.jpg"
-            alt="Fox Speed" style="opacity:0.42; transform:scale(1.09); transition:all 1.2s ease" />
-          <div class="absolute inset-0"
-            style="background:linear-gradient(to top, black 20%, rgba(0,0,0,0.45) 55%, transparent)"></div>
-          <div class="absolute inset-0" style="background:linear-gradient(to right, rgba(0,0,0,0.55), transparent)">
+      <section class="py-24 px-6 max-w-7xl mx-auto relative z-20">
+        <!-- Section header -->
+        <div class="flex items-end justify-between mb-16 reveal">
+          <div class="relative">
+            <span
+              class="absolute pointer-events-none select-none font-fantasy font-black"
+              style="
+                top: -2.5rem;
+                left: 0;
+                font-size: 8rem;
+                line-height: 1;
+                color: rgba(255, 255, 255, 0.03);
+              "
+              >01</span
+            >
+            <h2
+              class="font-fantasy text-4xl font-bold tracking-widest relative"
+            >
+              FOX FACTS
+            </h2>
+            <div class="h-0.5 w-20 bg-fox-orange mt-4"></div>
           </div>
-          <!-- Content -->
-          <div class="absolute bottom-0 left-0 p-8">
-            <span class="block font-fantasy uppercase tracking-[0.3em] mb-2"
-              style="font-size:10px;color:rgba(255,140,66,0.65)">Top Speed — Short Burst</span>
-            <div class="flex items-baseline gap-3 mb-3">
-              <span class="font-fantasy font-black text-white leading-none"
-                style="font-size:5.5rem;text-shadow:0 0 60px rgba(255,140,66,0.55)">50</span>
-              <span class="font-fantasy font-bold text-fox-orange" style="font-size:1.8rem">km/h</span>
-            </div>
-            <p style="color:#9ca3af;font-size:.875rem;font-weight:300;max-width:280px;line-height:1.7">
-              A master of evasion — in short bursts, outrunning most midsize predators across any terrain.</p>
+          <div
+            class="hidden md:block text-gray-600 font-fantasy text-xs tracking-[0.2em] uppercase"
+          >
+            Categorical Data / Vulpes vulpes
           </div>
         </div>
 
-        <!-- HEARING: blueprint stat card (2/5) -->
-        <div class="ff-hearing lg:col-span-2 relative rounded-2xl p-8 flex flex-col justify-between overflow-hidden"
-          style="height:320px;background:rgba(10,18,35,0.8);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.06);transition:border-color .5s ease">
-          <!-- Concentric ring decoration -->
-          <div class="absolute pointer-events-none"
-            style="top:-40px;right:-40px;width:220px;height:220px;border-radius:50%;border:1px solid rgba(96,165,250,0.1)">
-          </div>
-          <div class="absolute pointer-events-none"
-            style="top:-16px;right:-16px;width:162px;height:162px;border-radius:50%;border:1px solid rgba(96,165,250,0.09)">
-          </div>
-          <div class="absolute pointer-events-none"
-            style="top:8px;right:8px;width:104px;height:104px;border-radius:50%;border:1px solid rgba(96,165,250,0.08)">
-          </div>
-          <div class="absolute pointer-events-none"
-            style="top:26px;right:26px;width:68px;height:68px;border-radius:50%;background:rgba(96,165,250,0.05)"></div>
-          <div>
-            <span class="block font-fantasy uppercase tracking-[0.3em] mb-6"
-              style="font-size:10px;color:rgba(96,165,250,0.6)">Hearing Range</span>
-            <div class="flex items-baseline gap-2 mb-1">
-              <span class="font-fantasy font-black leading-none" style="font-size:5rem;color:#60A5FA">65</span>
-              <span class="font-fantasy" style="font-size:1.5rem;color:rgba(96,165,250,0.7)">kHz</span>
-            </div>
-            <span class="font-fantasy uppercase tracking-[0.2em]" style="font-size:9px;color:rgba(96,165,250,0.4)">vs
-              Human 20 kHz</span>
-          </div>
-          <p style="color:#6b7280;font-size:.875rem;font-weight:300;line-height:1.7">
-            Detects prey scurrying underground or beneath compacted snow — metres below the surface.</p>
-        </div>
-      </div>
-
-      <!-- Row 2: 3 stat cards -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5 reveal" style="transition-delay:150ms">
-
-        <!-- SUBSPECIES -->
-        <div class="ff-stat-card ff-stat-purple relative rounded-2xl p-8 overflow-hidden"
-          style="background:rgba(10,18,35,0.8);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.05)">
-          <div class="absolute pointer-events-none select-none font-fantasy font-black"
-            style="bottom:-24px;right:-8px;font-size:9rem;line-height:1;color:rgba(167,139,250,0.05)">45</div>
-          <span class="block font-fantasy uppercase tracking-[0.3em] mb-5"
-            style="font-size:10px;color:rgba(167,139,250,0.6)">Subspecies</span>
-          <div class="font-fantasy font-black leading-none mb-4" style="font-size:4.2rem;color:#A78BFA">45</div>
-          <div class="mb-5" style="height:1px;background:rgba(167,139,250,0.18)"></div>
-          <p style="color:#6b7280;font-size:.875rem;font-weight:300;line-height:1.7">Each uniquely evolved for its
-            specific ecological niche — from frozen tundra to desert edge.</p>
-        </div>
-
-        <!-- ACTIVITY -->
-        <div class="ff-stat-card ff-stat-orange relative rounded-2xl p-8 overflow-hidden"
-          style="background:rgba(10,18,35,0.8);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.05)">
-          <!-- Ambient glow -->
-          <div class="absolute pointer-events-none"
-            style="top:-20px;right:-20px;width:120px;height:120px;border-radius:50%;background:rgba(255,140,66,0.06);filter:blur(35px)">
-          </div>
-          <span class="block font-fantasy uppercase tracking-[0.3em] mb-5"
-            style="font-size:10px;color:rgba(255,140,66,0.6)">Peak Activity</span>
-          <!-- Minimalist ring icon -->
-          <div class="relative mb-5" style="width:54px;height:54px">
-            <div class="absolute inset-0" style="border-radius:50%;border:2px solid rgba(255,140,66,0.35)"></div>
-            <div class="absolute" style="inset:9px;border-radius:50%;border:1px solid rgba(255,140,66,0.22)"></div>
-            <div class="absolute" style="inset:18px;border-radius:50%;background:rgba(255,140,66,0.22)"></div>
-          </div>
-          <div class="font-fantasy font-bold text-white" style="font-size:1.55rem">Crepuscular</div>
-          <p style="color:#6b7280;font-size:.875rem;font-weight:300;line-height:1.7;margin-top:.75rem">
-            Most active at twilight — dawn and dusk — when light and shadow both belong to the fox.</p>
-        </div>
-
-        <!-- SURVIVAL TEMP -->
-        <div class="ff-stat-card ff-stat-gold relative rounded-2xl p-8 overflow-hidden"
-          style="background:rgba(10,18,35,0.8);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.05)">
-          <span class="block font-fantasy uppercase tracking-[0.3em] mb-5"
-            style="font-size:10px;color:rgba(210,163,60,0.6)">Survival Temperature</span>
-          <div class="font-fantasy font-black leading-none mb-1" style="font-size:3.5rem;color:#D2A33C">−50°C</div>
-          <div class="font-fantasy mb-5" style="font-size:1.1rem;color:rgba(210,163,60,0.5)">to +40°C</div>
-          <div class="mb-5" style="height:1px;background:rgba(210,163,60,0.15)"></div>
-          <p style="color:#6b7280;font-size:.875rem;font-weight:300;line-height:1.7">
-            Adaptable omnivores surviving from the high Arctic to the edge of the Sahara Desert.</p>
-        </div>
-      </div>
-
-      <!-- Row 3: Full-width editorial range card -->
-      <div class="ff-range-card reveal" style="transition-delay:200ms">
-        <div class="relative rounded-2xl overflow-hidden" style="height:220px">
-          <img class="ff-range-img absolute inset-0 w-full h-full object-cover object-top"
-            src="../assets/image/wp2652335-fox-wallpaper.jpg" alt="Fox Range"
-            style="opacity:0.22;transition:opacity .7s ease" />
-          <div class="absolute inset-0"
-            style="background:linear-gradient(to right, #0f172a 38%, rgba(15,23,42,0.8) 65%, rgba(15,23,42,0.5))"></div>
-          <!-- Editorial accent -->
-          <div class="absolute inset-y-0 left-0"
-            style="width:3px;background:linear-gradient(to bottom,transparent,rgba(255,140,66,0.6),transparent)"></div>
-          <div class="absolute bottom-0 left-0 right-0"
-            style="height:1px;background:linear-gradient(to right,rgba(255,140,66,0.35),transparent 55%)"></div>
-          <!-- Content -->
-          <div class="absolute inset-0 flex items-center px-10 gap-14">
-            <div style="flex-shrink:0">
-              <div class="font-fantasy uppercase tracking-[0.3em] mb-2"
-                style="font-size:10px;color:rgba(255,140,66,0.65)">Global Range</div>
-              <div class="flex items-baseline gap-2">
-                <span class="font-fantasy font-black text-white leading-none" style="font-size:4.5rem">70M</span>
-                <span class="font-fantasy font-bold text-fox-orange" style="font-size:1.4rem">km²</span>
+        <!-- Row 1: Hero image + hearing stat -->
+        <div
+          class="grid grid-cols-1 lg:grid-cols-5 gap-5 mb-5 reveal"
+          style="transition-delay: 100ms"
+        >
+          <!-- SPEED: image card (3/5) -->
+          <div
+            class="ff-speed-card lg:col-span-3 relative rounded-2xl overflow-hidden cursor-default"
+            style="
+              height: 320px;
+              border: 1px solid rgba(255, 255, 255, 0.06);
+              transition: border-color 0.6s ease;
+            "
+          >
+            <img
+              class="ff-speed-img absolute inset-0 w-full h-full object-cover"
+              src="../assets/image/Fox_standing.jpg"
+              alt="Fox Speed"
+              style="
+                opacity: 0.42;
+                transform: scale(1.09);
+                transition: all 1.2s ease;
+              "
+            />
+            <div
+              class="absolute inset-0"
+              style="
+                background: linear-gradient(
+                  to top,
+                  black 20%,
+                  rgba(0, 0, 0, 0.45) 55%,
+                  transparent
+                );
+              "
+            ></div>
+            <div
+              class="absolute inset-0"
+              style="
+                background: linear-gradient(
+                  to right,
+                  rgba(0, 0, 0, 0.55),
+                  transparent
+                );
+              "
+            ></div>
+            <!-- Content -->
+            <div class="absolute bottom-0 left-0 p-8">
+              <span
+                class="block font-fantasy uppercase tracking-[0.3em] mb-2"
+                style="font-size: 10px; color: rgba(255, 140, 66, 0.65)"
+                >Top Speed — Short Burst</span
+              >
+              <div class="flex items-baseline gap-3 mb-3">
+                <span
+                  class="font-fantasy font-black text-white leading-none"
+                  style="
+                    font-size: 5.5rem;
+                    text-shadow: 0 0 60px rgba(255, 140, 66, 0.55);
+                  "
+                  >50</span
+                >
+                <span
+                  class="font-fantasy font-bold text-fox-orange"
+                  style="font-size: 1.8rem"
+                  >km/h</span
+                >
               </div>
-            </div>
-            <div style="width:1px;height:72px;background:rgba(255,255,255,0.1);flex-shrink:0" class="hidden md:block">
-            </div>
-            <div class="hidden md:block">
-              <h4 class="font-fantasy text-white mb-2" style="font-size:1.15rem">Widest Geographic Distribution</h4>
-              <p style="color:#6b7280;font-size:.875rem;font-weight:300;line-height:1.75;max-width:480px">
-                The widest natural range of any wild land mammal on Earth. Across 4 continents,
-                45 subspecies have adapted to every climate zone — from Arctic tundra
-                to the North African savanna edge.</p>
+              <p
+                style="
+                  color: #9ca3af;
+                  font-size: 0.875rem;
+                  font-weight: 300;
+                  max-width: 280px;
+                  line-height: 1.7;
+                "
+              >
+                A master of evasion — in short bursts, outrunning most midsize
+                predators across any terrain.
+              </p>
             </div>
           </div>
-        </div>
-      </div>
 
-    </section>
-
-    <!-- ══════════════════════════════════════
-         THE GLOBAL FAMILY
-    ══════════════════════════════════════ -->
-    <section class="py-24 relative z-20" style="background:rgba(15,23,42,0.3)">
-      <div class="max-w-7xl mx-auto px-8">
-
-        <div class="mb-16 text-center reveal">
-          <h2 class="font-fantasy text-4xl font-bold tracking-widest mb-4">THE GLOBAL FAMILY</h2>
-          <p class="text-gray-500 font-light text-sm tracking-widest">Three distinct paths of evolution across the
-            continents.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 reveal" style="transition-delay:150ms">
-
-          <!-- Red Fox -->
-          <div class="flex flex-col items-center text-center group">
+          <!-- HEARING: blueprint stat card (2/5) -->
+          <div
+            class="ff-hearing lg:col-span-2 relative rounded-2xl p-8 flex flex-col justify-between overflow-hidden"
+            style="
+              height: 320px;
+              background: rgba(10, 18, 35, 0.8);
+              backdrop-filter: blur(24px);
+              border: 1px solid rgba(255, 255, 255, 0.06);
+              transition: border-color 0.5s ease;
+            "
+          >
+            <!-- Concentric ring decoration -->
             <div
-              class="w-44 h-44 rounded-2xl border border-fox-orange/20 group-hover:border-fox-orange/60 transition-all duration-700 mb-8 overflow-hidden species-wrap">
-              <img src="../assets/image/red-fox.jpg" alt="Red Fox"
-                class="w-full h-full object-cover object-[35%_top] species-img" />
-            </div>
-            <h4 class="font-fantasy text-2xl mb-1">Red Fox</h4>
-            <span class="font-fantasy text-xs tracking-[0.2em] text-fox-orange mb-4 block uppercase">Vulpes
-              Vulpes</span>
-            <p class="text-sm text-gray-400 font-light leading-relaxed max-w-xs">The largest of the true foxes and the
-              most geographically widespread of all members of the order Carnivora.</p>
-          </div>
-
-          <!-- Arctic Fox -->
-          <div class="flex flex-col items-center text-center group">
+              class="absolute pointer-events-none"
+              style="
+                top: -40px;
+                right: -40px;
+                width: 220px;
+                height: 220px;
+                border-radius: 50%;
+                border: 1px solid rgba(96, 165, 250, 0.1);
+              "
+            ></div>
             <div
-              class="w-44 h-44 rounded-2xl border border-blue-400/20 group-hover:border-blue-400/60 transition-all duration-700 mb-8 overflow-hidden species-wrap">
-              <img src="../assets/image/Arctic_Fox3.jpg" alt="Arctic Fox"
-                class="w-full h-full object-cover species-img" />
-            </div>
-            <h4 class="font-fantasy text-2xl mb-1">Arctic Fox</h4>
-            <span class="font-fantasy text-xs tracking-[0.2em] text-blue-400 mb-4 block uppercase">Vulpes Lagopus</span>
-            <p class="text-sm text-gray-400 font-light leading-relaxed max-w-xs">Built for extreme cold, featuring a
-              thick white coat that changes color with the seasons for camouflage.</p>
-          </div>
-
-          <!-- Fennec Fox -->
-          <div class="flex flex-col items-center text-center group">
+              class="absolute pointer-events-none"
+              style="
+                top: -16px;
+                right: -16px;
+                width: 162px;
+                height: 162px;
+                border-radius: 50%;
+                border: 1px solid rgba(96, 165, 250, 0.09);
+              "
+            ></div>
             <div
-              class="w-44 h-44 rounded-2xl border border-fox-gold/20 group-hover:border-fox-gold/60 transition-all duration-700 mb-8 overflow-hidden species-wrap">
-              <img src="../assets/image/images.jpg" alt="Fennec Fox" class="w-full h-full object-cover species-img" />
-            </div>
-            <h4 class="font-fantasy text-2xl mb-1">Fennec Fox</h4>
-            <span class="font-fantasy text-xs tracking-[0.2em] text-fox-gold mb-4 block uppercase">Vulpes Zerda</span>
-            <p class="text-sm text-gray-400 font-light leading-relaxed max-w-xs">The smallest species of canid in the
-              world, renowned for its unusually large ears used to dissipate heat.</p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ══════════════════════════════════════
-         THERMAL ADAPTATION
-    ══════════════════════════════════════ -->
-    <section class="py-24 px-8 max-w-7xl mx-auto relative z-20">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-
-        <!-- Left: text + bars -->
-        <div class="reveal">
-          <h2 class="font-fantasy text-4xl font-bold italic mb-6 tracking-widest">THERMAL ADAPTATION</h2>
-          <p class="font-body text-gray-400 leading-relaxed mb-10 font-light">
-            Foxes are masters of thermodynamic regulation. From the sub-zero tundra
-            to the searing Sahara, their metabolic systems adjust to maintain core stability.
-          </p>
-
-          <!-- Arctic bar -->
-          <div class="mb-10">
-            <div class="flex justify-between font-fantasy text-xs tracking-[0.2em] uppercase mb-3">
-              <span class="text-white/80">Arctic Tundra</span>
-              <span class="text-blue-400">-50°C Average Low</span>
-            </div>
-            <div class="w-full h-3 bg-white/5 rounded-full overflow-hidden">
-              <div class="h-full rounded-full bar-arctic"
-                style="width:90%; background:linear-gradient(90deg,#1d4ed8,#60A5FA); box-shadow:0 0 15px rgba(96,165,250,0.3)">
+              class="absolute pointer-events-none"
+              style="
+                top: 8px;
+                right: 8px;
+                width: 104px;
+                height: 104px;
+                border-radius: 50%;
+                border: 1px solid rgba(96, 165, 250, 0.08);
+              "
+            ></div>
+            <div
+              class="absolute pointer-events-none"
+              style="
+                top: 26px;
+                right: 26px;
+                width: 68px;
+                height: 68px;
+                border-radius: 50%;
+                background: rgba(96, 165, 250, 0.05);
+              "
+            ></div>
+            <div>
+              <span
+                class="block font-fantasy uppercase tracking-[0.3em] mb-6"
+                style="font-size: 10px; color: rgba(96, 165, 250, 0.6)"
+                >Hearing Range</span
+              >
+              <div class="flex items-baseline gap-2 mb-1">
+                <span
+                  class="font-fantasy font-black leading-none"
+                  style="font-size: 5rem; color: #60a5fa"
+                  >65</span
+                >
+                <span
+                  class="font-fantasy"
+                  style="font-size: 1.5rem; color: rgba(96, 165, 250, 0.7)"
+                  >kHz</span
+                >
               </div>
+              <span
+                class="font-fantasy uppercase tracking-[0.2em]"
+                style="font-size: 9px; color: rgba(96, 165, 250, 0.4)"
+                >vs Human 20 kHz</span
+              >
             </div>
-          </div>
-
-          <!-- Temperate bar -->
-          <div>
-            <div class="flex justify-between font-fantasy text-xs tracking-[0.2em] uppercase mb-3">
-              <span class="text-white/80">Temperate Forest</span>
-              <span class="text-fox-orange">15°C Average Mid</span>
-            </div>
-            <div class="w-full h-3 bg-white/5 rounded-full overflow-hidden">
-              <div class="h-full rounded-full bar-ember"
-                style="width:55%; background:linear-gradient(90deg,#92400e,#FF8C42); box-shadow:0 0 15px rgba(255,140,66,0.3)">
-              </div>
-            </div>
+            <p
+              style="
+                color: #6b7280;
+                font-size: 0.875rem;
+                font-weight: 300;
+                line-height: 1.7;
+              "
+            >
+              Detects prey scurrying underground or beneath compacted snow —
+              metres below the surface.
+            </p>
           </div>
         </div>
 
-        <!-- Right: image card -->
-        <div class="reveal" style="transition-delay:200ms">
-          <div class="relative glass-card rounded-2xl overflow-hidden border border-white/5 group">
-            <img src="../assets/image/Fox_standing.jpg" alt="Fox in forest"
-              class="w-full aspect-square object-cover opacity-60 group-hover:opacity-90 group-hover:scale-105 transition-all duration-1000" />
+        <!-- Row 2: 3 stat cards -->
+        <div
+          class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5 reveal"
+          style="transition-delay: 150ms"
+        >
+          <!-- SUBSPECIES -->
+          <div
+            class="ff-stat-card ff-stat-purple relative rounded-2xl p-8 overflow-hidden"
+            style="
+              background: rgba(10, 18, 35, 0.8);
+              backdrop-filter: blur(24px);
+              border: 1px solid rgba(255, 255, 255, 0.05);
+            "
+          >
             <div
-              class="absolute inset-0 bg-gradient-to-t from-midnight-900 via-midnight-900/40 to-transparent flex items-end p-8">
-              <div>
-                <h4 class="font-fantasy text-2xl text-white mb-2">Climate Resilience</h4>
-                <p class="text-sm text-gray-400 font-light">Data collected from 14 global wildlife observation stations.
+              class="absolute pointer-events-none select-none font-fantasy font-black"
+              style="
+                bottom: -24px;
+                right: -8px;
+                font-size: 9rem;
+                line-height: 1;
+                color: rgba(167, 139, 250, 0.05);
+              "
+            >
+              45
+            </div>
+            <span
+              class="block font-fantasy uppercase tracking-[0.3em] mb-5"
+              style="font-size: 10px; color: rgba(167, 139, 250, 0.6)"
+              >Subspecies</span
+            >
+            <div
+              class="font-fantasy font-black leading-none mb-4"
+              style="font-size: 4.2rem; color: #a78bfa"
+            >
+              45
+            </div>
+            <div
+              class="mb-5"
+              style="height: 1px; background: rgba(167, 139, 250, 0.18)"
+            ></div>
+            <p
+              style="
+                color: #6b7280;
+                font-size: 0.875rem;
+                font-weight: 300;
+                line-height: 1.7;
+              "
+            >
+              Each uniquely evolved for its specific ecological niche — from
+              frozen tundra to desert edge.
+            </p>
+          </div>
+
+          <!-- ACTIVITY -->
+          <div
+            class="ff-stat-card ff-stat-orange relative rounded-2xl p-8 overflow-hidden"
+            style="
+              background: rgba(10, 18, 35, 0.8);
+              backdrop-filter: blur(24px);
+              border: 1px solid rgba(255, 255, 255, 0.05);
+            "
+          >
+            <!-- Ambient glow -->
+            <div
+              class="absolute pointer-events-none"
+              style="
+                top: -20px;
+                right: -20px;
+                width: 120px;
+                height: 120px;
+                border-radius: 50%;
+                background: rgba(255, 140, 66, 0.06);
+                filter: blur(35px);
+              "
+            ></div>
+            <span
+              class="block font-fantasy uppercase tracking-[0.3em] mb-5"
+              style="font-size: 10px; color: rgba(255, 140, 66, 0.6)"
+              >Peak Activity</span
+            >
+            <!-- Minimalist ring icon -->
+            <div class="relative mb-5" style="width: 54px; height: 54px">
+              <div
+                class="absolute inset-0"
+                style="
+                  border-radius: 50%;
+                  border: 2px solid rgba(255, 140, 66, 0.35);
+                "
+              ></div>
+              <div
+                class="absolute"
+                style="
+                  inset: 9px;
+                  border-radius: 50%;
+                  border: 1px solid rgba(255, 140, 66, 0.22);
+                "
+              ></div>
+              <div
+                class="absolute"
+                style="
+                  inset: 18px;
+                  border-radius: 50%;
+                  background: rgba(255, 140, 66, 0.22);
+                "
+              ></div>
+            </div>
+            <div
+              class="font-fantasy font-bold text-white"
+              style="font-size: 1.55rem"
+            >
+              Crepuscular
+            </div>
+            <p
+              style="
+                color: #6b7280;
+                font-size: 0.875rem;
+                font-weight: 300;
+                line-height: 1.7;
+                margin-top: 0.75rem;
+              "
+            >
+              Most active at twilight — dawn and dusk — when light and shadow
+              both belong to the fox.
+            </p>
+          </div>
+
+          <!-- SURVIVAL TEMP -->
+          <div
+            class="ff-stat-card ff-stat-gold relative rounded-2xl p-8 overflow-hidden"
+            style="
+              background: rgba(10, 18, 35, 0.8);
+              backdrop-filter: blur(24px);
+              border: 1px solid rgba(255, 255, 255, 0.05);
+            "
+          >
+            <span
+              class="block font-fantasy uppercase tracking-[0.3em] mb-5"
+              style="font-size: 10px; color: rgba(210, 163, 60, 0.6)"
+              >Survival Temperature</span
+            >
+            <div
+              class="font-fantasy font-black leading-none mb-1"
+              style="font-size: 3.5rem; color: #d2a33c"
+            >
+              −50°C
+            </div>
+            <div
+              class="font-fantasy mb-5"
+              style="font-size: 1.1rem; color: rgba(210, 163, 60, 0.5)"
+            >
+              to +40°C
+            </div>
+            <div
+              class="mb-5"
+              style="height: 1px; background: rgba(210, 163, 60, 0.15)"
+            ></div>
+            <p
+              style="
+                color: #6b7280;
+                font-size: 0.875rem;
+                font-weight: 300;
+                line-height: 1.7;
+              "
+            >
+              Adaptable omnivores surviving from the high Arctic to the edge of
+              the Sahara Desert.
+            </p>
+          </div>
+        </div>
+
+        <!-- Row 3: Full-width editorial range card -->
+        <div class="ff-range-card reveal" style="transition-delay: 200ms">
+          <div
+            class="relative rounded-2xl overflow-hidden"
+            style="height: 220px"
+          >
+            <img
+              class="ff-range-img absolute inset-0 w-full h-full object-cover object-top"
+              src="../assets/image/wp2652335-fox-wallpaper.jpg"
+              alt="Fox Range"
+              style="opacity: 0.22; transition: opacity 0.7s ease"
+            />
+            <div
+              class="absolute inset-0"
+              style="
+                background: linear-gradient(
+                  to right,
+                  #0f172a 38%,
+                  rgba(15, 23, 42, 0.8) 65%,
+                  rgba(15, 23, 42, 0.5)
+                );
+              "
+            ></div>
+            <!-- Editorial accent -->
+            <div
+              class="absolute inset-y-0 left-0"
+              style="
+                width: 3px;
+                background: linear-gradient(
+                  to bottom,
+                  transparent,
+                  rgba(255, 140, 66, 0.6),
+                  transparent
+                );
+              "
+            ></div>
+            <div
+              class="absolute bottom-0 left-0 right-0"
+              style="
+                height: 1px;
+                background: linear-gradient(
+                  to right,
+                  rgba(255, 140, 66, 0.35),
+                  transparent 55%
+                );
+              "
+            ></div>
+            <!-- Content -->
+            <div class="absolute inset-0 flex items-center px-10 gap-14">
+              <div style="flex-shrink: 0">
+                <div
+                  class="font-fantasy uppercase tracking-[0.3em] mb-2"
+                  style="font-size: 10px; color: rgba(255, 140, 66, 0.65)"
+                >
+                  Global Range
+                </div>
+                <div class="flex items-baseline gap-2">
+                  <span
+                    class="font-fantasy font-black text-white leading-none"
+                    style="font-size: 4.5rem"
+                    >70M</span
+                  >
+                  <span
+                    class="font-fantasy font-bold text-fox-orange"
+                    style="font-size: 1.4rem"
+                    >km²</span
+                  >
+                </div>
+              </div>
+              <div
+                style="
+                  width: 1px;
+                  height: 72px;
+                  background: rgba(255, 255, 255, 0.1);
+                  flex-shrink: 0;
+                "
+                class="hidden md:block"
+              ></div>
+              <div class="hidden md:block">
+                <h4
+                  class="font-fantasy text-white mb-2"
+                  style="font-size: 1.15rem"
+                >
+                  Widest Geographic Distribution
+                </h4>
+                <p
+                  style="
+                    color: #6b7280;
+                    font-size: 0.875rem;
+                    font-weight: 300;
+                    line-height: 1.75;
+                    max-width: 480px;
+                  "
+                >
+                  The widest natural range of any wild land mammal on Earth.
+                  Across 4 continents, 45 subspecies have adapted to every
+                  climate zone — from Arctic tundra to the North African savanna
+                  edge.
                 </p>
               </div>
             </div>
           </div>
         </div>
+      </section>
 
-      </div>
-    </section>
+      <!-- ══════════════════════════════════════
+         THE GLOBAL FAMILY
+    ══════════════════════════════════════ -->
+      <section
+        class="py-24 relative z-20"
+        style="background: rgba(15, 23, 42, 0.3)"
+      >
+        <div class="max-w-7xl mx-auto px-8">
+          <div class="mb-16 text-center reveal">
+            <h2 class="font-fantasy text-4xl font-bold tracking-widest mb-4">
+              THE GLOBAL FAMILY
+            </h2>
+            <p class="text-gray-500 font-light text-sm tracking-widest">
+              Three distinct paths of evolution across the continents.
+            </p>
+          </div>
 
-    <!-- ══════════════════════════════════════
+          <div
+            class="grid grid-cols-1 md:grid-cols-3 gap-12 reveal"
+            style="transition-delay: 150ms"
+          >
+            <!-- Red Fox -->
+            <div class="flex flex-col items-center text-center group">
+              <div
+                class="w-44 h-44 rounded-2xl border border-fox-orange/20 group-hover:border-fox-orange/60 transition-all duration-700 mb-8 overflow-hidden species-wrap"
+              >
+                <img
+                  src="../assets/image/red-fox.jpg"
+                  alt="Red Fox"
+                  class="w-full h-full object-cover object-[35%_top] species-img"
+                />
+              </div>
+              <h4 class="font-fantasy text-2xl mb-1">Red Fox</h4>
+              <span
+                class="font-fantasy text-xs tracking-[0.2em] text-fox-orange mb-4 block uppercase"
+                >Vulpes Vulpes</span
+              >
+              <p
+                class="text-sm text-gray-400 font-light leading-relaxed max-w-xs"
+              >
+                The largest of the true foxes and the most geographically
+                widespread of all members of the order Carnivora.
+              </p>
+            </div>
+
+            <!-- Arctic Fox -->
+            <div class="flex flex-col items-center text-center group">
+              <div
+                class="w-44 h-44 rounded-2xl border border-blue-400/20 group-hover:border-blue-400/60 transition-all duration-700 mb-8 overflow-hidden species-wrap"
+              >
+                <img
+                  src="../assets/image/Arctic_Fox3.jpg"
+                  alt="Arctic Fox"
+                  class="w-full h-full object-cover species-img"
+                />
+              </div>
+              <h4 class="font-fantasy text-2xl mb-1">Arctic Fox</h4>
+              <span
+                class="font-fantasy text-xs tracking-[0.2em] text-blue-400 mb-4 block uppercase"
+                >Vulpes Lagopus</span
+              >
+              <p
+                class="text-sm text-gray-400 font-light leading-relaxed max-w-xs"
+              >
+                Built for extreme cold, featuring a thick white coat that
+                changes color with the seasons for camouflage.
+              </p>
+            </div>
+
+            <!-- Fennec Fox -->
+            <div class="flex flex-col items-center text-center group">
+              <div
+                class="w-44 h-44 rounded-2xl border border-fox-gold/20 group-hover:border-fox-gold/60 transition-all duration-700 mb-8 overflow-hidden species-wrap"
+              >
+                <img
+                  src="../assets/image/images.jpg"
+                  alt="Fennec Fox"
+                  class="w-full h-full object-cover species-img"
+                />
+              </div>
+              <h4 class="font-fantasy text-2xl mb-1">Fennec Fox</h4>
+              <span
+                class="font-fantasy text-xs tracking-[0.2em] text-fox-gold mb-4 block uppercase"
+                >Vulpes Zerda</span
+              >
+              <p
+                class="text-sm text-gray-400 font-light leading-relaxed max-w-xs"
+              >
+                The smallest species of canid in the world, renowned for its
+                unusually large ears used to dissipate heat.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════
+         THERMAL ADAPTATION
+    ══════════════════════════════════════ -->
+      <section class="py-24 px-8 max-w-7xl mx-auto relative z-20">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <!-- Left: text + bars -->
+          <div class="reveal">
+            <h2
+              class="font-fantasy text-4xl font-bold italic mb-6 tracking-widest"
+            >
+              THERMAL ADAPTATION
+            </h2>
+            <p class="font-body text-gray-400 leading-relaxed mb-10 font-light">
+              Foxes are masters of thermodynamic regulation. From the sub-zero
+              tundra to the searing Sahara, their metabolic systems adjust to
+              maintain core stability.
+            </p>
+
+            <!-- Arctic bar -->
+            <div class="mb-10">
+              <div
+                class="flex justify-between font-fantasy text-xs tracking-[0.2em] uppercase mb-3"
+              >
+                <span class="text-white/80">Arctic Tundra</span>
+                <span class="text-blue-400">-50°C Average Low</span>
+              </div>
+              <div class="w-full h-3 bg-white/5 rounded-full overflow-hidden">
+                <div
+                  class="h-full rounded-full bar-arctic"
+                  style="
+                    width: 90%;
+                    background: linear-gradient(90deg, #1d4ed8, #60a5fa);
+                    box-shadow: 0 0 15px rgba(96, 165, 250, 0.3);
+                  "
+                ></div>
+              </div>
+            </div>
+
+            <!-- Temperate bar -->
+            <div>
+              <div
+                class="flex justify-between font-fantasy text-xs tracking-[0.2em] uppercase mb-3"
+              >
+                <span class="text-white/80">Temperate Forest</span>
+                <span class="text-fox-orange">15°C Average Mid</span>
+              </div>
+              <div class="w-full h-3 bg-white/5 rounded-full overflow-hidden">
+                <div
+                  class="h-full rounded-full bar-ember"
+                  style="
+                    width: 55%;
+                    background: linear-gradient(90deg, #92400e, #ff8c42);
+                    box-shadow: 0 0 15px rgba(255, 140, 66, 0.3);
+                  "
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: image card -->
+          <div class="reveal" style="transition-delay: 200ms">
+            <div
+              class="relative glass-card rounded-2xl overflow-hidden border border-white/5 group"
+            >
+              <img
+                src="../assets/image/Fox_standing.jpg"
+                alt="Fox in forest"
+                class="w-full aspect-square object-cover opacity-60 group-hover:opacity-90 group-hover:scale-105 transition-all duration-1000"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-midnight-900 via-midnight-900/40 to-transparent flex items-end p-8"
+              >
+                <div>
+                  <h4 class="font-fantasy text-2xl text-white mb-2">
+                    Climate Resilience
+                  </h4>
+                  <p class="text-sm text-gray-400 font-light">
+                    Data collected from 14 global wildlife observation stations.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════
          BACK CTA
     ══════════════════════════════════════ -->
-    <section class="py-24 flex flex-col items-center relative z-20 reveal">
-      <div class="w-px h-20 bg-gradient-to-b from-fox-orange/50 to-transparent mb-10"></div>
-      <a href="more.html" id="back-main-btn"
-        class="group relative px-12 py-4 overflow-hidden rounded-full transition-all duration-500">
-        <div class="absolute inset-0 bg-fox-orange opacity-10 group-hover:opacity-20 transition-opacity"></div>
+      <section class="py-24 flex flex-col items-center relative z-20 reveal">
         <div
-          class="absolute inset-0 border border-fox-orange/30 rounded-full group-hover:shadow-[0_0_30px_rgba(255,140,66,0.3)] transition-all duration-500">
-        </div>
-        <span class="relative z-10 font-fantasy tracking-[0.2em] text-fox-orange flex items-center gap-3 text-sm">
-          ← BACK TO MORE
-        </span>
-      </a>
-    </section>
+          class="w-px h-20 bg-gradient-to-b from-fox-orange/50 to-transparent mb-10"
+        ></div>
+        <a
+          href="more.html"
+          id="back-main-btn"
+          class="group relative px-12 py-4 overflow-hidden rounded-full transition-all duration-500"
+        >
+          <div
+            class="absolute inset-0 bg-fox-orange opacity-10 group-hover:opacity-20 transition-opacity"
+          ></div>
+          <div
+            class="absolute inset-0 border border-fox-orange/30 rounded-full group-hover:shadow-[0_0_30px_rgba(255,140,66,0.3)] transition-all duration-500"
+          ></div>
+          <span
+            class="relative z-10 font-fantasy tracking-[0.2em] text-fox-orange flex items-center gap-3 text-sm"
+          >
+            ← BACK TO MORE
+          </span>
+        </a>
+      </section>
+    </main>
 
-  </main>
+    <!-- Footer (same as index.html) -->
+    <footer
+      class="relative z-20 bg-black py-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center px-12"
+    >
+      <div
+        class="font-fantasy text-xl font-bold tracking-widest text-white/20 mb-4 md:mb-0"
+      >
+        FOX<span class="text-fox-orange">.</span>
+      </div>
+      <p
+        class="text-gray-700 font-body text-xs tracking-[0.15em] uppercase text-center mb-4 md:mb-0"
+      >
+        © Educational Credits: The Celestial Narrative Wildlife Series
+      </p>
+      <div class="flex gap-8">
+        <a
+          href="#"
+          class="text-gray-700 hover:text-fox-orange transition-colors font-body text-xs tracking-[0.1em] uppercase"
+          >Terms of Observation</a
+        >
+        <a
+          href="#"
+          class="text-gray-700 hover:text-fox-orange transition-colors font-body text-xs tracking-[0.1em] uppercase"
+          >Privacy</a
+        >
+      </div>
+    </footer>
 
-  <!-- Footer (same as index.html) -->
-  <footer
-    class="relative z-20 bg-black py-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center px-12">
-    <div class="font-fantasy text-xl font-bold tracking-widest text-white/20 mb-4 md:mb-0">
-      FOX<span class="text-fox-orange">.</span>
-    </div>
-    <p class="text-gray-700 font-body text-xs tracking-[0.15em] uppercase text-center mb-4 md:mb-0">
-      © Educational Credits: The Celestial Narrative Wildlife Series
-    </p>
-    <div class="flex gap-8">
-      <a href="#"
-        class="text-gray-700 hover:text-fox-orange transition-colors font-body text-xs tracking-[0.1em] uppercase">Terms
-        of Observation</a>
-      <a href="#"
-        class="text-gray-700 hover:text-fox-orange transition-colors font-body text-xs tracking-[0.1em] uppercase">Privacy</a>
-    </div>
-  </footer>
-
-  <script src="../js/deeper.js" defer></script>
-</body>
-
+    <script src="../js/deeper.js" defer></script>
+  </body>
 </html>

@@ -63,7 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!wrapper) return;
     // remove model-viewer if exists
     const existingModel = document.getElementById("fox-3d");
-    if (existingModel && existingModel.parentNode) existingModel.parentNode.removeChild(existingModel);
+    if (existingModel && existingModel.parentNode)
+      existingModel.parentNode.removeChild(existingModel);
 
     // create fallback image
     const img = document.createElement("img");
@@ -153,8 +154,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateStatusBadge() {
     const badge = document.getElementById("status-badge");
     if (!badge) return;
-    const stars = document.getElementById("star-container")?.children.length ?? 0;
-    const snows = document.getElementById("snow-container")?.children.length ?? 0;
+    const stars =
+      document.getElementById("star-container")?.children.length ?? 0;
+    const snows =
+      document.getElementById("snow-container")?.children.length ?? 0;
     const loaded = modelLoaded ? "model: ready" : `model: ${modelProgress}%`;
     badge.innerText = `stars: ${stars} · snow: ${snows} · ${loaded}`;
   }
@@ -311,34 +314,37 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.5 },
     );
 
     videoObserver.observe(docVideo);
   }
 
   // === 4.5 BAR CHART ANIMATION (Grow on scroll) ===
-  const barElements = document.querySelectorAll('.bar-fill');
+  const barElements = document.querySelectorAll(".bar-fill");
   if (barElements && barElements.length) {
     // ensure start at zero so percent heights animate correctly
     barElements.forEach((b) => {
-      b.style.height = '0%';
-      const span = b.querySelector('span');
-      if (span) span.style.opacity = '0';
+      b.style.height = "0%";
+      const span = b.querySelector("span");
+      if (span) span.style.opacity = "0";
     });
 
-    const barObserver = new IntersectionObserver((entries, obs) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        const bar = entry.target;
-        const targetHeight = bar.dataset.target || '50%';
-        // apply height (percentage string like "75%")
-        bar.style.height = targetHeight;
-        const span = bar.querySelector('span');
-        if (span) span.style.opacity = '1';
-        obs.unobserve(bar);
-      });
-    }, { threshold: 0.35 });
+    const barObserver = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const bar = entry.target;
+          const targetHeight = bar.dataset.target || "50%";
+          // apply height (percentage string like "75%")
+          bar.style.height = targetHeight;
+          const span = bar.querySelector("span");
+          if (span) span.style.opacity = "1";
+          obs.unobserve(bar);
+        });
+      },
+      { threshold: 0.35 },
+    );
 
     barElements.forEach((b) => barObserver.observe(b));
   }
@@ -351,34 +357,42 @@ document.addEventListener("DOMContentLoaded", () => {
       scrollWheelZoom: false,
     }).setView([60.0, 10.0], 2);
 
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-      subdomains: "abcd",
-      maxZoom: 19,
-      attribution: '&copy; <a href="https://carto.com/">CartoDB</a>'
-    }).addTo(map);
+    L.tileLayer(
+      "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+      {
+        subdomains: "abcd",
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://carto.com/">CartoDB</a>',
+      },
+    ).addTo(map);
 
     function createPulseIcon(colorClass) {
       return L.divIcon({
         className: "custom-div-icon",
         html: `<div class="custom-pulse-marker ${colorClass}"><div class="pulse"></div><div class="dot"></div></div>`,
         iconSize: [14, 14],
-        iconAnchor: [7, 7]
+        iconAnchor: [7, 7],
       });
     }
 
     L.marker([64.2008, -100.4937], { icon: createPulseIcon("") })
       .addTo(map)
-      .bindPopup("<b style='color:#FF8C42; font-family:Cinzel'>North American Fox</b><br><span style='font-size:12px; color:#9ca3af'>Tundra & Boreal Forests. Thrives in deep snow.</span>");
+      .bindPopup(
+        "<b style='color:#FF8C42; font-family:Cinzel'>North American Fox</b><br><span style='font-size:12px; color:#9ca3af'>Tundra & Boreal Forests. Thrives in deep snow.</span>",
+      );
 
-    L.marker([60.4720, 8.4689], { icon: createPulseIcon("marker-blue") })
+    L.marker([60.472, 8.4689], { icon: createPulseIcon("marker-blue") })
       .addTo(map)
-      .bindPopup("<b style='color:#60A5FA; font-family:Cinzel'>Scandinavian Fox</b><br><span style='font-size:12px; color:#9ca3af'>Northern Europe. Hunts using magnetic fields.</span>");
+      .bindPopup(
+        "<b style='color:#60A5FA; font-family:Cinzel'>Scandinavian Fox</b><br><span style='font-size:12px; color:#9ca3af'>Northern Europe. Hunts using magnetic fields.</span>",
+      );
 
-    L.marker([61.5240, 105.3188], { icon: createPulseIcon("marker-white") })
+    L.marker([61.524, 105.3188], { icon: createPulseIcon("marker-white") })
       .addTo(map)
-      .bindPopup("<b style='color:#FFFFFF; font-family:Cinzel'>Siberian Fox</b><br><span style='font-size:12px; color:#9ca3af'>Russian Taiga. Survives up to -70°C.</span>");
+      .bindPopup(
+        "<b style='color:#FFFFFF; font-family:Cinzel'>Siberian Fox</b><br><span style='font-size:12px; color:#9ca3af'>Russian Taiga. Survives up to -70°C.</span>",
+      );
   }
-
 });
 
 // ══════════════════════════════════════════════════════
@@ -392,92 +406,92 @@ const FOX_FACTS = [
     icon: "ph-light ph-magnet text-blue-400",
     title: "Magnetic Navigation",
     body: "Foxes use the Earth's magnetic field to hunt. They dive into the snow facing northeast with 73% accuracy — significantly higher than any other direction.",
-    source: "Červený et al., 2011 — Czech University"
+    source: "Červený et al., 2011 — Czech University",
   },
   {
     icon: "ph-light ph-thermometer text-fox-orange",
     title: "Extreme Temperature Tolerance",
     body: "The Red Fox is the only carnivore that can survive across a 90°C temperature range — from the -70°C Siberian tundra to the warm Mediterranean regions.",
-    source: "IUCN Red List — Vulpes vulpes"
+    source: "IUCN Red List — Vulpes vulpes",
   },
   {
     icon: "ph-light ph-ear text-white",
     title: "Supersonic Hearing",
     body: "Foxes can hear mice moving under 3 feet of dense snow. They can rotate their ears 150° independently to pinpoint prey with extreme precision.",
-    source: "Wildlife Online — Red Fox Biology"
+    source: "Wildlife Online — Red Fox Biology",
   },
   {
     icon: "ph-light ph-globe-hemisphere-west text-cyan-400",
     title: "Widest Distribution",
     body: "Spanning over 70 million km² across 4 continents, the Red Fox is the most widely distributed terrestrial land carnivore on Earth — beating both wolves and bears.",
-    source: "GBIF — Occurrence Data 2024"
+    source: "GBIF — Occurrence Data 2024",
   },
   {
     icon: "ph-light ph-paw-print text-fox-gold",
     title: "45 Subspecies",
     body: "Vulpes vulpes has 45 scientifically recognized subspecies, ranging from the white-furred Arctic Fox in the tundra to the sleek desert subspecies in the Middle East.",
-    source: "Mammal Species of the World, 3rd Ed."
+    source: "Mammal Species of the World, 3rd Ed.",
   },
   {
     icon: "ph-light ph-buildings text-gray-400",
     title: "Urban Foxes",
     body: "London alone is home to approximately 150,000 urban foxes — the highest density in the world. They have adapted by eating discarded food and hunting at night.",
-    source: "University of Reading — Urban Fox Survey 2016"
+    source: "University of Reading — Urban Fox Survey 2016",
   },
   {
     icon: "ph-light ph-snowflake text-blue-300",
     title: "The Winter Coat",
     body: "As temperatures drop, the Red Fox grows a dense secondary coat. This fur is so efficient at trapping heat that they don't shiver until temperatures hit -70°C.",
-    source: "Voigt, D.R. — Wild Furbearer Management"
+    source: "Voigt, D.R. — Wild Furbearer Management",
   },
   {
     icon: "ph-light ph-lightning text-yellow-400",
     title: "Hunting Speed",
     body: "A Red Fox can run up to 72 km/h in short sprints. When hunting, they use a technique called 'mousing' — leaping high and diving headfirst into the snow.",
-    source: "Wildlife Online — Hunting Behaviour"
+    source: "Wildlife Online — Hunting Behaviour",
   },
   {
     icon: "ph-light ph-moon-stars text-indigo-300",
     title: "January Mating Season",
     body: "The iconic 'vixen scream' is heard every January and February. This female call can be heard from up to 1 km away and is often mistaken for a human screaming.",
-    source: "Harris & Yalden — Mammals of the British Isles"
+    source: "Harris & Yalden — Mammals of the British Isles",
   },
   {
     icon: "ph-light ph-dna text-emerald-400",
     title: "10 Million Year Ancestry",
     body: "The ancestor of the Red Fox, Eucyon davisi, emerged in North America around 10 million years ago. They crossed the Bering Land Bridge before evolving into Vulpes vulpes.",
-    source: "Prevosti & Rincón, 2007 — Canid Phylogeny"
+    source: "Prevosti & Rincón, 2007 — Canid Phylogeny",
   },
   {
     icon: "ph-light ph-moon text-white",
     title: "Sleeping in Open Snow",
     body: "When sleeping in open terrain, foxes curl their bodies and wrap their tails around their snouts. The thick bushy tail acts as a blanket that warms the air they breathe.",
-    source: "Macdonald, D.W. — Running with the Fox"
+    source: "Macdonald, D.W. — Running with the Fox",
   },
   {
     icon: "ph-light ph-database text-blue-400",
     title: "1.4 Million GBIF Records",
     body: "The GBIF database has recorded over 1.4 million occurrences of the Red Fox worldwide — making it one of the species with the most observation data globally.",
-    source: "GBIF.org — Species 5219243"
+    source: "GBIF.org — Species 5219243",
   },
   {
     icon: "ph-light ph-map-trifold text-fox-orange",
     title: "Home Range",
     body: "A Red Fox can roam an average of 10 km per night during winter to hunt. In urban areas, their home range can expand up to 4 km² per individual.",
-    source: "Canids.org — Home Range Data"
+    source: "Canids.org — Home Range Data",
   },
   {
     icon: "ph-light ph-flask text-purple-400",
     title: "Domestication Experiment",
     body: "Since 1959, Russian scientists have run a fox domestication experiment. After 50+ generations of selection, these foxes display dog-like behaviors — wagging their tails and seeking human affection.",
-    source: "Trut, L. — Novosibirsk Fox Experiment"
+    source: "Trut, L. — Novosibirsk Fox Experiment",
   },
   {
     icon: "ph-light ph-leaf text-green-400",
     title: "True Omnivores",
     body: "Red Foxes eat everything: mice, rabbits, insects, berries, worms, and human leftovers. This dietary flexibility is the primary reason they succeed in all habitats.",
-    source: "IUCN — Vulpes vulpes Diet Analysis"
-  }
+    source: "IUCN — Vulpes vulpes Diet Analysis",
+  },
 ];
 
 let currentFactIndex = 0;
@@ -502,7 +516,10 @@ function loadDailyFact() {
   const dateEl = document.getElementById("daily-date");
   if (dateEl) {
     dateEl.textContent = today.toLocaleDateString("en-US", {
-      weekday: "long", day: "numeric", month: "long", year: "numeric"
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
     });
   }
 
@@ -511,7 +528,7 @@ function loadDailyFact() {
   const dayLabel = document.getElementById("day-label");
   if (progress) {
     setTimeout(() => {
-      progress.style.width = ((dayOfYear / totalDays) * 100) + "%";
+      progress.style.width = (dayOfYear / totalDays) * 100 + "%";
     }, 500);
   }
   if (dayLabel) {
@@ -529,8 +546,12 @@ function renderFact(index) {
   const sourceEl = document.getElementById("fact-source");
 
   // Fade out
-  [iconEl, titleEl, bodyEl, sourceEl].forEach(el => {
-    if (el) { el.style.opacity = "0"; el.style.transform = "translateY(6px)"; el.style.transition = "opacity 0.3s ease, transform 0.3s ease"; }
+  [iconEl, titleEl, bodyEl, sourceEl].forEach((el) => {
+    if (el) {
+      el.style.opacity = "0";
+      el.style.transform = "translateY(6px)";
+      el.style.transition = "opacity 0.3s ease, transform 0.3s ease";
+    }
   });
 
   setTimeout(() => {
@@ -540,8 +561,11 @@ function renderFact(index) {
     if (sourceEl) sourceEl.textContent = "Source: " + fact.source;
 
     // Fade in
-    [iconEl, titleEl, bodyEl, sourceEl].forEach(el => {
-      if (el) { el.style.opacity = "1"; el.style.transform = "translateY(0)"; }
+    [iconEl, titleEl, bodyEl, sourceEl].forEach((el) => {
+      if (el) {
+        el.style.opacity = "1";
+        el.style.transform = "translateY(0)";
+      }
     });
   }, 300);
 }

@@ -4,32 +4,35 @@
 // ══════════════════════════════════════════════════
 
 // ── Config ──
-const API_BASE   = "https://api.inaturalist.org/v1/observations";
-const TAXON_ID   = 42069;   // Vulpes vulpes
-const PER_PAGE   = 9;       // foto per load
+const API_BASE = "https://api.inaturalist.org/v1/observations";
+const TAXON_ID = 42069; // Vulpes vulpes
+const PER_PAGE = 9; // foto per load
 
 // iNaturalist place_id per wilayah
 const PLACE_IDS = {
-  "ALL"          : null,
-  "EUROPE"       : 97391,
-  "ASIA"         : 97395,
+  ALL: null,
+  EUROPE: 97391,
+  ASIA: 97395,
   "NORTH AMERICA": 97394,
-  "AFRICA"       : 97392,
-  "OCEANIA"      : 97393,
+  AFRICA: 97392,
+  OCEANIA: 97393,
 };
 
 // State
 let currentRegion = "ALL";
-let currentPage   = 1;
-let isLoading     = false;
-let totalResults  = 0;
+let currentPage = 1;
+let isLoading = false;
+let totalResults = 0;
 
 // ── Page overlay fade in ──
 window.addEventListener("load", () => {
   const overlay = document.getElementById("page-overlay");
   if (overlay) {
     overlay.style.transition = "opacity 0.8s ease";
-    setTimeout(() => { overlay.style.opacity = "0"; overlay.style.pointerEvents = "none"; }, 100);
+    setTimeout(() => {
+      overlay.style.opacity = "0";
+      overlay.style.pointerEvents = "none";
+    }, 100);
   }
 });
 
@@ -41,15 +44,23 @@ function fadeOut(href) {
     overlay.style.opacity = "1";
     overlay.style.pointerEvents = "all";
   }
-  setTimeout(() => window.location.href = href, 650);
+  setTimeout(() => (window.location.href = href), 650);
 }
 
 // ── Nav links ──
 document.addEventListener("DOMContentLoaded", () => {
   const logoLink = document.getElementById("logo-link");
-  const backBtn  = document.getElementById("back-more-btn");
-  if (logoLink) logoLink.addEventListener("click", e => { e.preventDefault(); fadeOut("../index.html"); });
-  if (backBtn)  backBtn.addEventListener("click",  e => { e.preventDefault(); fadeOut("more.html"); });
+  const backBtn = document.getElementById("back-more-btn");
+  if (logoLink)
+    logoLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      fadeOut("../index.html");
+    });
+  if (backBtn)
+    backBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      fadeOut("more.html");
+    });
 });
 
 // ── Stars ──
@@ -61,10 +72,10 @@ if (sc) {
     s.style.cssText = `
       position:absolute; background:white; border-radius:50%;
       opacity:0; animation:twinkle linear infinite;
-      left:${Math.random()*100}%; top:${Math.random()*100}%;
+      left:${Math.random() * 100}%; top:${Math.random() * 100}%;
       width:${sz}; height:${sz};
-      animation-duration:${Math.random()*3+2}s;
-      animation-delay:${Math.random()*4}s;
+      animation-duration:${Math.random() * 3 + 2}s;
+      animation-delay:${Math.random() * 4}s;
     `;
     sc.appendChild(s);
   }
@@ -80,21 +91,27 @@ if (snc) {
       position:absolute; top:-20px; background:white; border-radius:50%;
       opacity:0.6; pointer-events:none; filter:blur(0.5px);
       animation:fall linear infinite;
-      left:${Math.random()*100}vw; width:${sz}; height:${sz};
-      animation-duration:${Math.random()*10+5}s;
-      animation-delay:${Math.random()*5}s;
+      left:${Math.random() * 100}vw; width:${sz}; height:${sz};
+      animation-duration:${Math.random() * 10 + 5}s;
+      animation-delay:${Math.random() * 5}s;
     `;
     snc.appendChild(sf);
   }
 }
 
 // ── Scroll reveal ──
-const revealObs = new IntersectionObserver((entries, obs) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add("active"); obs.unobserve(e.target); }
-  });
-}, { threshold: 0.1 });
-document.querySelectorAll(".reveal").forEach(el => revealObs.observe(el));
+const revealObs = new IntersectionObserver(
+  (entries, obs) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add("active");
+        obs.unobserve(e.target);
+      }
+    });
+  },
+  { threshold: 0.1 },
+);
+document.querySelectorAll(".reveal").forEach((el) => revealObs.observe(el));
 
 // ══════════════════════════════════════════════════
 // FETCH dari iNaturalist API
@@ -102,12 +119,13 @@ document.querySelectorAll(".reveal").forEach(el => revealObs.observe(el));
 async function fetchObservations(region = "ALL", page = 1) {
   const placeId = PLACE_IDS[region];
 
-  let url = `${API_BASE}?taxon_id=${TAXON_ID}`
-          + `&photos=true`
-          + `&quality_grade=research`
-          + `&per_page=${PER_PAGE}`
-          + `&page=${page}`
-          + `&order=desc&order_by=created_at`;
+  let url =
+    `${API_BASE}?taxon_id=${TAXON_ID}` +
+    `&photos=true` +
+    `&quality_grade=research` +
+    `&per_page=${PER_PAGE}` +
+    `&page=${page}` +
+    `&order=desc&order_by=created_at`;
 
   if (placeId) url += `&place_id=${placeId}`;
 
@@ -124,15 +142,15 @@ function buildCard(obs) {
   let photoUrl = obs.photos?.[0]?.url || "";
   photoUrl = photoUrl
     .replace("/square.", "/medium.")
-    .replace("/small.",  "/medium.");
+    .replace("/small.", "/medium.");
 
   // Fallback kalau tidak ada foto
   if (!photoUrl) return null;
 
-  const lokasi   = (obs.place_guess || "Unknown Location").toUpperCase();
-  const tahun    = obs.observed_on ? obs.observed_on.slice(0, 4) : "";
+  const lokasi = (obs.place_guess || "Unknown Location").toUpperCase();
+  const tahun = obs.observed_on ? obs.observed_on.slice(0, 4) : "";
   const observer = (obs.user?.login || "Anonymous").toUpperCase();
-  const region   = guessRegion(obs.place_guess || "");
+  const region = guessRegion(obs.place_guess || "");
 
   return `
     <div class="gallery-card group relative rounded-xl overflow-hidden"
@@ -142,7 +160,7 @@ function buildCard(obs) {
       <!-- Shimmer skeleton -->
       <div class="absolute inset-0 shimmer z-0" style="background:#0c1324"></div>
       <!-- Foto -->
-      <img alt="${obs.place_guess || 'Red Fox'}"
+      <img alt="${obs.place_guess || "Red Fox"}"
            class="relative z-10 w-full h-full object-cover"
            src="${photoUrl}"
            loading="lazy"
@@ -168,17 +186,95 @@ function buildCard(obs) {
 // ── Tebak region dari nama lokasi ──
 function guessRegion(placeGuess) {
   const p = placeGuess.toLowerCase();
-  const europeKw    = ["norway","sweden","finland","uk","england","scotland","germany","france","spain","italy","netherlands","denmark","poland","russia","ukraine","switzerland","austria","portugal","greece","hungary","czech","romania","belgium","ireland","croatia"];
-  const asiaKw      = ["japan","china","korea","india","taiwan","thailand","indonesia","malaysia","vietnam","philippines","mongolia","kazakhstan","iran","turkey","israel","syria","iraq","pakistan","nepal","bangladesh","singapore"];
-  const northAmKw   = ["usa","united states","canada","mexico","alaska","california","new york","texas","florida","ontario","british columbia","alberta"];
-  const africaKw    = ["morocco","algeria","egypt","ethiopia","kenya","nigeria","south africa","tanzania","uganda","ghana","cameroon","senegal","mali","libya","tunisia","somalia"];
-  const oceaniaKw   = ["australia","new zealand","papua","fiji"];
+  const europeKw = [
+    "norway",
+    "sweden",
+    "finland",
+    "uk",
+    "england",
+    "scotland",
+    "germany",
+    "france",
+    "spain",
+    "italy",
+    "netherlands",
+    "denmark",
+    "poland",
+    "russia",
+    "ukraine",
+    "switzerland",
+    "austria",
+    "portugal",
+    "greece",
+    "hungary",
+    "czech",
+    "romania",
+    "belgium",
+    "ireland",
+    "croatia",
+  ];
+  const asiaKw = [
+    "japan",
+    "china",
+    "korea",
+    "india",
+    "taiwan",
+    "thailand",
+    "indonesia",
+    "malaysia",
+    "vietnam",
+    "philippines",
+    "mongolia",
+    "kazakhstan",
+    "iran",
+    "turkey",
+    "israel",
+    "syria",
+    "iraq",
+    "pakistan",
+    "nepal",
+    "bangladesh",
+    "singapore",
+  ];
+  const northAmKw = [
+    "usa",
+    "united states",
+    "canada",
+    "mexico",
+    "alaska",
+    "california",
+    "new york",
+    "texas",
+    "florida",
+    "ontario",
+    "british columbia",
+    "alberta",
+  ];
+  const africaKw = [
+    "morocco",
+    "algeria",
+    "egypt",
+    "ethiopia",
+    "kenya",
+    "nigeria",
+    "south africa",
+    "tanzania",
+    "uganda",
+    "ghana",
+    "cameroon",
+    "senegal",
+    "mali",
+    "libya",
+    "tunisia",
+    "somalia",
+  ];
+  const oceaniaKw = ["australia", "new zealand", "papua", "fiji"];
 
-  if (europeKw.some(k  => p.includes(k))) return "EUROPE";
-  if (asiaKw.some(k    => p.includes(k))) return "ASIA";
-  if (northAmKw.some(k => p.includes(k))) return "NORTH AMERICA";
-  if (africaKw.some(k  => p.includes(k))) return "AFRICA";
-  if (oceaniaKw.some(k => p.includes(k))) return "OCEANIA";
+  if (europeKw.some((k) => p.includes(k))) return "EUROPE";
+  if (asiaKw.some((k) => p.includes(k))) return "ASIA";
+  if (northAmKw.some((k) => p.includes(k))) return "NORTH AMERICA";
+  if (africaKw.some((k) => p.includes(k))) return "AFRICA";
+  if (oceaniaKw.some((k) => p.includes(k))) return "OCEANIA";
   return "ALL";
 }
 
@@ -186,7 +282,7 @@ function guessRegion(placeGuess) {
 // RENDER ke gallery grid
 // ══════════════════════════════════════════════════
 function renderCards(observations, append = false) {
-  const grid  = document.getElementById("gallery-grid");
+  const grid = document.getElementById("gallery-grid");
   const empty = document.getElementById("gallery-empty");
   const loadMoreBtn = document.getElementById("load-more-btn");
 
@@ -196,7 +292,7 @@ function renderCards(observations, append = false) {
   if (!append) grid.innerHTML = "";
 
   // Filter yang punya foto valid
-  const valid = observations.filter(o => o.photos?.length > 0);
+  const valid = observations.filter((o) => o.photos?.length > 0);
 
   if (valid.length === 0 && !append) {
     if (empty) empty.classList.remove("hidden");
@@ -206,7 +302,7 @@ function renderCards(observations, append = false) {
 
   if (empty) empty.classList.add("hidden");
 
-  valid.forEach(obs => {
+  valid.forEach((obs) => {
     const html = buildCard(obs);
     if (html) grid.insertAdjacentHTML("beforeend", html);
   });
@@ -226,7 +322,9 @@ function showSkeleton() {
   if (!grid) return;
   grid.innerHTML = "";
   for (let i = 0; i < PER_PAGE; i++) {
-    grid.insertAdjacentHTML("beforeend", `
+    grid.insertAdjacentHTML(
+      "beforeend",
+      `
       <div class="gallery-card relative rounded-xl overflow-hidden" style="aspect-ratio:4/3">
         <div class="absolute inset-0 shimmer" style="background:#0c1324"></div>
         <div class="absolute bottom-6 left-6 space-y-2">
@@ -234,7 +332,8 @@ function showSkeleton() {
           <div class="h-4 w-36 rounded shimmer" style="background:#1a2340"></div>
         </div>
       </div>
-    `);
+    `,
+    );
   }
 }
 
@@ -256,10 +355,10 @@ async function loadGallery(region = "ALL", page = 1, append = false) {
 
     // Update stats bar total
     const statsTotal = document.getElementById("stats-total");
-    if (statsTotal) statsTotal.textContent = totalResults.toLocaleString() + "+ Records";
+    if (statsTotal)
+      statsTotal.textContent = totalResults.toLocaleString() + "+ Records";
 
     renderCards(data.results || [], append);
-
   } catch (err) {
     console.error("Gallery fetch error:", err);
     const grid = document.getElementById("gallery-grid");
@@ -281,15 +380,17 @@ async function loadGallery(region = "ALL", page = 1, append = false) {
 // ══════════════════════════════════════════════════
 // FILTER BUTTONS
 // ══════════════════════════════════════════════════
-document.querySelectorAll(".filter-btn").forEach(btn => {
+document.querySelectorAll(".filter-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     // Update active state
-    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    document
+      .querySelectorAll(".filter-btn")
+      .forEach((b) => b.classList.remove("active"));
     btn.classList.add("active");
 
     // Update state & reload
     currentRegion = btn.dataset.region;
-    currentPage   = 1;
+    currentPage = 1;
     loadGallery(currentRegion, currentPage, false);
   });
 });
@@ -319,7 +420,10 @@ if (rawDataBtn) {
 const inatBtn = document.getElementById("inaturalist-btn");
 if (inatBtn) {
   inatBtn.addEventListener("click", () => {
-    window.open("https://www.inaturalist.org/observations?taxon_id=42069&quality_grade=research&photos=true", "_blank");
+    window.open(
+      "https://www.inaturalist.org/observations?taxon_id=42069&quality_grade=research&photos=true",
+      "_blank",
+    );
   });
 }
 
@@ -360,14 +464,17 @@ function startTerminalAnimation() {
 // Trigger terminal animation saat section terlihat
 const terminalSection = document.querySelector(".font-fantasy.space-y-1");
 if (terminalSection) {
-  const termObs = new IntersectionObserver((entries, obs) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        startTerminalAnimation();
-        obs.disconnect();
-      }
-    });
-  }, { threshold: 0.3 });
+  const termObs = new IntersectionObserver(
+    (entries, obs) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          startTerminalAnimation();
+          obs.disconnect();
+        }
+      });
+    },
+    { threshold: 0.3 },
+  );
   termObs.observe(terminalSection.closest("section") || terminalSection);
 }
 

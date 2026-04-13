@@ -12,33 +12,72 @@
 async function loadFoxData() {
   try {
     const response = await fetch("data/data.json");
-    if (!response.ok) throw new Error("data.json tidak ditemukan");
+    if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
     const data = await response.json();
 
     updateDistributionChart(data.distribution);
     updateTrendChart(data.trend);
     updateMetaBadge(data.meta);
-
   } catch (err) {
     console.warn("Gagal load data.json, pakai data fallback:", err);
-    // Kalau data.json tidak ada, chart tetap pakai nilai hardcode di HTML
+    // Kalau data.json tidak ada, tampilkan notifikasi UX yang elegan dan tetap pakai chart statis bawaan HTML
+    showFallbackToast(err);
+  }
+}
+
+// ── Tampilkan Notifikasi Error (UX Fallback) ────────────────
+/**
+ * Alih-alih membiarkan aplikasi kosong atau crash, fungsi ini
+ * membangun elemen notifikasi Tailwind secara dinamis untuk memberitahu user.
+ */
+function showFallbackToast(error) {
+  const section = document.getElementById("population");
+  if (!section) return;
+
+  const alertBox = document.createElement("div");
+  alertBox.className = "mt-6 max-w-xl mx-auto p-4 bg-red-500/10 border border-red-500/30 rounded-2xl flex items-center gap-4 text-left backdrop-blur-md opacity-0 transition-opacity duration-1000";
+  alertBox.innerHTML = `
+    <div class="p-3 bg-red-500/20 rounded-full flex-shrink-0">
+      <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+      </svg>
+    </div>
+    <div>
+      <h4 class="text-red-400 font-bold text-sm uppercase font-fantasy tracking-wider">Live Data Unavailable</h4>
+      <p class="text-gray-400 text-xs font-body mt-1 leading-relaxed">
+        Gagal memuat API data JSON (${error.message}). Tampilan saat ini menggunakan data statis <i>(fallback mode)</i> agar Anda tetap dapat melihat *preview* visualisasi.
+      </p>
+    </div>
+  `;
+
+  const headerContainer = section.querySelector(".text-center.mb-16.reveal");
+  if (headerContainer) {
+    headerContainer.appendChild(alertBox);
+    // Trigger fade-in animation
+    requestAnimationFrame(() => {
+      alertBox.classList.remove("opacity-0");
+    });
   }
 }
 
 // ── Update Bar Chart KIRI (Territory Distribution) ──────────
+/**
+ * Memetakan data distribusi ke dalam elemen bar chart pada DOM.
+ * Digunakan pola `labelMap` untuk melakukan normalisasi key wilayah (karena data API
+ * bisa berbeda penamaan dengan label UI). Fungsi ini secara dinamis memperbarui
+ * elemen CSS width (.bar-fill) agar merepresentasikan persentase distribusi secara akurat.
+ */
 function updateDistributionChart(distribution) {
   // Urutkan: Europe, North America, Asia, Africa (atau Middle East), Oceania (Australia)
   const labelMap = {
-    "Europe"       : "Eurasia",
+    Europe: "Eurasia",
     "North America": "America",
-    "Asia"         : "Asia",
-    "Africa"       : "Africa",
-    "Oceania"      : "Australia",
+    Asia: "Asia",
+    Africa: "Africa",
+    Oceania: "Australia",
   };
 
-  const bars = document.querySelectorAll(
-    "#population .bar-fill[data-target]"
-  );
+  const bars = document.querySelectorAll("#population .bar-fill[data-target]");
 
   // Cari parent section population
   const section = document.getElementById("population");
@@ -63,7 +102,8 @@ function updateDistributionChart(distribution) {
 
     // Update label nama benua di bawah bar
     const labelEl = bar.closest(".relative")?.querySelector("p");
-    if (labelEl) labelEl.textContent = labelMap[item.continent] ?? item.continent;
+    if (labelEl)
+      labelEl.textContent = labelMap[item.continent] ?? item.continent;
   });
 }
 
@@ -86,9 +126,10 @@ function updateTrendChart(trend) {
     // Update tooltip/label
     const span = bar.querySelector("span");
     if (span) {
-      span.textContent = item.change_pct > 0
-        ? "+" + item.change_pct + "%"
-        : item.change_pct + "%";
+      span.textContent =
+        item.change_pct > 0
+          ? "+" + item.change_pct + "%"
+          : item.change_pct + "%";
     }
 
     // Update label tahun di bawah bar
@@ -105,8 +146,7 @@ function updateMetaBadge(meta) {
 
   const subtitle = section.querySelector("p.text-gray-400");
   if (subtitle) {
-    subtitle.innerHTML =
-      `Data dari <a href="${meta.source_url}" target="_blank" 
+    subtitle.innerHTML = `Data dari <a href="${meta.source_url}" target="_blank" 
        class="text-fox-orange underline hover:opacity-80 transition-opacity"
        >${meta.source}</a>. 
        Diproses dengan Python + Pandas. 
