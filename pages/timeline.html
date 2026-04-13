@@ -32,6 +32,46 @@
     />
   </head>
 
+  <!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║           PANDUAN CUSTOM CLASS — timeline.html                   ║
+  ║  Semua class di bawah ini BUKAN bawaan Tailwind, tapi           ║
+  ║  didefinisikan di css/input.css → dikompile ke dist/output.css  ║
+  ╠══════════════════════════════════════════════════════════════════╣
+  ║                                                                  ║
+  ║  reveal               → Elemen muncul dari bawah saat discroll  ║
+  ║                         JS menambah class .active untuk animasi ║
+  ║                         Dipakai di: section timeline, bento     ║
+  ║                                                                  ║
+  ║  glass-card           → Kartu dengan efek kaca (glassmorphism)  ║
+  ║                         bg semi-transparan + backdrop-blur      ║
+  ║                         Dipakai di: detail card, bento card     ║
+  ║                                                                  ║
+  ║  timeline-dot         → Titik pada garis waktu (klik = pilih)  ║
+  ║                         Hover: scale(1.2), cursor pointer       ║
+  ║                         Dipakai di: semua <div class="...       ║
+  ║                         timeline-dot"> di nav timeline          ║
+  ║                                                                  ║
+  ║  dot-ring             → Lingkaran animasi pulse di titik aktif  ║
+  ║                         Dipakai di: <div class="dot-ring">      ║
+  ║                         di dalam timeline-dot yang aktif        ║
+  ║                                                                  ║
+  ║  no-scrollbar         → Menyembunyikan scrollbar horizontal     ║
+  ║                         Dipakai di: container timeline nav      ║
+  ║                                                                  ║
+  ║  svg-path-anim        → Animasi garis jalur migrasi pada peta   ║
+  ║                         stroke-dashoffset bergerak (dash anim)  ║
+  ║                         Dipakai di: <path> SVG di dalam peta    ║
+  ║                                                                  ║
+  ║  #page-overlay        → Overlay hitam untuk transisi antar page ║
+  ║                                                                  ║
+  ║  font-fantasy         → Font Cinzel (serif)                     ║
+  ║  font-script          → Font Pinyon Script (kursif)             ║
+  ║  fox-orange (#FF8C42) → Warna oranye fox utama                  ║
+  ║  midnight-900 (#020617)→ Warna background gelap utama           ║
+  ╚══════════════════════════════════════════════════════════════════╝
+  -->
+
   <body class="bg-midnight-900 text-white font-body overflow-x-hidden">
     <!-- Stars & Snow — same as index.html -->
     <div

@@ -65,6 +65,48 @@
     </style>
   </head>
 
+  <!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║           PANDUAN CUSTOM CLASS — deeper.html                     ║
+  ║  Semua class di bawah ini BUKAN bawaan Tailwind, tapi           ║
+  ║  didefinisikan di css/input.css → dikompile ke dist/output.css  ║
+  ╠══════════════════════════════════════════════════════════════════╣
+  ║                                                                  ║
+  ║  reveal               → Elemen muncul dari bawah saat discroll  ║
+  ║                         JS menambah class .active untuk animasi ║
+  ║                         Dipakai di: section facts, grid, card   ║
+  ║                                                                  ║
+  ║  bar-arctic           → Animasi progress bar melebar dari 0     ║
+  ║                         Dipakai di: bar suhu Arctic Tundra      ║
+  ║                                                                  ║
+  ║  bar-ember            → Animasi progress bar melebar (delay     ║
+  ║                         0.2s) — Dipakai di: bar Temperate       ║
+  ║                                                                  ║
+  ║  species-wrap         → Container gambar spesies rubah          ║
+  ║  species-img          → Gambar di dalam species-wrap            ║
+  ║                         Hover pada .species-wrap: gambar zoom   ║
+  ║                         scale(1.1) secara smooth                ║
+  ║                         Dipakai di: kartu Red/Arctic/Fennec Fox ║
+  ║                                                                  ║
+  ║  #page-overlay        → Overlay hitam untuk transisi antar page ║
+  ║                                                                  ║
+  ║  ff-speed-card        → Card kecepatan fox (CSS di <style>)     ║
+  ║  ff-speed-img         → Gambar di dalam speed card              ║
+  ║  ff-range-card        → Card jangkauan geografis fox            ║
+  ║  ff-range-img         → Gambar di dalam range card              ║
+  ║  ff-stat-card         → Card statistik (border hover effect)    ║
+  ║  ff-stat-purple/orange/gold/hearing → Varian warna border hover ║
+  ║                         CATATAN: class ff-* didefinisikan di    ║
+  ║                         <style> lokal di dalam file ini         ║
+  ║                                                                  ║
+  ║  font-fantasy         → Font Cinzel (serif)                     ║
+  ║  font-body            → Font Lato (sans-serif)                  ║
+  ║  fox-orange (#FF8C42) → Warna oranye fox utama                  ║
+  ║  fox-gold   (#F59E0B) → Warna emas fox                          ║
+  ║  midnight-900 (#020617)→ Warna background gelap utama           ║
+  ╚══════════════════════════════════════════════════════════════════╝
+  -->
+
   <body class="bg-midnight-900 text-white font-body overflow-x-hidden">
     <!-- Stars & Snow (same as index.html) -->
     <div

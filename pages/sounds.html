@@ -23,6 +23,48 @@
     />
   </head>
 
+  <!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║           PANDUAN CUSTOM CLASS — sounds.html                     ║
+  ║  Semua class di bawah ini BUKAN bawaan Tailwind, tapi           ║
+  ║  didefinisikan di css/input.css → dikompile ke dist/output.css  ║
+  ╠══════════════════════════════════════════════════════════════════╣
+  ║                                                                  ║
+  ║  reveal               → Elemen muncul dari bawah saat discroll  ║
+  ║                         JS menambah class .active untuk animasi ║
+  ║                         Dipakai di: section grid, tabel, dll    ║
+  ║                                                                  ║
+  ║  glass-card           → Kartu dengan efek kaca (glassmorphism)  ║
+  ║                         bg semi-transparan + backdrop-blur      ║
+  ║                         Dipakai di: kartu suara + tabel data    ║
+  ║                                                                  ║
+  ║  play-btn             → Tombol putar audio bulat                ║
+  ║                         Hover: scale(1.05), warna berubah       ║
+  ║                         Dipakai di: tombol ▶ pada setiap kartu  ║
+  ║                                                                  ║
+  ║  tracking-wider-custom→ Letter-spacing lebih lebar (0.15em)     ║
+  ║                         Dipakai di: label "Vocalization Type"   ║
+  ║                                                                  ║
+  ║  hover-row            → Baris tabel berubah warna saat hover    ║
+  ║                         background: rgba(255,255,255,0.04)      ║
+  ║                         Dipakai di: semua <tr class="hover-row">║
+  ║                         di dalam tabel Bioacoustic              ║
+  ║                                                                  ║
+  ║  waveform-bar         → Bar visualisasi gelombang suara         ║
+  ║                         Dengan class .animate → animasi naik    ║
+  ║                         turun (waveAnim) saat lagu diputar      ║
+  ║                         Dibuat oleh JS di sounds.js             ║
+  ║                                                                  ║
+  ║  #page-overlay        → Overlay hitam untuk transisi antar page ║
+  ║                                                                  ║
+  ║  font-fantasy         → Font Cinzel (serif)                     ║
+  ║  font-body            → Font Lato (sans-serif)                  ║
+  ║  fox-orange (#FF8C42) → Warna oranye fox utama                  ║
+  ║  fox-gold   (#F59E0B) → Warna emas fox                          ║
+  ║  midnight-900 (#020617)→ Warna background gelap utama           ║
+  ╚══════════════════════════════════════════════════════════════════╝
+  -->
+
   <body class="bg-midnight-900 text-white font-body overflow-x-hidden">
     <!-- Stars & Snow — same as index.html -->
     <div

@@ -172,6 +172,49 @@
     </style>
   </head>
 
+  <!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║           PANDUAN CUSTOM CLASS — gallery.html                    ║
+  ║  Semua class di bawah ini BUKAN bawaan Tailwind, tapi           ║
+  ║  didefinisikan di css/input.css → dikompile ke dist/output.css  ║
+  ╠══════════════════════════════════════════════════════════════════╣
+  ║                                                                  ║
+  ║  reveal               → Elemen muncul dari bawah saat discroll  ║
+  ║                         JS menambah class .active untuk animasi ║
+  ║                         Dipakai di: filter bar, grid, section   ║
+  ║                                                                  ║
+  ║  #page-overlay        → Overlay hitam untuk transisi antar page ║
+  ║                                                                  ║
+  ║  ── CLASS LOKAL (didefinisikan di <style> dalam file ini) ──    ║
+  ║                                                                  ║
+  ║  glass                → Kartu kaca: bg blur + border hijau tipis║
+  ║                         Dipakai di: stats bar, filter container ║
+  ║                                                                  ║
+  ║  shimmer              → Efek kilap loading skeleton saat fetch  ║
+  ║                         Dipakai di: placeholder kartu galeri    ║
+  ║                                                                  ║
+  ║  gallery-card         → Kartu foto galeri                       ║
+  ║                         Hover: scale(1.03), border hijau        ║
+  ║                         Gambar: grayscale(30%) → 0% saat hover  ║
+  ║                         Dibuat oleh gallery.js secara dinamis   ║
+  ║                                                                  ║
+  ║  filter-btn           → Tombol filter region (All/Europe/dll)   ║
+  ║                         .active → background hijau emerald      ║
+  ║                         Hover: border hijau transparan          ║
+  ║                                                                  ║
+  ║  cursor-blink         → Efek kursor terminal berkedip           ║
+  ║                         Dipakai di: terminal card di bawah      ║
+  ║                                                                  ║
+  ║  scroll-bounce        → Efek naik-turun pada scroll indicator   ║
+  ║                         Dipakai di: panah scroll di hero        ║
+  ║                                                                  ║
+  ║  font-fantasy         → Font Cinzel (serif)                     ║
+  ║  font-script          → Font Pinyon Script (kursif)             ║
+  ║  font-body            → Font Lato (sans-serif)                  ║
+  ║  fox-orange (#FF8C42) → Warna oranye fox utama                  ║
+  ╚══════════════════════════════════════════════════════════════════╝
+  -->
+
   <body class="font-body">
     <!-- Page fade overlay (same as all pages) -->
     <div
