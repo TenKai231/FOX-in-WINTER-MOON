@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (backBtn)  backBtn.addEventListener("click",  e => { e.preventDefault(); fadeOut("../index.html"); });
 
     // Hub cards fade out
-    ["card-deeper", "card-timeline", "card-sounds"].forEach(id => {
+    ["card-deeper", "card-timeline", "card-sounds", "card-gallery"].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.addEventListener("click", e => {
             e.preventDefault();

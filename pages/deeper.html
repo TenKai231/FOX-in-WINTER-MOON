@@ -19,6 +19,46 @@
   <!-- Favicon emoji (paling simpel, tidak perlu file) -->
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦊</text></svg>" />
+  <!-- Fox Facts cinematic styles -->
+  <style>
+    .ff-speed-card:hover .ff-speed-img {
+      transform: scale(1) !important;
+      opacity: 0.62 !important;
+    }
+
+    .ff-speed-card:hover {
+      border-color: rgba(255, 140, 66, 0.4) !important;
+      box-shadow: 0 0 40px rgba(255, 140, 66, 0.08);
+    }
+
+    .ff-range-card:hover .ff-range-img {
+      opacity: 0.35 !important;
+    }
+
+    .ff-stat-card {
+      transition: border-color .5s ease, box-shadow .5s ease;
+    }
+
+    .ff-stat-card:hover {
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .ff-stat-purple:hover {
+      border-color: rgba(167, 139, 250, 0.35) !important;
+    }
+
+    .ff-stat-orange:hover {
+      border-color: rgba(255, 140, 66, 0.35) !important;
+    }
+
+    .ff-stat-gold:hover {
+      border-color: rgba(210, 163, 60, 0.35) !important;
+    }
+
+    .ff-hearing:hover {
+      border-color: rgba(96, 165, 250, 0.35) !important;
+    }
+  </style>
 </head>
 
 <body class="bg-midnight-900 text-white font-body overflow-x-hidden">
@@ -86,71 +126,164 @@
     </section>
 
     <!-- ══════════════════════════════════════
-         FOX FACTS
+         FOX FACTS — Cinematic Redesign
     ══════════════════════════════════════ -->
-    <section class="py-24 px-8 max-w-7xl mx-auto relative z-20">
+    <section class="py-24 px-6 max-w-7xl mx-auto relative z-20">
 
+      <!-- Section header -->
       <div class="flex items-end justify-between mb-16 reveal">
-        <div>
-          <h2 class="font-fantasy text-4xl font-bold tracking-widest">FOX FACTS</h2>
+        <div class="relative">
+          <span class="absolute pointer-events-none select-none font-fantasy font-black"
+            style="top:-2.5rem;left:0;font-size:8rem;line-height:1;color:rgba(255,255,255,0.03)">01</span>
+          <h2 class="font-fantasy text-4xl font-bold tracking-widest relative">FOX FACTS</h2>
           <div class="h-0.5 w-20 bg-fox-orange mt-4"></div>
         </div>
         <div class="hidden md:block text-gray-600 font-fantasy text-xs tracking-[0.2em] uppercase">
-          Categorical Data / 01
+          Categorical Data / Vulpes vulpes
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal" style="transition-delay:100ms">
+      <!-- Row 1: Hero image + hearing stat -->
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-5 mb-5 reveal" style="transition-delay:100ms">
 
-        <div
-          class="glass-card p-8 rounded-2xl border border-white/5 hover:border-fox-orange/30 transition-all duration-500 group hover:-translate-y-1">
-          <div class="text-fox-orange text-3xl mb-6 group-hover:scale-110 transition-transform">⚡</div>
-          <h3 class="font-fantasy text-xl mb-3 group-hover:text-fox-orange transition-colors">Speed</h3>
-          <p class="text-gray-400 text-sm leading-relaxed font-light">Red foxes can reach speeds of up to 30 mph (50
-            km/h) in short bursts, allowing them to evade larger predators.</p>
+        <!-- SPEED: image card (3/5) -->
+        <div class="ff-speed-card lg:col-span-3 relative rounded-2xl overflow-hidden cursor-default"
+          style="height:320px; border:1px solid rgba(255,255,255,0.06); transition:border-color .6s ease">
+          <img class="ff-speed-img absolute inset-0 w-full h-full object-cover" src="../assets/image/Fox_standing.jpg"
+            alt="Fox Speed" style="opacity:0.42; transform:scale(1.09); transition:all 1.2s ease" />
+          <div class="absolute inset-0"
+            style="background:linear-gradient(to top, black 20%, rgba(0,0,0,0.45) 55%, transparent)"></div>
+          <div class="absolute inset-0" style="background:linear-gradient(to right, rgba(0,0,0,0.55), transparent)">
+          </div>
+          <!-- Content -->
+          <div class="absolute bottom-0 left-0 p-8">
+            <span class="block font-fantasy uppercase tracking-[0.3em] mb-2"
+              style="font-size:10px;color:rgba(255,140,66,0.65)">Top Speed — Short Burst</span>
+            <div class="flex items-baseline gap-3 mb-3">
+              <span class="font-fantasy font-black text-white leading-none"
+                style="font-size:5.5rem;text-shadow:0 0 60px rgba(255,140,66,0.55)">50</span>
+              <span class="font-fantasy font-bold text-fox-orange" style="font-size:1.8rem">km/h</span>
+            </div>
+            <p style="color:#9ca3af;font-size:.875rem;font-weight:300;max-width:280px;line-height:1.7">
+              A master of evasion — in short bursts, outrunning most midsize predators across any terrain.</p>
+          </div>
         </div>
 
-        <div
-          class="glass-card p-8 rounded-2xl border border-white/5 hover:border-fox-orange/30 transition-all duration-500 group hover:-translate-y-1">
-          <div class="text-fox-orange text-3xl mb-6 group-hover:scale-110 transition-transform">👂</div>
-          <h3 class="font-fantasy text-xl mb-3 group-hover:text-fox-orange transition-colors">Hearing</h3>
-          <p class="text-gray-400 text-sm leading-relaxed font-light">Their hearing is so sensitive they can hear
-            rodents scurrying underground or beneath deep snowpacks.</p>
+        <!-- HEARING: blueprint stat card (2/5) -->
+        <div class="ff-hearing lg:col-span-2 relative rounded-2xl p-8 flex flex-col justify-between overflow-hidden"
+          style="height:320px;background:rgba(10,18,35,0.8);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.06);transition:border-color .5s ease">
+          <!-- Concentric ring decoration -->
+          <div class="absolute pointer-events-none"
+            style="top:-40px;right:-40px;width:220px;height:220px;border-radius:50%;border:1px solid rgba(96,165,250,0.1)">
+          </div>
+          <div class="absolute pointer-events-none"
+            style="top:-16px;right:-16px;width:162px;height:162px;border-radius:50%;border:1px solid rgba(96,165,250,0.09)">
+          </div>
+          <div class="absolute pointer-events-none"
+            style="top:8px;right:8px;width:104px;height:104px;border-radius:50%;border:1px solid rgba(96,165,250,0.08)">
+          </div>
+          <div class="absolute pointer-events-none"
+            style="top:26px;right:26px;width:68px;height:68px;border-radius:50%;background:rgba(96,165,250,0.05)"></div>
+          <div>
+            <span class="block font-fantasy uppercase tracking-[0.3em] mb-6"
+              style="font-size:10px;color:rgba(96,165,250,0.6)">Hearing Range</span>
+            <div class="flex items-baseline gap-2 mb-1">
+              <span class="font-fantasy font-black leading-none" style="font-size:5rem;color:#60A5FA">65</span>
+              <span class="font-fantasy" style="font-size:1.5rem;color:rgba(96,165,250,0.7)">kHz</span>
+            </div>
+            <span class="font-fantasy uppercase tracking-[0.2em]" style="font-size:9px;color:rgba(96,165,250,0.4)">vs
+              Human 20 kHz</span>
+          </div>
+          <p style="color:#6b7280;font-size:.875rem;font-weight:300;line-height:1.7">
+            Detects prey scurrying underground or beneath compacted snow — metres below the surface.</p>
         </div>
-
-        <div
-          class="glass-card p-8 rounded-2xl border border-white/5 hover:border-fox-orange/30 transition-all duration-500 group hover:-translate-y-1">
-          <div class="text-fox-orange text-3xl mb-6 group-hover:scale-110 transition-transform">🌿</div>
-          <h3 class="font-fantasy text-xl mb-3 group-hover:text-fox-orange transition-colors">Survival</h3>
-          <p class="text-gray-400 text-sm leading-relaxed font-light">Adaptable omnivores, foxes survive in environments
-            ranging from the high Arctic to urban city centers.</p>
-        </div>
-
-        <div
-          class="glass-card p-8 rounded-2xl border border-white/5 hover:border-fox-orange/30 transition-all duration-500 group hover:-translate-y-1">
-          <div class="text-fox-orange text-3xl mb-6 group-hover:scale-110 transition-transform">🧬</div>
-          <h3 class="font-fantasy text-xl mb-3 group-hover:text-fox-orange transition-colors">Subspecies</h3>
-          <p class="text-gray-400 text-sm leading-relaxed font-light">Over 40 distinct subspecies exist, each uniquely
-            evolved for its specific local ecological niche.</p>
-        </div>
-
-        <div
-          class="glass-card p-8 rounded-2xl border border-white/5 hover:border-fox-orange/30 transition-all duration-500 group hover:-translate-y-1">
-          <div class="text-fox-orange text-3xl mb-6 group-hover:scale-110 transition-transform">🌙</div>
-          <h3 class="font-fantasy text-xl mb-3 group-hover:text-fox-orange transition-colors">Activity</h3>
-          <p class="text-gray-400 text-sm leading-relaxed font-light">Primarily nocturnal or crepuscular, they are most
-            active during the twilight hours of dawn and dusk.</p>
-        </div>
-
-        <div
-          class="glass-card p-8 rounded-2xl border border-white/5 hover:border-fox-orange/30 transition-all duration-500 group hover:-translate-y-1">
-          <div class="text-fox-orange text-3xl mb-6 group-hover:scale-110 transition-transform">🌍</div>
-          <h3 class="font-fantasy text-xl mb-3 group-hover:text-fox-orange transition-colors">Range</h3>
-          <p class="text-gray-400 text-sm leading-relaxed font-light">Foxes have the widest natural distribution of any
-            land mammal except for humans themselves.</p>
-        </div>
-
       </div>
+
+      <!-- Row 2: 3 stat cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5 reveal" style="transition-delay:150ms">
+
+        <!-- SUBSPECIES -->
+        <div class="ff-stat-card ff-stat-purple relative rounded-2xl p-8 overflow-hidden"
+          style="background:rgba(10,18,35,0.8);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.05)">
+          <div class="absolute pointer-events-none select-none font-fantasy font-black"
+            style="bottom:-24px;right:-8px;font-size:9rem;line-height:1;color:rgba(167,139,250,0.05)">45</div>
+          <span class="block font-fantasy uppercase tracking-[0.3em] mb-5"
+            style="font-size:10px;color:rgba(167,139,250,0.6)">Subspecies</span>
+          <div class="font-fantasy font-black leading-none mb-4" style="font-size:4.2rem;color:#A78BFA">45</div>
+          <div class="mb-5" style="height:1px;background:rgba(167,139,250,0.18)"></div>
+          <p style="color:#6b7280;font-size:.875rem;font-weight:300;line-height:1.7">Each uniquely evolved for its
+            specific ecological niche — from frozen tundra to desert edge.</p>
+        </div>
+
+        <!-- ACTIVITY -->
+        <div class="ff-stat-card ff-stat-orange relative rounded-2xl p-8 overflow-hidden"
+          style="background:rgba(10,18,35,0.8);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.05)">
+          <!-- Ambient glow -->
+          <div class="absolute pointer-events-none"
+            style="top:-20px;right:-20px;width:120px;height:120px;border-radius:50%;background:rgba(255,140,66,0.06);filter:blur(35px)">
+          </div>
+          <span class="block font-fantasy uppercase tracking-[0.3em] mb-5"
+            style="font-size:10px;color:rgba(255,140,66,0.6)">Peak Activity</span>
+          <!-- Minimalist ring icon -->
+          <div class="relative mb-5" style="width:54px;height:54px">
+            <div class="absolute inset-0" style="border-radius:50%;border:2px solid rgba(255,140,66,0.35)"></div>
+            <div class="absolute" style="inset:9px;border-radius:50%;border:1px solid rgba(255,140,66,0.22)"></div>
+            <div class="absolute" style="inset:18px;border-radius:50%;background:rgba(255,140,66,0.22)"></div>
+          </div>
+          <div class="font-fantasy font-bold text-white" style="font-size:1.55rem">Crepuscular</div>
+          <p style="color:#6b7280;font-size:.875rem;font-weight:300;line-height:1.7;margin-top:.75rem">
+            Most active at twilight — dawn and dusk — when light and shadow both belong to the fox.</p>
+        </div>
+
+        <!-- SURVIVAL TEMP -->
+        <div class="ff-stat-card ff-stat-gold relative rounded-2xl p-8 overflow-hidden"
+          style="background:rgba(10,18,35,0.8);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.05)">
+          <span class="block font-fantasy uppercase tracking-[0.3em] mb-5"
+            style="font-size:10px;color:rgba(210,163,60,0.6)">Survival Temperature</span>
+          <div class="font-fantasy font-black leading-none mb-1" style="font-size:3.5rem;color:#D2A33C">−50°C</div>
+          <div class="font-fantasy mb-5" style="font-size:1.1rem;color:rgba(210,163,60,0.5)">to +40°C</div>
+          <div class="mb-5" style="height:1px;background:rgba(210,163,60,0.15)"></div>
+          <p style="color:#6b7280;font-size:.875rem;font-weight:300;line-height:1.7">
+            Adaptable omnivores surviving from the high Arctic to the edge of the Sahara Desert.</p>
+        </div>
+      </div>
+
+      <!-- Row 3: Full-width editorial range card -->
+      <div class="ff-range-card reveal" style="transition-delay:200ms">
+        <div class="relative rounded-2xl overflow-hidden" style="height:220px">
+          <img class="ff-range-img absolute inset-0 w-full h-full object-cover object-top"
+            src="../assets/image/wp2652335-fox-wallpaper.jpg" alt="Fox Range"
+            style="opacity:0.22;transition:opacity .7s ease" />
+          <div class="absolute inset-0"
+            style="background:linear-gradient(to right, #0f172a 38%, rgba(15,23,42,0.8) 65%, rgba(15,23,42,0.5))"></div>
+          <!-- Editorial accent -->
+          <div class="absolute inset-y-0 left-0"
+            style="width:3px;background:linear-gradient(to bottom,transparent,rgba(255,140,66,0.6),transparent)"></div>
+          <div class="absolute bottom-0 left-0 right-0"
+            style="height:1px;background:linear-gradient(to right,rgba(255,140,66,0.35),transparent 55%)"></div>
+          <!-- Content -->
+          <div class="absolute inset-0 flex items-center px-10 gap-14">
+            <div style="flex-shrink:0">
+              <div class="font-fantasy uppercase tracking-[0.3em] mb-2"
+                style="font-size:10px;color:rgba(255,140,66,0.65)">Global Range</div>
+              <div class="flex items-baseline gap-2">
+                <span class="font-fantasy font-black text-white leading-none" style="font-size:4.5rem">70M</span>
+                <span class="font-fantasy font-bold text-fox-orange" style="font-size:1.4rem">km²</span>
+              </div>
+            </div>
+            <div style="width:1px;height:72px;background:rgba(255,255,255,0.1);flex-shrink:0" class="hidden md:block">
+            </div>
+            <div class="hidden md:block">
+              <h4 class="font-fantasy text-white mb-2" style="font-size:1.15rem">Widest Geographic Distribution</h4>
+              <p style="color:#6b7280;font-size:.875rem;font-weight:300;line-height:1.75;max-width:480px">
+                The widest natural range of any wild land mammal on Earth. Across 4 continents,
+                45 subspecies have adapted to every climate zone — from Arctic tundra
+                to the North African savanna edge.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </section>
 
     <!-- ══════════════════════════════════════

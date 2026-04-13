@@ -113,7 +113,7 @@
                 Ancestor</span>
             </div>
             <div class="relative">
-              <div
+              <div id="dot-circle-0"
                 class="w-4 h-4 rounded-full bg-purple-400 ring-4 ring-midnight-900 relative z-10 shadow-[0_0_15px_rgba(167,139,250,0.6)]">
               </div>
             </div>
@@ -124,7 +124,7 @@
           <div class="flex flex-col items-center group timeline-dot" onclick="selectEra(1)">
             <div class="mb-10 h-16 opacity-0">·</div>
             <div class="relative">
-              <div
+              <div id="dot-circle-1"
                 class="w-4 h-4 rounded-full bg-purple-400/60 ring-4 ring-midnight-900 relative z-10 shadow-[0_0_10px_rgba(167,139,250,0.3)]">
               </div>
             </div>
@@ -142,9 +142,8 @@
                 Emerges</span>
             </div>
             <div class="relative">
-              <div
-                class="w-6 h-6 rounded-full bg-purple-400 ring-4 ring-midnight-900 relative z-10 shadow-[0_0_20px_rgba(167,139,250,0.8)]"
-                id="active-dot"></div>
+              <div id="dot-circle-2"
+                class="w-6 h-6 rounded-full bg-purple-400 ring-4 ring-midnight-900 relative z-10 shadow-[0_0_20px_rgba(167,139,250,0.8)]"></div>
               <div class="dot-ring"></div>
             </div>
             <div class="mt-10 h-16 opacity-0">·</div>
@@ -154,7 +153,7 @@
           <div class="flex flex-col items-center group timeline-dot" onclick="selectEra(3)">
             <div class="mb-10 h-16 opacity-0">·</div>
             <div class="relative">
-              <div
+              <div id="dot-circle-3"
                 class="w-4 h-4 rounded-full bg-purple-400/60 ring-4 ring-midnight-900 relative z-10 shadow-[0_0_10px_rgba(167,139,250,0.3)]">
               </div>
             </div>
@@ -171,7 +170,7 @@
               <span class="text-[10px] uppercase tracking-wider text-gray-500 text-center mt-1">45 Subspecies</span>
             </div>
             <div class="relative">
-              <div
+              <div id="dot-circle-4"
                 class="w-4 h-4 rounded-full bg-fox-orange ring-4 ring-midnight-900 relative z-10 shadow-[0_0_15px_rgba(255,140,66,0.5)]">
               </div>
             </div>
@@ -194,8 +193,8 @@
           class="absolute -inset-4 bg-purple-500/20 blur-3xl rounded-full opacity-30 group-hover:opacity-50 transition-opacity">
         </div>
         <div class="relative aspect-[4/5] rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-2xl">
-          <img src="../assets/image/fox_forrest.jpg" alt="Red Fox in forest"
-            class="w-full h-full object-cover transition-transform duration-1000 scale-105 group-hover:scale-100" />
+          <img id="era-image" src="../assets/image/era_1mya.png" alt="Era image"
+            class="w-full h-full object-cover transition-all duration-700 scale-105 group-hover:scale-100" />
           <div class="absolute inset-0 bg-gradient-to-t from-midnight-900 via-transparent to-transparent"></div>
           <div class="absolute bottom-8 left-8">
             <p class="font-script text-purple-400 text-3xl" id="detail-caption">The Red Fox Emerges</p>

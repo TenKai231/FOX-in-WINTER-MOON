@@ -58,6 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
             scrollWheelZoom: false,
             dragging: false,
             doubleClickZoom: false,
+            attributionControl: false,
         }).setView([55.0, 60.0], 2);
 
         L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
@@ -114,6 +115,22 @@ document.addEventListener("DOMContentLoaded", () => {
             .leaflet-popup-tip { background:#0f172a; }
             .leaflet-popup-close-button { color:rgba(255,255,255,0.5) !important; }
             @keyframes ping { 0%{transform:scale(1);opacity:1} 75%{transform:scale(2);opacity:0} 100%{opacity:0} }
+            .dot-ring {
+                position: absolute;
+                top: 50%; left: 50%;
+                transform: translate(-50%, -50%);
+                width: 36px; height: 36px;
+                border-radius: 50%;
+                border: 2.5px solid rgba(167, 139, 250, 0.85);
+                animation: dotPing 1.6s ease-out infinite;
+                pointer-events: none;
+            }
+            .dot-ring.orange { border-color: rgba(255, 140, 66, 0.85); }
+            @keyframes dotPing {
+                0%   { transform: translate(-50%, -50%) scale(1);    opacity: 1; }
+                70%  { transform: translate(-50%, -50%) scale(2.2);   opacity: 0.3; }
+                100% { transform: translate(-50%, -50%) scale(2.5);   opacity: 0; }
+            }
         `;
         document.head.appendChild(style);
     }
@@ -132,7 +149,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Crossed the Bering Land Bridge to begin colonizing Eurasia."
             ],
             link:    "https://en.wikipedia.org/wiki/Late_Miocene",
-            sciLink: "https://paleobiodb.org/classic/checkTaxonInfo?taxon_no=41293"
+            sciLink: "https://paleobiodb.org/classic/checkTaxonInfo?taxon_no=41293",
+            image:   "../assets/image/era_10mya.png"
         },
         {
             epoch: "Pliocene Rise",
@@ -146,7 +164,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Brain size increased to support sophisticated social hunting."
             ],
             link:    "https://en.wikipedia.org/wiki/Pliocene",
-            sciLink: "https://www.gbif.org/genus/5219238"
+            sciLink: "https://www.gbif.org/genus/5219238",
+            image:   "../assets/image/era_5mya.png"
         },
         {
             epoch: "Pleistocene Epoch",
@@ -160,7 +179,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Cunning Evolution: Increased cranial capacity for sophisticated hunting strategies in deep snow."
             ],
             link:    "https://en.wikipedia.org/wiki/Pleistocene",
-            sciLink: "https://en.wikipedia.org/wiki/Red_fox"
+            sciLink: "https://en.wikipedia.org/wiki/Red_fox",
+            image:   "../assets/image/era_1mya.png"
         },
         {
             epoch: "The Dispersion",
@@ -174,7 +194,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Population densities established on 4 continents simultaneously."
             ],
             link:    "https://en.wikipedia.org/wiki/Bering_land_bridge",
-            sciLink: "https://en.wikipedia.org/wiki/Vulpes_vulpes#Subspecies"
+            sciLink: "https://en.wikipedia.org/wiki/Vulpes_vulpes#Subspecies",
+            image:   "../assets/image/era_500ka.png"
         },
         {
             epoch: "Modern Era",
@@ -188,7 +209,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Successfully adapted to urban environments on every inhabited continent."
             ],
             link:    "https://en.wikipedia.org/wiki/Red_fox",
-            sciLink: "https://www.iucnredlist.org/species/23062/166244332"
+            sciLink: "https://www.iucnredlist.org/species/23062/166244332",
+            image:   "../assets/image/era_today.png"
         }
     ];
 
@@ -197,6 +219,51 @@ document.addEventListener("DOMContentLoaded", () => {
     window.selectEra = function(index) {
         currentEra = index;
         const era = eras[index];
+
+        // ── Update timeline dot visuals ──
+        const inactiveClass = [
+            "w-4 h-4 rounded-full bg-purple-400    ring-4 ring-midnight-900 relative z-10 shadow-[0_0_15px_rgba(167,139,250,0.6)]",
+            "w-4 h-4 rounded-full bg-purple-400/60 ring-4 ring-midnight-900 relative z-10 shadow-[0_0_10px_rgba(167,139,250,0.3)]",
+            "w-4 h-4 rounded-full bg-purple-400    ring-4 ring-midnight-900 relative z-10 shadow-[0_0_15px_rgba(167,139,250,0.6)]",
+            "w-4 h-4 rounded-full bg-purple-400/60 ring-4 ring-midnight-900 relative z-10 shadow-[0_0_10px_rgba(167,139,250,0.3)]",
+            "w-4 h-4 rounded-full bg-fox-orange     ring-4 ring-midnight-900 relative z-10 shadow-[0_0_15px_rgba(255,140,66,0.5)]"
+        ];
+        const activeClass = [
+            "w-6 h-6 rounded-full bg-purple-400 ring-4 ring-midnight-900 relative z-10 shadow-[0_0_24px_rgba(167,139,250,0.95)]",
+            "w-6 h-6 rounded-full bg-purple-400 ring-4 ring-midnight-900 relative z-10 shadow-[0_0_24px_rgba(167,139,250,0.95)]",
+            "w-6 h-6 rounded-full bg-purple-400 ring-4 ring-midnight-900 relative z-10 shadow-[0_0_24px_rgba(167,139,250,0.95)]",
+            "w-6 h-6 rounded-full bg-purple-400 ring-4 ring-midnight-900 relative z-10 shadow-[0_0_24px_rgba(167,139,250,0.95)]",
+            "w-6 h-6 rounded-full bg-fox-orange ring-4 ring-midnight-900 relative z-10 shadow-[0_0_24px_rgba(255,140,66,0.9)]"
+        ];
+        for (let i = 0; i < 5; i++) {
+            const circle = document.getElementById(`dot-circle-${i}`);
+            if (!circle) continue;
+            const container = circle.parentElement;
+            // remove any existing ring
+            const existing = container.querySelector(".dot-ring");
+            if (existing) existing.remove();
+            if (i === index) {
+                circle.className = activeClass[i];
+                const ring = document.createElement("div");
+                ring.className = (i === 4) ? "dot-ring orange" : "dot-ring";
+                container.appendChild(ring);
+            } else {
+                circle.className = inactiveClass[i];
+            }
+        }
+
+        // ── Swap era image with fade effect ──
+        const eraImg = document.getElementById("era-image");
+        if (eraImg && era.image) {
+            eraImg.style.transition = "opacity 0.35s ease";
+            eraImg.style.opacity = "0";
+            setTimeout(() => {
+                eraImg.src = era.image;
+                eraImg.onload = () => { eraImg.style.opacity = "1"; };
+                // fallback in case onload doesn't fire (cached)
+                setTimeout(() => { eraImg.style.opacity = "1"; }, 50);
+            }, 350);
+        }
 
         const card = document.getElementById("detail-card");
         if (!card) return;
@@ -219,15 +286,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 ).join("");
             }
 
-            // ── Wire up the two buttons to this era's links ──
+            // ── Wire up buttons ──
             const exploreBtn = document.getElementById("explore-btn");
             const sciBtn     = document.getElementById("sci-btn");
-            if (exploreBtn) {
-                exploreBtn.onclick = () => window.open(era.link, "_blank", "noopener");
-            }
-            if (sciBtn) {
-                sciBtn.onclick = () => window.open(era.sciLink, "_blank", "noopener");
-            }
+            if (exploreBtn) exploreBtn.onclick = () => window.open(era.link,    "_blank", "noopener");
+            if (sciBtn)     sciBtn.onclick     = () => window.open(era.sciLink, "_blank", "noopener");
 
             card.style.opacity = "1";
             card.style.transform = "translateY(0)";
