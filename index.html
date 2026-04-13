@@ -555,10 +555,47 @@
   </section>
 
   <!-- CTA Section -->
-  <section class="relative z-40 bg-black py-20 px-6 text-center overflow-hidden">
+  <section class="relative z-40 bg-black py-20 px-6 text-center overflow-visible">
+
+    <!-- ✦ Tumpukan salju tepat di batas warna midnight-900 → black ✦ -->
+    <div id="snow-pile-cta" class="snow-pile-top" style="cursor:pointer;" title="Klik untuk menjatuhkan salju!">
+      <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
+        style="height:120px; transform:scaleY(-1);">
+        <!-- bayangan es biru dalam (kedalaman) -->
+        <path
+          d="M0,120 L0,80 Q90,52 180,70 Q270,88 360,58 Q450,28 540,50 Q630,72 720,42 Q810,12 900,38 Q990,64 1080,38 Q1170,12 1260,40 Q1350,68 1440,52 L1440,120 Z"
+          fill="rgba(120,175,230,0.45)" />
+        <!-- lapisan es biru tengah -->
+        <path
+          d="M0,120 L0,92 Q120,68 240,84 Q360,100 480,76 Q600,52 720,68 Q840,84 960,62 Q1080,40 1200,62 Q1320,84 1440,72 L1440,120 Z"
+          fill="rgba(185,220,255,0.65)" />
+        <!-- lapisan salju putih-biru organik -->
+        <path
+          d="M0,120 L0,105 Q60,94 120,102 Q180,110 240,98 Q310,84 380,96 Q440,107 510,97 Q570,87 640,97 Q700,107 770,97 Q840,86 910,96 Q970,106 1040,96 Q1110,85 1180,96 Q1240,106 1310,98 Q1370,90 1440,99 L1440,120 Z"
+          fill="rgba(230,245,255,0.88)" />
+        <!-- lapisan permukaan salju - putih bersih -->
+        <path
+          d="M0,120 L0,112 Q50,106 100,111 Q160,117 210,109 Q270,100 330,110 Q380,118 440,110 Q500,101 560,110 Q610,118 670,110 Q730,101 790,110 Q850,118 910,110 Q960,101 1020,110 Q1080,118 1140,111 Q1190,103 1260,111 Q1320,118 1380,112 Q1410,108 1440,112 L1440,120 Z"
+          fill="rgba(255,255,255,0.97)" />
+        <!-- garis tepi kristal salju -->
+        <path
+          d="M0,112 Q50,106 100,112 Q160,118 210,109 Q270,100 330,110 Q380,119 440,111 Q500,102 560,111 Q610,119 670,111 Q730,102 790,111 Q850,119 910,110 Q960,101 1020,111 Q1080,119 1140,111 Q1190,103 1260,111 Q1320,119 1380,112 Q1410,108 1440,113"
+          fill="none" stroke="white" stroke-width="2.5" />
+        <!-- kilap kristal salju (highlight titik-titik) -->
+        <circle cx="120" cy="110" r="2.5" fill="white" opacity="0.9" />
+        <circle cx="360" cy="104" r="2" fill="white" opacity="0.8" />
+        <circle cx="540" cy="108" r="3" fill="white" opacity="0.95" />
+        <circle cx="720" cy="102" r="2" fill="white" opacity="0.85" />
+        <circle cx="900" cy="108" r="2.5" fill="white" opacity="0.9" />
+        <circle cx="1080" cy="103" r="2" fill="white" opacity="0.8" />
+        <circle cx="1260" cy="109" r="3" fill="white" opacity="0.9" />
+        <circle cx="1440" cy="105" r="2" fill="white" opacity="0.85" />
+      </svg>
+    </div>
 
     <!-- decorative border line -->
-    <div class="relative z-10 w-full max-w-2xl mx-auto mb-12 flex items-center justify-center gap-4">
+    <div class="relative z-10 w-full max-w-2xl mx-auto mb-12 flex items-center justify-center gap-4"
+      style="margin-top: 80px;">
       <div class="flex-1 h-px bg-gradient-to-r from-transparent via-fox-orange/50 to-transparent"></div>
       <span class="font-fantasy tracking-[0.4em] text-xs text-fox-orange/60 uppercase whitespace-nowrap">Discover
         More</span>
@@ -589,64 +626,60 @@
       </div>
     </a>
 
-    <!-- Snow pile interaktif di bawah CTA -->
-    <div id="snow-pile-cta" class="snow-pile" style="cursor:pointer;" title="Klik untuk menjatuhkan salju!">
-      <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="height:120px;">
-        <!-- latar biru lembut -->
-        <path
-          d="M0,120 L0,80 Q90,52 180,70 Q270,88 360,58 Q450,28 540,50 Q630,72 720,42 Q810,12 900,38 Q990,64 1080,38 Q1170,12 1260,40 Q1350,68 1440,52 L1440,120 Z"
-          fill="rgba(186,213,255,0.18)" />
-        <!-- lapisan tengah -->
-        <path
-          d="M0,120 L0,92 Q120,68 240,84 Q360,100 480,76 Q600,52 720,68 Q840,84 960,62 Q1080,40 1200,62 Q1320,84 1440,72 L1440,120 Z"
-          fill="rgba(210,230,255,0.28)" />
-        <!-- lapisan depan organik -->
-        <path
-          d="M0,120 L0,105 Q60,94 120,102 Q180,110 240,98 Q310,84 380,96 Q440,107 510,97 Q570,87 640,97 Q700,107 770,97 Q840,86 910,96 Q970,106 1040,96 Q1110,85 1180,96 Q1240,106 1310,98 Q1370,90 1440,99 L1440,120 Z"
-          fill="rgba(230,242,255,0.55)" />
-        <!-- lapisan paling depan - paling putih -->
-        <path
-          d="M0,120 L0,112 Q50,106 100,111 Q160,117 210,109 Q270,100 330,110 Q380,118 440,110 Q500,101 560,110 Q610,118 670,110 Q730,101 790,110 Q850,118 910,110 Q960,101 1020,110 Q1080,118 1140,111 Q1190,103 1260,111 Q1320,118 1380,112 Q1410,108 1440,112 L1440,120 Z"
-          fill="rgba(245,250,255,0.85)" />
-        <!-- highlight garis putih di puncak -->
-        <path
-          d="M0,112 Q50,106 100,112 Q160,118 210,109 Q270,100 330,110 Q380,119 440,111 Q500,102 560,111 Q610,119 670,111 Q730,102 790,111 Q850,119 910,110 Q960,101 1020,111 Q1080,119 1140,111 Q1190,103 1260,111 Q1320,119 1380,112 Q1410,108 1440,113"
-          fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2" />
-      </svg>
-    </div>
   </section>
 
-  <footer class="relative z-40 bg-black pb-10 pt-16 text-center overflow-hidden">
-    <!-- Tumpukan salju di atas footer -->
+  <footer class="relative z-40 bg-black pb-8 pt-0 border-t border-white/5 overflow-hidden">
+    <!-- Tumpukan salju di atas footer (lebih pendek agar tak menimpa teks) -->
     <div id="snow-pile-footer" class="snow-pile-top" style="cursor:pointer;" title="Klik untuk menjatuhkan salju!">
-      <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
-        style="height:120px; transform:scaleY(-1);">
+      <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
+        style="height:60px; transform:scaleY(-1);">
+        <!-- bayangan es biru dalam -->
         <path
-          d="M0,120 L0,80 Q90,52 180,70 Q270,88 360,58 Q450,28 540,50 Q630,72 720,42 Q810,12 900,38 Q990,64 1080,38 Q1170,12 1260,40 Q1350,68 1440,52 L1440,120 Z"
-          fill="rgba(186,213,255,0.12)" />
+          d="M0,60 L0,30 Q90,10 180,24 Q270,38 360,14 Q450,0 540,18 Q630,36 720,12 Q810,0 900,16 Q990,32 1080,10 Q1170,0 1260,18 Q1350,34 1440,18 L1440,60 Z"
+          fill="rgba(120,175,230,0.45)" />
+        <!-- lapisan es biru tengah -->
         <path
-          d="M0,120 L0,92 Q120,68 240,84 Q360,100 480,76 Q600,52 720,68 Q840,84 960,62 Q1080,40 1200,62 Q1320,84 1440,72 L1440,120 Z"
-          fill="rgba(210,230,255,0.22)" />
+          d="M0,60 L0,38 Q120,22 240,34 Q360,46 480,26 Q600,10 720,28 Q840,44 960,24 Q1080,8 1200,26 Q1320,42 1440,28 L1440,60 Z"
+          fill="rgba(185,220,255,0.65)" />
+        <!-- lapisan salju putih-biru organik -->
         <path
-          d="M0,120 L0,105 Q60,94 120,102 Q180,110 240,98 Q310,84 380,96 Q440,107 510,97 Q570,87 640,97 Q700,107 770,97 Q840,86 910,96 Q970,106 1040,96 Q1110,85 1180,96 Q1240,106 1310,98 Q1370,90 1440,99 L1440,120 Z"
-          fill="rgba(230,242,255,0.45)" />
+          d="M0,60 L0,50 Q60,43 120,50 Q180,57 240,48 Q310,38 380,48 Q440,57 510,48 Q570,38 640,48 Q700,57 770,48 Q840,38 910,48 Q970,57 1040,48 Q1110,38 1180,48 Q1240,57 1310,50 Q1370,43 1440,50 L1440,60 Z"
+          fill="rgba(230,245,255,0.88)" />
+        <!-- permukaan salju putih bersih -->
         <path
-          d="M0,120 L0,112 Q50,106 100,111 Q160,117 210,109 Q270,100 330,110 Q380,118 440,110 Q500,101 560,110 Q610,118 670,110 Q730,101 790,110 Q850,118 910,110 Q960,101 1020,110 Q1080,118 1140,111 Q1190,103 1260,111 Q1320,118 1380,112 Q1410,108 1440,112 L1440,120 Z"
-          fill="rgba(245,250,255,0.75)" />
+          d="M0,60 L0,55 Q50,51 100,55 Q160,59 210,53 Q270,47 330,53 Q388,59 440,53 Q500,47 560,53 Q614,59 670,53 Q730,47 790,53 Q850,59 910,53 Q964,47 1020,53 Q1080,59 1140,54 Q1194,48 1260,54 Q1318,59 1380,55 Q1412,52 1440,55 L1440,60 Z"
+          fill="rgba(255,255,255,0.97)" />
+        <!-- garis kristal tepi salju -->
         <path
-          d="M0,112 Q50,106 100,112 Q160,118 210,109 Q270,100 330,110 Q380,119 440,111 Q500,102 560,111 Q610,119 670,111 Q730,102 790,111 Q850,119 910,110 Q960,101 1020,111 Q1080,119 1140,111 Q1190,103 1260,111 Q1320,119 1380,112 Q1410,108 1440,113"
-          fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2" />
+          d="M0,55 Q50,51 100,56 Q160,59 210,53 Q270,47 330,54 Q388,59 440,53 Q500,47 560,54 Q614,59 670,53 Q730,47 790,54 Q850,59 910,53 Q964,47 1020,54 Q1080,59 1140,54 Q1194,48 1260,54 Q1318,59 1380,55 Q1412,52 1440,56"
+          fill="none" stroke="white" stroke-width="2" />
+        <!-- kilap kristal -->
+        <circle cx="180" cy="53" r="1.5" fill="white" opacity="0.9" />
+        <circle cx="480" cy="51" r="1.5" fill="white" opacity="0.85" />
+        <circle cx="720" cy="52" r="2" fill="white" opacity="0.95" />
+        <circle cx="960" cy="51" r="1.5" fill="white" opacity="0.85" />
+        <circle cx="1260" cy="53" r="1.5" fill="white" opacity="0.9" />
       </svg>
     </div>
 
-    <div class="relative z-10 text-xl font-fantasy font-bold tracking-widest text-white/20 mb-4">FOX.</div>
-    <p class="relative z-10 text-gray-700 font-body text-xs tracking-widest uppercase">
-      &copy; 2026 The Frozen Forest. Crafted for educational purposes.
-    </p>
-    <p class="relative z-10 text-gray-800 font-body text-xs mt-1 italic tracking-wide">
-      Data based on wildlife research and environmental observations.
-    </p>
+    <!-- Konten footer — mt-16 agar tepat di bawah salju 60px -->
+    <div class="relative z-10 mt-16 flex flex-col md:flex-row justify-between items-center px-12">
+      <div class="font-fantasy text-xl font-bold tracking-widest text-white/20 mb-4 md:mb-0">
+        FOX<span class="text-fox-orange">.</span>
+      </div>
+      <p class="text-gray-700 font-body text-xs tracking-[0.15em] uppercase text-center mb-4 md:mb-0">
+        &copy; 2026 The Frozen Forest. Crafted for educational purposes.
+      </p>
+      <div class="flex gap-8">
+        <a href="#"
+          class="text-gray-700 hover:text-fox-orange transition-colors font-body text-xs tracking-[0.1em] uppercase">Terms
+          of Observation</a>
+        <a href="#"
+          class="text-gray-700 hover:text-fox-orange transition-colors font-body text-xs tracking-[0.1em] uppercase">Privacy</a>
+      </div>
+    </div>
   </footer>
+
 
   <script src="js/fetch_data.js" defer></script>
   <script src="js/script.js" defer></script>
