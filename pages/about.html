@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About | Fox.</title>
+  <meta name="description"
+    content="Learn about the creator of the Fox. wildlife web project — Rama Ferdiansyah, a student at Universitas Sriwijaya." />
+
+  <!-- Fonts (same as all pages) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lato:wght@300;400&family=Pinyon+Script&display=swap"
+    rel="stylesheet" />
+
+  <!-- Project CSS -->
+  <link rel="stylesheet" href="../dist/output.css" />
+
+  <!-- Favicon -->
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦊</text></svg>" />
+
+  <style>
+    /* ── Page-specific animations ── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(28px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes floatY {
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-12px);
+      }
+    }
+
+    @keyframes shimmerLine {
+      0% {
+        transform: scaleX(0);
+        opacity: 0;
+      }
+
+      50% {
+        transform: scaleX(1);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scaleX(1);
+        opacity: 0.6;
+      }
+    }
+
+    @keyframes glowPulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 20px rgba(255, 140, 66, 0.2);
+      }
+
+      50% {
+        box-shadow: 0 0 40px rgba(255, 140, 66, 0.5);
+      }
+    }
+
+    /* Floating gif container */
+    .gif-float {
+      animation: floatY 4s ease-in-out infinite;
+      filter: drop-shadow(0 16px 40px rgba(255, 140, 66, 0.3));
+    }
+
+    /* Profile card glow */
+    .profile-card {
+      background: rgba(10, 18, 35, 0.75);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 140, 66, 0.18);
+      transition: border-color 0.5s ease, box-shadow 0.5s ease;
+      animation: glowPulse 4s ease-in-out infinite;
+    }
+
+    .profile-card:hover {
+      border-color: rgba(255, 140, 66, 0.45);
+      box-shadow: 0 0 60px rgba(255, 140, 66, 0.15);
+    }
+
+    /* Stat pill */
+    .stat-pill {
+      background: rgba(255, 140, 66, 0.07);
+      border: 1px solid rgba(255, 140, 66, 0.18);
+      transition: background 0.3s ease;
+    }
+
+    .stat-pill:hover {
+      background: rgba(255, 140, 66, 0.14);
+    }
+
+    /* Divider shimmer */
+    .divider-shimmer {
+      height: 1px;
+      background: linear-gradient(to right,
+          transparent,
+          rgba(255, 140, 66, 0.5),
+          transparent);
+      animation: shimmerLine 3s ease-in-out infinite;
+      transform-origin: left;
+    }
+
+    /* Tag chip */
+    .tag-chip {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      transition: all 0.3s ease;
+    }
+
+    .tag-chip:hover {
+      background: rgba(255, 140, 66, 0.12);
+      border-color: rgba(255, 140, 66, 0.35);
+      color: #ff8c42;
+    }
+  </style>
+</head>
+
+<!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║           PANDUAN CUSTOM CLASS — about.html                      ║
+  ║  Semua class di bawah ini BUKAN bawaan Tailwind, tapi           ║
+  ║  didefinisikan di css/input.css → dikompile ke dist/output.css  ║
+  ╠══════════════════════════════════════════════════════════════════╣
+  ║                                                                  ║
+  ║  reveal               → Elemen muncul dari bawah saat discroll  ║
+  ║  #page-overlay        → Overlay hitam untuk transisi antar page ║
+  ║  font-fantasy         → Font Cinzel (serif)                     ║
+  ║  font-body            → Font Lato (sans-serif)                  ║
+  ║  fox-orange (#FF8C42) → Warna oranye fox utama                  ║
+  ║  fox-gold   (#F59E0B) → Warna emas fox                          ║
+  ║  midnight-900 (#020617)→ Warna background gelap utama           ║
+  ╚══════════════════════════════════════════════════════════════════╝
+  -->
+
+<body class="bg-midnight-900 text-white font-body overflow-x-hidden">
+  <!-- Stars & Snow — same as index.html -->
+  <div id="star-container" class="fixed inset-0 z-0 opacity-60 pointer-events-none"></div>
+  <div id="snow-container" class="fixed inset-0 z-10 pointer-events-none"></div>
+
+  <!-- Page overlay -->
+  <div id="page-overlay"></div>
+
+  <!-- ── NAV — same as index.html ── -->
+  <nav
+    class="fixed w-full z-50 top-0 px-8 py-6 flex justify-between items-center bg-gradient-to-b from-midnight-900/90 to-transparent opacity-0"
+    style="animation: fadeUp 0.8s 0.5s ease-out forwards">
+    <a href="../index.html" id="logo-link"
+      class="text-xl font-fantasy font-bold tracking-widest text-white hover:text-fox-orange transition-colors duration-300">
+      FOX<span class="text-fox-orange">.</span>
+    </a>
+    <ul class="hidden md:flex space-x-8 text-xs tracking-[0.2em] uppercase text-white/70">
+      <li class="hover:text-fox-orange transition-all cursor-pointer">
+        <a href="../index.html#hero">Home</a>
+      </li>
+      <li class="hover:text-fox-orange transition-all cursor-pointer">
+        <a href="../index.html#biography">Biography</a>
+      </li>
+      <li class="hover:text-fox-orange transition-all cursor-pointer">
+        <a href="../index.html#documentary">Documentary</a>
+      </li>
+      <li class="hover:text-fox-orange transition-all cursor-pointer">
+        <a href="../index.html#habitat">Habitat</a>
+      </li>
+      <li class="hover:text-fox-orange transition-all cursor-pointer">
+        <a href="../index.html#population">Population</a>
+      </li>
+    </ul>
+  </nav>
+
+  <main class="relative z-20">
+    <!-- ══════════════════════════════════════
+           HERO
+      ══════════════════════════════════════ -->
+    <section class="relative min-h-[60vh] flex flex-col items-center justify-center overflow-hidden pt-24 pb-12">
+      <!-- Radial glow -->
+      <div class="absolute inset-0 pointer-events-none"
+        style="background: radial-gradient(circle at 50% 40%, rgba(255,140,66,0.08), transparent 65%);"></div>
+      <div
+        class="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-midnight-900 to-transparent pointer-events-none">
+      </div>
+
+      <!-- Editorial label -->
+      <span class="font-fantasy tracking-[0.4em] text-fox-orange uppercase text-xs mb-6 block opacity-0 relative z-20"
+        style="animation: fadeUp 0.8s 0.7s ease-out forwards">About the Creator</span>
+
+      <!-- Page title -->
+      <h1
+        class="font-fantasy text-6xl md:text-8xl font-black tracking-tight text-white text-center opacity-0 relative z-20"
+        style="
+            animation: fadeUp 0.9s 1s ease-out forwards;
+            text-shadow: 0 0 60px rgba(255, 140, 66, 0.4), 0 0 120px rgba(255, 185, 95, 0.2);
+          ">
+        ABOUT US
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="font-body text-gray-400 mt-6 max-w-xl mx-auto text-base leading-relaxed font-light text-center px-6 opacity-0 relative z-20"
+        style="animation: fadeUp 0.8s 1.3s ease-out forwards">
+        Welcome to the <em>Sounds of the Wild</em> — a wildlife web project
+        dedicated to the world's most captivating creature, the Red Fox.
+      </p>
+    </section>
+
+    <!-- ══════════════════════════════════════
+           PROFILE CARD
+      ══════════════════════════════════════ -->
+    <section class="px-6 pb-24 max-w-5xl mx-auto relative z-20">
+
+      <!-- Decorative top divider -->
+      <div class="divider-shimmer mb-16 mx-auto max-w-xs"></div>
+
+      <div class="profile-card rounded-3xl p-8 md:p-12 relative overflow-hidden reveal">
+        <!-- Corner decoration: subtle glow -->
+        <div class="absolute top-0 right-0 pointer-events-none"
+          style="width: 260px; height: 260px; border-radius: 50%; background: radial-gradient(circle at 70% 30%, rgba(255,140,66,0.07), transparent 70%); transform: translate(30%, -30%);">
+        </div>
+
+        <!-- Top meta label -->
+        <span class="block font-fantasy uppercase tracking-[0.35em] text-fox-orange mb-6"
+          style="font-size: 10px">Creator Profile</span>
+
+        <!-- Main grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 relative z-10">
+          <!-- Left column: identity -->
+          <div>
+            <h2 class="font-fantasy text-4xl font-bold text-white mb-1">
+              Rama Ferdiansyah
+            </h2>
+            <p class="font-fantasy text-fox-orange tracking-widest text-sm mb-8">
+              Wildlife Enthusiast & Web Developer
+            </p>
+
+            <!-- Divider -->
+            <div class="h-px mb-8" style="background: rgba(255,140,66,0.15)"></div>
+
+            <!-- Info rows -->
+            <dl class="space-y-5">
+              <div class="flex items-start gap-4">
+                <dt
+                  class="font-fantasy text-[10px] uppercase tracking-[0.25em] text-gray-500 w-24 flex-shrink-0 pt-0.5">
+                  Name
+                </dt>
+                <dd class="text-white/80 font-light text-sm leading-relaxed">
+                  Rama Ferdiansyah
+                </dd>
+              </div>
+              <div class="flex items-start gap-4">
+                <dt
+                  class="font-fantasy text-[10px] uppercase tracking-[0.25em] text-gray-500 w-24 flex-shrink-0 pt-0.5">
+                  University
+                </dt>
+                <dd class="text-white/80 font-light text-sm leading-relaxed">
+                  Universitas Sriwijaya
+                </dd>
+              </div>
+              <div class="flex items-start gap-4">
+                <dt
+                  class="font-fantasy text-[10px] uppercase tracking-[0.25em] text-gray-500 w-24 flex-shrink-0 pt-0.5">
+                  Project
+                </dt>
+                <dd class="text-white/80 font-light text-sm leading-relaxed">
+                  Sounds of the Wild — Fox.
+                </dd>
+              </div>
+              <div class="flex items-start gap-4">
+                <dt
+                  class="font-fantasy text-[10px] uppercase tracking-[0.25em] text-gray-500 w-24 flex-shrink-0 pt-0.5">
+                  Year
+                </dt>
+                <dd class="text-white/80 font-light text-sm leading-relaxed">
+                  2026
+                </dd>
+              </div>
+            </dl>
+          </div>
+
+          <!-- Right column: description + stats -->
+          <div>
+            <span class="block font-fantasy uppercase tracking-[0.25em] text-[10px] text-gray-500 mb-4">Project
+              Description</span>
+            <p class="text-gray-400 font-light text-sm leading-relaxed mb-8">
+              <strong class="text-white/80 font-normal">Fox.</strong> is a web-based application that lets users
+              explore and listen to various animal sounds, with a focus on
+              red fox vocalizations (<em>Vulpes vulpes</em>). The project aims
+              to educate users about the diversity of animal calls and raise
+              awareness of wildlife conservation.
+            </p>
+
+            <!-- Stat pills -->
+            <div class="grid grid-cols-2 gap-3">
+              <div class="stat-pill rounded-xl px-4 py-3 text-center">
+                <div class="font-fantasy text-2xl font-black text-fox-orange">
+                  4
+                </div>
+                <div class="font-fantasy text-[9px] uppercase tracking-[0.2em] text-gray-500 mt-1">
+                  Chapters
+                </div>
+              </div>
+              <div class="stat-pill rounded-xl px-4 py-3 text-center">
+                <div class="font-fantasy text-2xl font-black text-blue-400">
+                  45
+                </div>
+                <div class="font-fantasy text-[9px] uppercase tracking-[0.2em] text-gray-500 mt-1">
+                  Subspecies
+                </div>
+              </div>
+              <div class="stat-pill rounded-xl px-4 py-3 text-center">
+                <div class="font-fantasy text-2xl font-black text-purple-400">
+                  50
+                </div>
+                <div class="font-fantasy text-[9px] uppercase tracking-[0.2em] text-gray-500 mt-1">
+                  km/h Speed
+                </div>
+              </div>
+              <div class="stat-pill rounded-xl px-4 py-3 text-center">
+                <div class="font-fantasy text-2xl font-black text-fox-gold">
+                  65
+                </div>
+                <div class="font-fantasy text-[9px] uppercase tracking-[0.2em] text-gray-500 mt-1">
+                  kHz Hearing
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom tags row -->
+        <div class="mt-10 pt-8 border-t border-white/5 flex flex-wrap gap-3 relative z-10">
+          <span class="tag-chip rounded-full px-4 py-1.5 text-xs font-fantasy tracking-widest uppercase text-gray-400">
+            Wildlife
+          </span>
+          <span class="tag-chip rounded-full px-4 py-1.5 text-xs font-fantasy tracking-widest uppercase text-gray-400">
+            Web Design
+          </span>
+          <span class="tag-chip rounded-full px-4 py-1.5 text-xs font-fantasy tracking-widest uppercase text-gray-400">
+            Bioacoustics
+          </span>
+          <span class="tag-chip rounded-full px-4 py-1.5 text-xs font-fantasy tracking-widest uppercase text-gray-400">
+            Conservation
+          </span>
+          <span class="tag-chip rounded-full px-4 py-1.5 text-xs font-fantasy tracking-widest uppercase text-gray-400">
+            Education
+          </span>
+        </div>
+      </div>
+
+      <!-- Mission card -->
+      <div class="mt-8 rounded-2xl p-8 md:p-10 reveal" style="
+            background: rgba(10, 18, 35, 0.6);
+            border: 1px solid rgba(255,255,255,0.06);
+            transition-delay: 100ms;
+          ">
+        <span class="block font-fantasy uppercase tracking-[0.35em] text-[10px] text-fox-orange mb-5">Our Mission</span>
+        <h3 class="font-fantasy text-2xl font-bold text-white mb-4">
+          Bridging Nature &amp; Technology
+        </h3>
+        <p class="text-gray-400 font-light text-sm leading-relaxed max-w-2xl">
+          We believe the web can serve as a bridge between modern humans and
+          the natural world. Through data visualization, interactive audio,
+          scientific photography, and cinematic narration — we bring the wonder
+          of <em>Vulpes vulpes</em> directly to your screen. Every page is
+          crafted as a doorway into a deeper understanding of ecosystems and
+          wildlife behaviour.
+        </p>
+      </div>
+
+      <!-- Back button -->
+      <div class="mt-16 flex justify-center reveal" style="transition-delay: 150ms">
+        <a href="more.html" id="back-more-btn"
+          class="group relative px-10 py-3 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm text-sm font-fantasy tracking-widest overflow-hidden transition-all duration-500 hover:border-fox-orange hover:shadow-[0_0_30px_rgba(255,140,66,0.3)]">
+          <span class="relative z-10 group-hover:text-fox-orange transition-colors flex items-center gap-2">← BACK TO
+            MORE</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ── FOX-GIRL GIF — above footer ── -->
+  <div class="relative z-20 flex flex-col items-center justify-end pb-0 mt-8">
+    <!-- Glow under gif -->
+    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-72 h-24 pointer-events-none"
+      style="background: radial-gradient(ellipse at center, rgba(255,140,66,0.25), transparent 70%); filter: blur(20px);">
+    </div>
+    <img src="../assets/gift/fox-girl.gif" alt="Fox girl animation" class="gif-float relative z-10"
+      style="max-height: 220px; width: auto; object-fit: contain;" />
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer
+    class="relative z-20 bg-black py-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center px-12">
+    <div class="font-fantasy text-xl font-bold tracking-widest text-white/20 mb-4 md:mb-0">
+      FOX<span class="text-fox-orange">.</span>
+    </div>
+    <p class="text-gray-700 font-body text-xs tracking-[0.15em] uppercase text-center mb-4 md:mb-0">
+      © 2026 The Frozen Forest. Crafted for educational purposes.
+    </p>
+    <div class="flex gap-8">
+      <a href="more.html"
+        class="text-gray-700 hover:text-fox-orange transition-colors font-body text-xs tracking-[0.1em] uppercase">Back
+        to More</a>
+      <a href="about.html"
+        class="text-gray-700 hover:text-fox-orange transition-colors font-body text-xs tracking-[0.1em] uppercase">About</a>
+    </div>
+  </footer>
+
+  <!-- JS for stars/snow/page-overlay (same as other pages) -->
+  <script src="../js/more.js" defer></script>
+</body>
+
+</html>
